@@ -42,8 +42,7 @@ export default function SignUp() {
                         <button className={"btn"}>Create Account</button>
                         <div className={"log-in"}>
                             <span className={'login-text'}>Already have an account?</span><Link className={"link-login"}
-                                                                                                to={"/logIn"}>Log
-                            In</Link>
+                                                                                                to={"/signIn"}>Sign In</Link>
                         </div>
                     </form>
                 </Banner>

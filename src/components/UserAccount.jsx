@@ -6,7 +6,7 @@ export default function UserAccount() {
         <Home>
             <Line>
                 <Account>
-                        <img className={"img"} src={"/assets/padureadomneasca3.jpg"}/>
+                        <img className={"img"} src={"/assets/testimonial2.webp"}/>
                     <div>
                     <Title>Adelia157</Title>
                         <div className={'country'}>
@@ -25,10 +25,9 @@ export default function UserAccount() {
 const Account=styled.div`
   display: flex;
   gap: 48px;
-  justify-content: center;
   align-items: center;
   align-content: center;
-  padding-bottom: 96px;
+  padding: 48px 48px 96px 48px;
 
   .img {
     height: 150px;

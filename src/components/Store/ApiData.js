@@ -1,25 +1,15 @@
-import {useEffect, useReducer} from "react";
-import {createStore} from "redux";
-import {configureStore, createSlice} from "@reduxjs/toolkit";
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-const initialState = {
-    destinations: [],
-    status: 'loading'
-}
-
-const destinationsSlice = createSlice({
-    name: 'destinations',
-    initialState: initialState,
-    reducers: {
-        setDestinations(state, action) {
-            state.destinations = action.payload;
-        }
-    }
+export const api = createApi({
+    baseQuery: fetchBaseQuery(
+        {baseUrl: 'http://localhost:3000'}),
+    endpoints: (builder) => ({
+        getDestinations: builder.query({
+            query: (page=1) => `destinations?_page=${page}&_limit=4`
+        })
+    })
 })
 
-export const store = configureStore({
-    reducer: destinationsSlice.reducer
-})
 
-export const { setDestinations } = destinationsSlice.actions;
 
+export  const {useGetDestinationsQuery} = api;

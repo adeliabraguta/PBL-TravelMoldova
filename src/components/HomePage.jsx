@@ -4,9 +4,17 @@ import React, {useEffect, useState} from "react";
 import DestinationComponent from "./DestinationComponent.jsx";
 import {Home, Line, Banner, Title, Desc} from '../Styles/Banner.js'
 import styled from "styled-components";
+import InformationComponent from "./InformationComponent.jsx";
+import informationData from "./Information.json";
+import testimonialsData from "./Information.json";
+import TestimonialsComponent from "./TestimonialsComponent.jsx";
+
+import Data from "./Information.json";
 
 export default function HomePage() {
     const [destinations, setDestinations] = useState([])
+    const [information, setInformation] = useState(informationData.accordion)
+    const [testimonials, setTestimonials] = useState(testimonialsData.testimonials)
 
     useEffect(() => {
         const fetchData = async () => {
@@ -76,17 +84,36 @@ export default function HomePage() {
                         and each of them deserves attention. During its existence,
                         the country has gone through several historical transformations.
                         What to see in Moldova is described below. </p>
-                    <h2 className={"title"}>
-                        FEATURED TRAVEL DESTINATIONS
-                    </h2>
+                    {/*<h2 className={"title"}>*/}
+                    {/*    FEATURED TRAVEL DESTINATIONS*/}
+                    {/*</h2>*/}
                 </div>
                 <div className={"list"}>
                     {destinations.map(destination => (
                         <DestinationComponent key={destination.id} destination={destination}/>
-                    )).slice(0,3)}
+                    )).slice(0, 3)}
+                </div>
+                <div>
                 </div>
             </TravelDestinations>
+            <Testimonial>
+                <h1 className={"title"}>What Our Users Say About Us</h1>
+                <div className={"testimonials"}>
+                    {testimonials.map((testimonial, index) => (
+                        <TestimonialsComponent key={index} testimonial={testimonial}/>
+                    ))}
+                </div>
+            </Testimonial>
 
+            <Information>
+                <ul className="list">
+                    <p className="desc">NEED TO KNOW</p>
+                    <h1 className="title">Useful information about Moldova</h1>
+                    {information.map((info, index) => (
+                        <InformationComponent key={index} info={info}/>
+                    ))}
+                </ul>
+            </Information>
         </Home>
     )
 }
@@ -125,21 +152,19 @@ const PopularDestinations = styled.div`
     }
   }
 `
-const TravelDestinations=styled.div`
+const TravelDestinations = styled.div`
   .guide {
     box-shadow: inset 0 10px 10px -10px rgba(33, 35, 38, 0.05),
     inset 0 -10px 10px -10px rgba(33, 35, 38, 0.05);
     background-color: #F0F4F8;
     margin-bottom: 96px;
-    display: flex;
-    justify-content: center;
-
     .title {
       margin: 0;
       padding: 64px 0;
       color: #003E6B;
       font-weight: 600;
       font-size: 30px;
+      text-align: center;
     }
   }
 
@@ -176,4 +201,61 @@ const TravelDestinations=styled.div`
     transition: 0.3s ease;
     will-change: box-shadow, transform;
   }
+  
 `
+const Testimonial = styled.div`
+  box-shadow: inset 0 10px 10px -10px rgba(33, 35, 38, 0.05),
+  inset 0 -10px 10px -10px rgba(33, 35, 38, 0.05);
+  background-color: #F0F4F8;
+  margin-bottom: 96px;
+ 
+  padding: 0 96px 96px 96px;
+
+  .title {
+    margin: 0;
+    padding: 64px 0;
+    color: #003E6B;
+    font-weight: 600;
+    font-size: 30px;
+    text-align: center;
+  }
+
+  .testimonials {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 64px;
+
+  }
+
+`
+const Information = styled.div`
+  padding: 0px 48px 96px 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .list {
+    list-style-type: none;
+
+    .desc {
+      margin: 0;
+      color: #079A82;
+      letter-spacing: 1.5px;
+      font-size: 14px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 24px;
+      padding-bottom: 48px;
+      margin: 0;
+    }
+
+    .grid {
+      max-width: 60vw;
+    }
+  }
+`
+

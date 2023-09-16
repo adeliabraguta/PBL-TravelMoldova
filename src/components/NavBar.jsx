@@ -1,6 +1,6 @@
 import {Link, NavLink} from "react-router-dom";
 import styled from "styled-components";
-import {IoPersonAddOutline} from "react-icons/io5";
+import {IoLogInOutline, IoPersonAddOutline} from "react-icons/io5";
 
 export default function NavBar() {
     const navLinkStyle = ({isActive}) => {
@@ -24,8 +24,8 @@ export default function NavBar() {
                         {/*<NavLink className={`${style.link} ${style.title}`}>STORIES</NavLink>*/}
                     </div>
                     <div className={"sign-up"}>
-                        <IoPersonAddOutline className={"icon"}/>
-                        <NavLink to={"/signUp"} className={"link-signup"}>Sign Up</NavLink>
+                        <IoLogInOutline className={"icon"}/>
+                        <NavLink to={"/signIn"} className={"link-signup"}>Sign In</NavLink>
                     </div>
                 </div>
             </div>

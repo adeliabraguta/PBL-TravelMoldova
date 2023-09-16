@@ -1,0 +1,64 @@
+{
+  "accordion": [
+    {
+      "question": "Where is Moldova?",
+      "answer": "Moldova is a country in Eastern Europe, bordered by Romania to the west and Ukraine to the rest of the directions. ",
+      "open": false
+    },
+    {
+      "question": "What is the capital of Moldova?",
+      "answer": "The capital of Moldova is Chișinău.",
+      "open": false
+    },
+    {
+      "question": "What are the languages of Moldova?",
+      "answer": "The major languages of Moldova are Moldovan (55%), Romanian (24%), Russian (15%), Gagauz (3%) and Ukrainian (3%).",
+      "open": false
+    },
+    {
+      "question": "What are the religions of Moldova?",
+      "answer": "The major languages of Moldova are Moldovan (55%), Romanian (24%), Russian (15%), Gagauz (3%) and Ukrainian (3%).",
+      "open": false
+    },
+    {
+      "question": "Is Moldova safe?",
+      "answer": "Small crime is spreading in Moldova. There are pickpockets who target tourists. Sometimes robbers can be violent so it is better not to be alone late outside in the dark. Underground economy and women traffic are serious problems in Moldova but very rarely could affect tourists. ",
+      "open": false
+    },
+    {
+      "question": "Is Transnistria a country?",
+      "answer": "No, Transnistria is not an official country. Transnistria is a breakaway state that is still a part of Moldova according to the International community. Nevertheless, there is a proper border to get in and the region functions as a proper state de facto actually. Transnistria has its own government, laws and currency. You should learn about their laws and get their currency to be able to spend some time inside. ",
+      "open": false
+    },
+    {
+      "question": "Is Transnistria safe for tourists?",
+      "answer": "Yes, Transnsitria is normally reasonably safe for tourists. It used to be 100% safe for visitors but unfortunately, due to the war in Ukraine and since the territory is clearly Russia supporter, the safety conditions of the country are not as stable as they used to be. ",
+      "open": false
+    },
+    {
+      "question": "When is the best period to visit Moldova? ",
+      "answer": "The best period to visit Moldova is Spring and Autumn. Nevertheless, all year long is a good period to visit Moldova. Winters are mild and summers are long, warm and dry. ",
+      "open": false
+    }
+  ],
+  "testimonials": [
+    {
+      "img": "testimonial1.webp",
+      "name": "Dan Heng",
+      "review": "I had no idea there are so many wonderful places in this little country Moldova! I have already chosen what I want to visit in my next little trip!",
+      "stars": "5"
+    },
+    {
+      "img": "testimonial2.webp",
+      "name": "Eva Godina",
+      "review": "I am from Romania and trips through Moldova have became my favourite activity during summer. I recommend you to visit Old Orhei and Capriana Monastery. It is amazing! ",
+      "stars": "5"
+    },
+    {
+      "img": "testimonial3.webp",
+      "name": "Mark Sevoski",
+      "review": "I suggest to visit Mimi Castle. This winery has a fascinating architecture that leaves you speechless. Molodva has a lot of interesting places and now I want to visit all of them!s ",
+      "stars": "4"
+    }
+  ]
+}

@@ -4,14 +4,14 @@ import {Banner, Desc, Home, Line, Title} from "../Styles/Banner.js";
 import {useEffect} from "react";
 import {ImageContainer} from "./SignUp.jsx";
 
-export default function LogIn() {
+export default function SignIn() {
 
     return (
         <>
             <ImageContainer>
                 <Banner className={"banner"}>
                     <Title>
-                        Log Into Your Account
+                        Sign Into Your Account
                     </Title>
                     <Desc>
                         Travel Moldova
@@ -27,7 +27,7 @@ export default function LogIn() {
                             <input className={"input"} type={"password"} placeholder={"Choose a password"}/>
                         </div>
 
-                        <button className={"btn"}>Log In</button>
+                        <button className={"btn"}>Sign In</button>
                         <div className={"log-in"}>
                             <span className={'login-text'}>Don't have an account yet?</span><Link className={"link-login"} to={"/signUp"}>Sign Up</Link>
                         </div>
