@@ -6,7 +6,7 @@ export default function DestinationComponent({destination}) {
     return (
         <div>
             <Destination>
-                <Link to={`/destination}`} >
+                <Link to={`/destinations/${destination.id}`} >
                     <div className={"img-container"}>
                         <img
                             className={"img"}

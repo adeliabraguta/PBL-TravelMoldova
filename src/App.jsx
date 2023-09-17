@@ -28,7 +28,7 @@ function App() {
             <Routes>
                 <Route path={'/'} element={<HomePage/>}/>
                 <Route path={'/destinations'} element={<DestinationsComponent/>}/>
-                <Route path={'/destinations/destination'} element={<DestinationPage/>}/>
+                <Route path={'/destinations/:id'} element={<DestinationPage/>}/>
                 <Route path={"/signUp"} element={<SignUp/>}/>
                 <Route path={"/signIn"} element={<SignIn/>}/>
                 <Route path={"/userAccount"} element={<UserAccount/>}/>

@@ -2,22 +2,43 @@ import {Banner, Desc, Home, Line, Title} from "../Styles/Banner.js";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {IoLocationOutline, IoBookmarkOutline, IoCheckmarkOutline, IoPersonCircleOutline} from "react-icons/io5";
 import styled from "styled-components";
-import {useState} from "react";
+import React, {useState} from "react";
+
+import Loading from "./Loading.jsx";
+import {useGetDestinationByIdQuery} from "./Store/ApiData.js";
 
 export default function DestinationPage() {
+    const {id} = useParams()
+    let navigate = useNavigate();
+    const routeChange = () => {
+        navigate("/signIn");
+    }
+
+    const {
+        data: destination = [],
+        isLoading,
+        isFetching,
+        isError,
+        error
+    } = useGetDestinationByIdQuery(id)
     const [review, setReview] = useState("")
     const [reviews, setReviews] = useState([])
-
+    if (isLoading || isFetching) {
+        return (
+            <Loading/>
+        )
+    }
+    if (isError) {
+        console.log({error});
+        return <div>{error.status}</div>;
+    }
     const onChangeHandler = (e) => {
         setReview(e.target.value)
     }
     const onClickHandler = () => {
-        setReviews(comments => [...comments, review] )
+        setReviews(comments => [...comments, review])
     }
-    let navigate = useNavigate();
-    const routeChange = () =>{
-        navigate("/signIn");
-    }
+
     return (
         <Home>
             <Line>
@@ -25,35 +46,29 @@ export default function DestinationPage() {
                     <div className={"destination"}>
                         <Banner>
                             <Desc>DISCOVER NOW</Desc>
-                            <Title>Princely Forest Na ture Reserve</Title>
+                            <Title>{destination.title}</Title>
                             <div className={"interactions"}>
-                                <div className={"interested interact"}>
+                                <div className={"interested interact"} onClick={routeChange}>
                                     <IoBookmarkOutline className={"icon"}/>
                                     <span>Not interested</span>
 
                                 </div>
-                                <div className={"visited interact"}>
+                                <div className={"visited interact"} onClick={routeChange}>
                                     <IoCheckmarkOutline className={"icon"}/>
                                     <span>Not visited</span>
                                 </div>
                             </div>
                         </Banner>
-                        <p className={"information"}>Founded in 1993, this is the largest natural reserve in Moldova and
-                            is located in Glodeni. Here you’ll find the country’s oldest stand of old-growth oak tree
-                            where the oldest oak is estimated to be about 450 years old. Nature lovers will enjoy the
-                            many bird species with the most notable being the herons that nest near the river. Discover
-                            the area known as “One Hundred Hills,” a landscape of rolling knolls – that no one
-                            understands how they were formed. Padurea Domneasca is a great way to spend a day outdoors
-                            with Mother Nature."</p>
+                        <p className={"information"}>{destination.generalInformation}</p>
 
                     </div>
                     <div className={"carousel_section"}>
                         <div className={"carousel"}>
-                            <img className={"img"} src="/assets/padureadomneasca3.jpg" alt="image"/>
-                            <img className={"img"} src="/assets/padureadomneasca.jpg" alt="image"/>
+                            <img className={"img"} src={`/assets/${destination.img}`} alt="image"/>
+                            <img className={"img"} src={`/assets/${destination.img2}`} alt="image"/>
 
-                            <img className={"img"} src="/assets/padureadomneasca2.jpg" alt="image"/>
-                            <img className={"img"} src="/assets/padureadomneasca3.jpg" alt="image"/>
+                            <img className={"img"} src={`/assets/${destination.img3}`} alt="image"/>
+                            <img className={"img"} src={`/assets/${destination.img}`} alt="image"/>
 
 
                         </div>
@@ -63,15 +78,15 @@ export default function DestinationPage() {
                             className={"icon"}
                         />
                         <p className={"address"}>
-                            Glodeni and Falesti districts
+                            {destination.address}
                         </p>
                     </div>
 
                     <div className={"reviews"}>
                         <h2 className={"title"}>Reviews</h2>
-                        <div className={"place-review"} onClick={routeChange} >
+                        <div className={"place-review"} onClick={routeChange}>
                             <IoPersonCircleOutline className={"img"}/>
-                            <textarea className={'text-area'}   placeholder={"Add a review"}/>
+                            <textarea className={'text-area'} placeholder={"Add a review"}/>
                             {/*<button className={'btn'} onClick={onClickHandler}>Place a review</button>*/}
                         </div>
                         <div className={"display-review"}>
@@ -94,6 +109,7 @@ const Destination = styled.div`
       justify-content: center;
       align-items: center;
       gap: 8px;
+      cursor: pointer;
 
       .icon {
         color: var(--color-blue-4);
@@ -175,7 +191,7 @@ const Destination = styled.div`
   }
 
   .location {
-    padding: 32px 16px 96px 16px;
+    padding: 32px 16px 48px 16px;
     display: flex;
     align-items: center;
     gap: 16px;
@@ -195,28 +211,31 @@ const Destination = styled.div`
       font-style: italic;
     }
   }
-  
+
   .reviews {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding-bottom: 96px;
-    .title{
+
+    .title {
       color: var(--color-blue-0);
       font-size: 24px;
       letter-spacing: 1.1px;
     }
-    .place-review{
+
+    .place-review {
       display: flex;
       gap: 24px;
       cursor: pointer;
-      
-      .img{
+
+      .img {
         height: 70px;
         width: 70px;
         color: var(--color-grey-8);
       }
-      .text-area{
+
+      .text-area {
         border: none;
         overflow: auto;
         outline: none;
@@ -231,13 +250,11 @@ const Destination = styled.div`
         //&:focus{
         //  border-bottom: 2px solid var(--color-blue-5);
         //}
-        &:disabled{
+        &:disabled {
           background-color: white;
         }
       }
-      .btn{
-        
-      }
+
     }
   }
 
