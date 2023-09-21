@@ -3,24 +3,34 @@ import {Link, useNavigate} from "react-router-dom";
 import {Banner, Desc, Home, Line, Title} from "../../Styles/Banner.js";
 import {useEffect, useState} from "react";
 import {ImageContainer} from "./SignUp.jsx";
-import async from "async";
+// import async from "async";
 import {useLoginUserMutation} from "./ApiAuth.js";
 import {setCredentials} from "./AuthSlice.js";
 import {useDispatch} from "react-redux";
-const dispatch = useDispatch();
+
+
 export default function SignIn() {
-    const [loginUser, {isLoading}] = useLoginUserMutation();
+    const dispatch = useDispatch();
 
-    async function HandleSubmit(e) {
+    const [loginUser, {isLoading, isSuccess, erorr, data}] = useLoginUserMutation();
+
+    function HandleSubmit(e) {
         e.preventDefault()
-        let item = {username, password}
 
-        const result = await loginUser(item)
-        if (result) {
-            dispatch(setCredentials(result.data));
-        }
-        console.log(result)
+        loginUser({username, password})
+
+        // if (result) {
+        //     dispatch(setCredentials(result.data));
+        // }
+        // console.log(result)
     }
+
+    useEffect(() => {
+if(isSuccess){
+    dispatch(setCredentials(data));
+// navigate
+}
+    }, isLoading)
 
     // const [username, setUsername] = useState('')
     // const [password, setPassword] = useState('')

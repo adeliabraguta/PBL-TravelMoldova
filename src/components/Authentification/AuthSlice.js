@@ -12,7 +12,10 @@ const authSlice = createSlice({
             state.user = {name: null}
             state.access_token= null
         },
+        // check https://redux-toolkit.js.org/api/createReducer#builderaddmatcher
+       //  addMatcher(apiAuth.endpoints.loginUser.)
     }
+
 })
 export const { setCredentials, unsetCredentials} = authSlice.actions
 export default authSlice.reducer
