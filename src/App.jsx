@@ -1,19 +1,21 @@
 import {useState} from 'react'
 import './App.css'
-import NavBar from "./components/NavBar.jsx";
+import NavBar from "./components/UI/NavBar.jsx";
 import HomePage from "./components/HomePage.jsx";
-import FooterComponent from "./components/FooterComponent.jsx";
+import FooterComponent from "./components/UI/FooterComponent.jsx";
 import {Routes, Route, useNavigate} from "react-router-dom";
-import DestinationsComponent from "./components/DestinationsComponent.jsx";
-import NoMatch from "./components/NoMatch.jsx";
-import DestinationPage from "./components/DestinationPage.jsx";
-import SignUp from "./components/SignUp.jsx";
-import SignIn from "./components/SignIn.jsx";
-import UserAccount from "./components/UserAccount.jsx";
+import DestinationsPage from "./components/DestinationsPage.jsx";
+import NoMatch from "./components/UI/NoMatch.jsx";
+import DestinationPageNoAccount from "./components/DestinationPageNoAccount.jsx";
+import DestinationPageAccount from "./components/DestinationPageAccount.jsx";
+
+import SignUp from "./components/Authentification/SignUp.jsx";
+import SignIn from "./components/Authentification/SignIn.jsx";
+import UserAccount from "./components/Authentification/UserAccount.jsx";
 
 function App() {
     const navigate = useNavigate();
-
+const account = true ;
     const [showNav, setShowNav] = useState(true);
 
     const navigateToSignUp = () => {
@@ -27,8 +29,11 @@ function App() {
 
             <Routes>
                 <Route path={'/'} element={<HomePage/>}/>
-                <Route path={'/destinations'} element={<DestinationsComponent/>}/>
-                <Route path={'/destinations/:id'} element={<DestinationPage/>}/>
+                <Route path={'/destinations'} element={<DestinationsPage/>}/>
+                {account ? <Route path={'/destinations/:id/:slug'} element={<DestinationPageAccount/>}/> :
+                <Route path={'/destinations/:id/:slug'} element={<DestinationPageNoAccount/>}/>
+                }
+
                 <Route path={"/signUp"} element={<SignUp/>}/>
                 <Route path={"/signIn"} element={<SignIn/>}/>
                 <Route path={"/userAccount"} element={<UserAccount/>}/>

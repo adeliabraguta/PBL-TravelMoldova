@@ -4,10 +4,10 @@ import {IoLocationOutline, IoBookmarkOutline, IoCheckmarkOutline, IoPersonCircle
 import styled from "styled-components";
 import React, {useState} from "react";
 
-import Loading from "./Loading.jsx";
+import Loading from "./UI/Loading.jsx";
 import {useGetDestinationByIdQuery} from "./Store/ApiData.js";
 
-export default function DestinationPage() {
+export default function DestinationPageNoAccount() {
     const {id} = useParams()
     let navigate = useNavigate();
     const routeChange = () => {
@@ -37,6 +37,7 @@ export default function DestinationPage() {
     }
     const onClickHandler = () => {
         setReviews(comments => [...comments, review])
+        setReview('')
     }
 
     return (
@@ -48,14 +49,14 @@ export default function DestinationPage() {
                             <Desc>DISCOVER NOW</Desc>
                             <Title>{destination.title}</Title>
                             <div className={"interactions"}>
-                                <div className={"interested interact"} onClick={routeChange}>
+                                <div className={"interested interact"}>
                                     <IoBookmarkOutline className={"icon"}/>
-                                    <span>Not interested</span>
+                                    <span>Save</span>
 
                                 </div>
-                                <div className={"visited interact"} onClick={routeChange}>
+                                <div className={"visited interact"}>
                                     <IoCheckmarkOutline className={"icon"}/>
-                                    <span>Not visited</span>
+                                    <span>Not Visited</span>
                                 </div>
                             </div>
                         </Banner>
@@ -84,13 +85,13 @@ export default function DestinationPage() {
 
                     <div className={"reviews"}>
                         <h2 className={"title"}>Reviews</h2>
-                        <div className={"place-review"} onClick={routeChange}>
+                        <div className={"place-review"} >
                             <IoPersonCircleOutline className={"img"}/>
-                            <textarea className={'text-area'} placeholder={"Add a review"}/>
-                            {/*<button className={'btn'} onClick={onClickHandler}>Place a review</button>*/}
+                            <textarea rows='1' value={review} onChange={onChangeHandler} className={'text-area'} placeholder={"Add a review"}/>
+                            <button className={'btn'} onClick={onClickHandler}>Place Review</button>
                         </div>
                         <div className={"display-review"}>
-                            {/*{reviews.map((review, index) => <div className={"review"} key={index}>{review}</div>)}*/}
+                            {reviews.map((review, index) => <div className={"review"} key={index}>{review}</div>)}
                         </div>
 
                     </div>
@@ -227,7 +228,7 @@ const Destination = styled.div`
     .place-review {
       display: flex;
       gap: 24px;
-      cursor: pointer;
+      max-width: 60vw;
 
       .img {
         height: 70px;
@@ -241,20 +242,35 @@ const Destination = styled.div`
         outline: none;
         padding: 12px 20px;
         box-sizing: border-box;
-        border-bottom: 2px solid var(--color-blue-0);
+        border-bottom: 2px solid var(--color-grey-7);
         font-size: 16px;
         resize: none;
         width: 60vw;
-        cursor: pointer;
-        //
-        //&:focus{
-        //  border-bottom: 2px solid var(--color-blue-5);
-        //}
+
+        &:focus{
+          border-bottom: 2px solid var(--color-blue-5);
+        }
         &:disabled {
           background-color: white;
         }
       }
-
+      .btn{
+        background-color: white;
+        color: var(--color-grey-7);
+        border: 2px solid var(--color-grey-7);
+        font-weight: 600;
+        transition: 0.3s ease;
+        cursor: pointer;
+        letter-spacing: 1.1px;
+        font-size: 16px;
+        &:hover{
+          color: var(--color-blue-5);
+          border: 2px solid var(--color-blue-5);
+        }
+      }
+    }
+    .display-review{
+      padding-top: 48px;
     }
   }
 

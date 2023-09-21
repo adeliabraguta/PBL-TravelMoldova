@@ -1,33 +1,35 @@
-import CarouselComponent from "./CarouselComponent.jsx";
-import {slides} from "./carouselData.json"
+import Carousel from "./UI/Carousel.jsx";
+import {slides} from "./Data/carouselData.json"
 import React, {useEffect, useState} from "react";
 import DestinationComponent from "./DestinationComponent.jsx";
 import {Home, Line, Banner, Title, Desc} from '../Styles/Banner.js'
 import styled from "styled-components";
-import InformationComponent from "./InformationComponent.jsx";
-import informationData from "./Information.json";
-import testimonialsData from "./Information.json";
-import TestimonialsComponent from "./TestimonialsComponent.jsx";
+import InformationComponent from "./UI/InformationComponent.jsx";
+import informationData from "./Data/Information.json";
+import testimonialsData from "./Data/Information.json";
+import TestimonialsComponent from "./UI/TestimonialsComponent.jsx";
 
-import Data from "./Information.json";
+import Data from "./Data/Information.json";
+import {useGetDestinationsQuery} from "./Store/ApiData.js";
+import Loading from "./UI/Loading.jsx";
 
 export default function HomePage() {
-    const [destinations, setDestinations] = useState([])
     const [information, setInformation] = useState(informationData.accordion)
     const [testimonials, setTestimonials] = useState(testimonialsData.testimonials)
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const res = await fetch('http://localhost:3000/destinations')
-            const data = await res.json();
-            setDestinations(data);
-        }
-        fetchData()
-            .catch(console.error)
+    const {
+        data: destinations = [],
+        isLoading,
+        isFetching,
+        isError,
+        error
+    } = useGetDestinationsQuery();
 
-    }, [])
-
-
+    if (isLoading || isFetching) {
+        return (
+            <Loading/>
+        )
+    }
     return (
         <Home>
             <Line>
@@ -41,7 +43,7 @@ export default function HomePage() {
                 </Banner>
             </Line>
 
-            <CarouselComponent data={slides}/>
+            <Carousel data={slides}/>
             <PopularDestinations>
                 <div className={"popular-destinations"}>
                     <p className={"desc"}>
@@ -96,14 +98,7 @@ export default function HomePage() {
                 <div>
                 </div>
             </TravelDestinations>
-            <Testimonial>
-                <h1 className={"title"}>What Our Users Say About Us</h1>
-                <div className={"testimonials"}>
-                    {testimonials.map((testimonial, index) => (
-                        <TestimonialsComponent key={index} testimonial={testimonial}/>
-                    ))}
-                </div>
-            </Testimonial>
+
 
             <Information>
                 <ul className="list">
@@ -114,6 +109,14 @@ export default function HomePage() {
                     ))}
                 </ul>
             </Information>
+            <Testimonial>
+                <div className={"testimonials"}>
+                    <h1 className={"title"}>What Our Users Say About Us</h1>
+                    {testimonials.map((testimonial, index) => (
+                        <TestimonialsComponent className={"testimonial-item"} key={index} testimonial={testimonial}/>
+                    ))}
+                </div>
+            </Testimonial>
         </Home>
     )
 }
@@ -158,6 +161,7 @@ const TravelDestinations = styled.div`
     inset 0 -10px 10px -10px rgba(33, 35, 38, 0.05);
     background-color: #F0F4F8;
     margin-bottom: 96px;
+
     .title {
       margin: 0;
       padding: 64px 0;
@@ -201,31 +205,37 @@ const TravelDestinations = styled.div`
     transition: 0.3s ease;
     will-change: box-shadow, transform;
   }
-  
+
 `
 const Testimonial = styled.div`
   box-shadow: inset 0 10px 10px -10px rgba(33, 35, 38, 0.05),
   inset 0 -10px 10px -10px rgba(33, 35, 38, 0.05);
   background-color: #F0F4F8;
   margin-bottom: 96px;
- 
-  padding: 0 96px 96px 96px;
-
-  .title {
-    margin: 0;
-    padding: 64px 0;
-    color: #003E6B;
-    font-weight: 600;
-    font-size: 30px;
-    text-align: center;
-  }
+  padding: 48px 96px 48px 96px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
 
   .testimonials {
+    width: 60vw;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 64px;
+    grid-template-columns: 1fr 1fr;
+
+    gap: 48px;
+
+    .title {
+      align-self: center;
+      margin: 0;
+      padding: 48px 0;
+      color: #003E6B;
+      font-weight: 600;
+      font-size: 44px;
+      text-align: center;
+    }
 
   }
+
 
 `
 const Information = styled.div`

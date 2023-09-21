@@ -3,7 +3,7 @@ import {IoIosArrowForward} from "react-icons/io";
 import {IoIosArrowBack} from "react-icons/io"
 import styled from "styled-components";
 
-export default function CarouselComponent({data}) {
+export default function Carousel({data}) {
 
     const [slide, setSlide] = useState(0);
     const nextSlide = () => {
@@ -22,7 +22,7 @@ export default function CarouselComponent({data}) {
 
     return (
         <>
-            <Carousel>{data.map((item, index) => {
+            <CarouselComponent>{data.map((item, index) => {
                 return (
                     <div key={index} className={slide === index ? `slide active` : 'slide'}>
                         {index === slide && (<img src={`../assets/${item.src}.jpg`}
@@ -50,13 +50,13 @@ export default function CarouselComponent({data}) {
                     })}
                 </div>
 
-            </Carousel>
+            </CarouselComponent>
 
         </>
 
     )
 }
-const Carousel = styled.div`
+const CarouselComponent = styled.div`
     //display: flex;
     position: relative;
     justify-content: center;

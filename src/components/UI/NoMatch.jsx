@@ -1,4 +1,4 @@
-import {Home, Title} from "../Styles/Banner.js";
+import {Home, Title} from "../../Styles/Banner.js";
 import {useNavigate, useNavigation} from "react-router-dom";
 import styled from "styled-components";
 

@@ -1,9 +1,30 @@
 import styled from "styled-components";
-import {Link} from "react-router-dom";
-import {Banner, Desc, Home, Line, Title} from "../Styles/Banner.js";
-import {useEffect} from "react";
+import {Link, useNavigate} from "react-router-dom";
+import {Banner, Desc, Home, Line, Title} from "../../Styles/Banner.js";
+import {useEffect, useState} from "react";
 
 export default function SignUp() {
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const navigate = useNavigate()
+    async function HandleSubmit(e) {
+        e.preventDefault()
+        let item = {username, password}
+        console.log(item)
+        let result = await fetch("http://127.0.0.1:5000/auth/register", {
+            method: 'POST',
+            body: JSON.stringify(item),
+            headers: {
+                "Content-Type": 'application/json',
+                "Accept": 'application/json'
+            },
+        })
+        result = await result.json()
+        console.log(result)
+        localStorage.setItem("user-info", JSON.stringify(result))
+        localStorage.setItem("access_token", JSON.stringify(result))
+        navigate("/signIn")
+    }
 
     return (<>
             <ImageContainer>
@@ -14,16 +35,11 @@ export default function SignUp() {
                     <Desc>
                         Join Travel Moldova
                     </Desc>
-                    <form className={"form"}>
-                        <div className={'user-country'}>
+                    <form className={"form"} onSubmit={HandleSubmit}>
                         <div className={"form_section"}>
                             <label className={"label"}>Username</label>
-                            <input className={"input"} type={"text"} placeholder={"Choose a username"}/>
-                        </div>
-                        <div className={"form_section"}>
-                            <label className={"label"}>Country</label>
-                            <input className={"input"} type={"password"} placeholder={"Enter your country"}/>
-                        </div>
+                            <input onChange={e => setUsername(e.target.value)} value={username} className={"input"}
+                                   type={"text"} placeholder={"Choose a username"}/>
                         </div>
                         <div className={"form_section"}>
                             <label className={"label"}>Email Address</label>
@@ -32,7 +48,13 @@ export default function SignUp() {
 
                         <div className={"form_section"}>
                             <label className={"label"}>Password</label>
-                            <input className={"input"} type={"password"} placeholder={"Choose a password"}/>
+                            <input onChange={e => setPassword(e.target.value)} value={password} className={"input"}
+                                   type={"password"} placeholder={"Choose a password"}/>
+                        </div>
+                        <div className={"form_section"}>
+                            <label className={"label"}>Repeat Password</label>
+                            <input  className={"input"}
+                                   type={"password"} placeholder={"Repeat password"}/>
                         </div>
                         <div className={"terms"}>
                             <input type={"checkbox"}/>
@@ -42,7 +64,8 @@ export default function SignUp() {
                         <button className={"btn"}>Create Account</button>
                         <div className={"log-in"}>
                             <span className={'login-text'}>Already have an account?</span><Link className={"link-login"}
-                                                                                                to={"/signIn"}>Sign In</Link>
+                                                                                                to={"/signIn"}>Sign
+                            In</Link>
                         </div>
                     </form>
                 </Banner>
@@ -89,12 +112,8 @@ export const ImageContainer = styled.div`
     padding-top: 24px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 16px;
     width: 100%;
-  }
-  .user-country{
-    display: flex;
-    gap: 24px;
   }
 
   .form_section {

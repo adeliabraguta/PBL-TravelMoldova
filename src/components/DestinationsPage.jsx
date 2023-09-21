@@ -4,10 +4,10 @@ import DestinationComponent from "./DestinationComponent.jsx";
 import styled from "styled-components";
 import {useGetDestinationsQuery} from "../components/Store/ApiData.js";
 import {IoChevronBack, IoChevronForward} from "react-icons/io5";
-import Loading from "./Loading.jsx";
+import Loading from "./UI/Loading.jsx";
 import {Link as ScrollLink} from "react-scroll";
 
-export default function DestinationsComponent() {
+export default function DestinationsPage() {
 
     const [page, setPage] = useState(1)
     const {
@@ -17,6 +17,7 @@ export default function DestinationsComponent() {
         isError,
         error
     } = useGetDestinationsQuery(page);
+
     useEffect(() => {
         window.scrollTo(0, 0);
     }, [page]);
@@ -55,18 +56,20 @@ export default function DestinationsComponent() {
                                 spy={true}
                                 smooth={true}
                                 duration={200}>
-                        <button  className={"btn"}
-                                 disabled={page <= 1}
-                                 onClick={() => setPage(prev => prev - 1)}><IoChevronBack
-                            className={"icon"}/></button></ScrollLink>
+                        <button className={"btn"}
+                                disabled={page <= 1}
+                                onClick={() => setPage(prev => prev - 1)}><IoChevronBack
+                            className={"icon"}/></button>
+                    </ScrollLink>
                     <ScrollLink to="top"
                                 spy={true}
                                 smooth={true}
                                 duration={200}>
-                        <button  className={"btn"}
-                                 disabled={page >= 3}
-                                 onClick={() => setPage(prev => prev + 1)}><IoChevronForward
-                            className={"icon"}/></button></ScrollLink>
+                        <button className={"btn"}
+                                disabled={page >= 2}
+                                onClick={() => setPage(prev => prev + 1)}><IoChevronForward
+                            className={"icon"}/></button>
+                    </ScrollLink>
                 </Pagination>
             </Destinations>
         </Home>
@@ -79,7 +82,7 @@ const Destinations = styled.div`
 const List = styled.div`
   padding: 24px 128px 24px 128px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   gap: 64px;
   transition-property: box-shadow, transform;
   transition: 0.3s ease;
@@ -113,7 +116,6 @@ const Pagination = styled.div`
       &:hover {
         color: var(--color-grey-7);
         border: 2px solid var(--color-grey-7);
-
       }
     }
 

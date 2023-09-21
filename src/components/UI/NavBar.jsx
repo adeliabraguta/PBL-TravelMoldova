@@ -14,7 +14,7 @@ export default function NavBar() {
         <Nav >
             <div className={"nav_bar"}>
                 <Link to={'/'} className={"left_side"}>
-                    <img className={"img"} src="../../assets/moldova4.png"/>
+                    <img className={"img"} src="../../../assets/moldova4.png"/>
                     <h1 className={"title"}>TRAVEL MOLDOVA</h1>
                 </Link>
 

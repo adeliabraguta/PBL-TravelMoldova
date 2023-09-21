@@ -1,4 +1,4 @@
-import {Banner, Home, Line, Title} from "../Styles/Banner.js";
+import {Banner, Home, Line, Title} from "../../Styles/Banner.js";
 import styled from "styled-components";
 
 export default function UserAccount() {

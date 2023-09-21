@@ -5,16 +5,13 @@ export const api = createApi({
         {baseUrl: 'http://localhost:3000'}),
     endpoints: (builder) => ({
         getDestinations: builder.query({
-            query: (page = 1) => `destinations?_page=${page}&_limit=4`
+            query: (page = 1) => `destinations?_page=${page}&_limit=5`
         }),
         getDestinationById: builder.query({
             query: (id) => `destinations/${id}`,
         }),
     })
 })
-
-
-
 
 export const {useGetDestinationsQuery} = api;
 export const {useGetDestinationByIdQuery} = api;
