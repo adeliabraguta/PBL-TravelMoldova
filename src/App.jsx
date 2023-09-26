@@ -9,9 +9,9 @@ import NoMatch from "./components/UI/NoMatch.jsx";
 import DestinationPageNoAccount from "./components/DestinationPageNoAccount.jsx";
 import DestinationPageAccount from "./components/DestinationPageAccount.jsx";
 
-import SignUp from "./components/Authentification/SignUp.jsx";
-import SignIn from "./components/Authentification/SignIn.jsx";
-import UserAccount from "./components/Authentification/UserAccount.jsx";
+import SignUp from "./features/authentification/SignUp.jsx";
+import SignIn from "./features/authentification/SignIn.jsx";
+import UserAccount from "./features/authentification/UserAccount.jsx";
 
 function App() {
     const navigate = useNavigate();
