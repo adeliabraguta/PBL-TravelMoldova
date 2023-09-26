@@ -1,26 +1,64 @@
 import styled from "styled-components";
 import {Link, useNavigate} from "react-router-dom";
 import {Banner, Desc, Home, Line, Title} from "../../Styles/Banner.js";
-import {useEffect, useState} from "react";
+import {useEffect, useState, useRef} from "react";
 import {ImageContainer} from "./SignUp.jsx";
 import async from "async";
 import {useLoginUserMutation} from "./ApiAuth.js";
 import {setCredentials} from "./AuthSlice.js";
 import {useDispatch} from "react-redux";
-const dispatch = useDispatch();
+
 export default function SignIn() {
-    const [loginUser, {isLoading}] = useLoginUserMutation();
+    const userRef = useRef();
+    const errRef = useRef()
+    const [username, setUsername] = useState()
+    const [password, setPassword] = useState()
+    const [err, setErr] = useState()
+    const navigate = useNavigate()
 
-    async function HandleSubmit(e) {
+    const [login, {isLoading}] = useLoginUserMutation()
+    const dispatch = useDispatch()
+    useEffect(() => {
+        userRef.current.focus()
+    }, [])
+    useEffect((username, password) => {
+        setErr('')
+
+
+    }, [username, password])
+
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        let item = {username, password}
-
-        const result = await loginUser(item)
-        if (result) {
-            dispatch(setCredentials(result.data));
+        try {
+            const userData = await login({username, password}).unwrap()
+            console.log(userData)
+            dispatch(setCredentials({...userData, username}))
+            setUsername('')
+            setPassword('')
+            navigate("/userAccount")
+        } catch (err) {
+            console.error('Login failed:', err);
+            setErr('Login failed. Please check your credentials.');
+            errRef.current.focus()
         }
-        console.log(result)
     }
+   const handleUserInput = (e) => setUsername(e.target.value)
+    const handlePasswordInput = (e) => setPassword(e.target.value)
+
+
+    // const [loginUser, {isLoading}] = useLoginUserMutation();
+    //
+    // async function HandleSubmit(e) {
+    //     e.preventDefault()
+    //     let item = {username, password}
+    //
+    //     const result = await loginUser(item)
+    //     if (result) {
+    //         dispatch(setCredentials(result.data));
+    //     }
+    //     console.log(result)
+    // }
 
     // const [username, setUsername] = useState('')
     // const [password, setPassword] = useState('')
@@ -52,16 +90,16 @@ export default function SignIn() {
                     <Desc>
                         Travel Moldova
                     </Desc>
-                    <form className={"form"} onSubmit={HandleSubmit}>
+                    <form className={"form"} onSubmit={handleSubmit}>
                         <div className={"form_section"}>
                             <label className={"label"}>Username</label>
-                            <input onChange={e => setUsername(e.target.value)} value={username} className={"input"}
+                            <input onChange={handleUserInput} value={username} className={"input"}
                                    type={"text"} placeholder={"Choose a username"}/>
                         </div>
 
                         <div className={"form_section"}>
                             <label className={"label"}>Password</label>
-                            <input onChange={e => setPassword(e.target.value)} value={password} className={"input"}
+                            <input onChange={handlePasswordInput} value={password} className={"input"}
                                    type={"password"} placeholder={"Choose a password"}/>
                         </div>
 
