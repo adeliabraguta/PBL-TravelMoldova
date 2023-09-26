@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Banner, Desc, Home, Line, Title } from "../../Styles/Banner.js";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { ImageContainer } from "./SignUp.jsx";
-import { useLoginUserMutation } from "../../app/services/apiAuth.js";
+import { useLoginUserMutation } from "../../app/services/apiService.js";
 import { setCredentials } from "./authSlice.js";
 import { useDispatch } from "react-redux";
 

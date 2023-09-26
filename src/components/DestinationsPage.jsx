@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {Home, Line, Banner, Title, Desc} from '../Styles/Banner.js'
 import DestinationComponent from "./DestinationComponent.jsx";
 import styled from "styled-components";
-import {useGetDestinationsQuery} from "../components/Store/ApiData.js";
+import {useGetDestinationsQuery} from "../app/services/apiService.js";
 import {IoChevronBack, IoChevronForward} from "react-icons/io5";
 import Loading from "./UI/Loading.jsx";
 import {Link as ScrollLink} from "react-scroll";
