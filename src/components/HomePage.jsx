@@ -10,7 +10,7 @@ import testimonialsData from "./Data/Information.json";
 import TestimonialsComponent from "./UI/TestimonialsComponent.jsx";
 
 import Data from "./Data/Information.json";
-import {useGetDestinationsQuery} from "./Store/ApiData.js";
+import {useGetDestinationsQuery} from "../app/services/apiService.js";
 import Loading from "./UI/Loading.jsx";
 
 export default function HomePage() {

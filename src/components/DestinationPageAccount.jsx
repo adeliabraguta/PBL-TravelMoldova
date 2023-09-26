@@ -5,7 +5,7 @@ import styled from "styled-components";
 import React, {useState} from "react";
 
 import Loading from "./UI/Loading.jsx";
-import {useGetDestinationByIdQuery} from "./Store/ApiData.js";
+import {useGetDestinationByIdQuery} from "../app/services/apiService.js";
 
 export default function DestinationPageNoAccount() {
     const {id} = useParams()
