@@ -1,30 +1,34 @@
 import styled from "styled-components";
 import {Link, useNavigate} from "react-router-dom";
 import {Banner, Desc, Home, Line, Title} from "../../Styles/Banner.js";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
+import {useRegisterUserMutation} from "../../app/services/apiService.js";
+import {useDispatch} from "react-redux";
+import {setCredentials} from "./authSlice.js";
 
 export default function SignUp() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
-    async function HandleSubmit(e) {
+
+    const [register, { isLoading, isSuccess, error, isError, data }] = useRegisterUserMutation()
+    const dispatch = useDispatch()
+    const userData = data;
+    useEffect(() => {
+        if (isSuccess) {
+            dispatch(setCredentials({ ...userData, username }))
+            navigate("/userAccount")
+        }
+    }, [isSuccess])
+
+    const handleSubmit = useCallback((e) => {
         e.preventDefault()
-        let item = {username, password}
-        console.log(item)
-        let result = await fetch("http://127.0.0.1:5000/auth/register", {
-            method: 'POST',
-            body: JSON.stringify(item),
-            headers: {
-                "Content-Type": 'application/json',
-                "Accept": 'application/json'
-            },
-        })
-        result = await result.json()
-        console.log(result)
-        localStorage.setItem("user-info", JSON.stringify(result))
-        localStorage.setItem("access_token", JSON.stringify(result))
-        navigate("/signIn")
-    }
+        register({ username, password });
+    }, [username, password]);
+
+    const handleUserInput = (e) => setUsername(e.target.value)
+
+    const handlePasswordInput = (e) => setPassword(e.target.value)
 
     return (<>
             <ImageContainer>
@@ -35,10 +39,10 @@ export default function SignUp() {
                     <Desc>
                         Join Travel Moldova
                     </Desc>
-                    <form className={"form"} onSubmit={HandleSubmit}>
+                    <form className={"form"} onSubmit={handleSubmit}>
                         <div className={"form_section"}>
                             <label className={"label"}>Username</label>
-                            <input onChange={e => setUsername(e.target.value)} value={username} className={"input"}
+                            <input onChange={handleUserInput} value={username} className={"input"}
                                    type={"text"} placeholder={"Choose a username"}/>
                         </div>
                         <div className={"form_section"}>
@@ -48,7 +52,7 @@ export default function SignUp() {
 
                         <div className={"form_section"}>
                             <label className={"label"}>Password</label>
-                            <input onChange={e => setPassword(e.target.value)} value={password} className={"input"}
+                            <input onChange={handlePasswordInput} value={password} className={"input"}
                                    type={"password"} placeholder={"Choose a password"}/>
                         </div>
                         <div className={"form_section"}>

@@ -1,6 +1,8 @@
 import {Link, NavLink} from "react-router-dom";
 import styled from "styled-components";
 import {IoLogInOutline, IoPersonAddOutline} from "react-icons/io5";
+import {selectCurrentToken, selectCurrentUser} from "../../features/authentification/authSlice.js";
+import {useSelector} from "react-redux";
 
 export default function NavBar() {
     const navLinkStyle = ({isActive}) => {
@@ -9,6 +11,10 @@ export default function NavBar() {
             transition: '0.3s ease'
         }
     }
+    const token = useSelector(selectCurrentToken)
+    const user = useSelector(selectCurrentUser)
+    // const token = selectCurrentToken()
+    // console.log(token)
 
     return (
         <Nav >
@@ -23,10 +29,15 @@ export default function NavBar() {
                         <NavLink  to={'/destinations'} className={`link title`}>DESTINATIONS</NavLink>
                         {/*<NavLink className={`${style.link} ${style.title}`}>STORIES</NavLink>*/}
                     </div>
+                    {token ? <div className={"sign-up"}>
+                        <IoLogInOutline className={"icon"}/>
+                        <NavLink to={"/signIn"} className={"link-signup"}>Account</NavLink>
+                    </div> :
                     <div className={"sign-up"}>
                         <IoLogInOutline className={"icon"}/>
                         <NavLink to={"/signIn"} className={"link-signup"}>Sign In</NavLink>
                     </div>
+                    }
                 </div>
             </div>
         </Nav>

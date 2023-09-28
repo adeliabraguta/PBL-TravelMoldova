@@ -3,68 +3,34 @@ import { Link, useNavigate } from "react-router-dom";
 import { Banner, Desc, Home, Line, Title } from "../../Styles/Banner.js";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { ImageContainer } from "./SignUp.jsx";
-import { useLoginUserMutation } from "../../app/services/apiService.js";
+import {useLoginUserMutation} from "../../app/services/apiService.js";
 import { setCredentials } from "./authSlice.js";
 import { useDispatch } from "react-redux";
 
 export default function SignIn() {
-    const [username, setUsername] = useState()
-    const [password, setPassword] = useState()
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
     const navigate = useNavigate()
 
-    const [login, { isLoading, isSuccess, error, isError }] = useLoginUserMutation()
+    const [register, { isLoading, isSuccess, error, isError, data }] = useLoginUserMutation()
     const dispatch = useDispatch()
+    const userData = data;
 
     useEffect(() => {
         if (isSuccess) {
-            dispatch(setCredentials({ ...userData, username }))
-            navigate("/userAccount")
+            dispatch(setCredentials({ ...userData, username}))
+            navigate("/")
         }
     }, [isSuccess])
 
     const handleSubmit = useCallback((e) => {
         e.preventDefault()
-        login({ username, password });
+        register({ username, password });
     }, [username, password]);
 
     const handleUserInput = (e) => setUsername(e.target.value)
 
     const handlePasswordInput = (e) => setPassword(e.target.value)
-
-
-    // const [loginUser, {isLoading}] = useLoginUserMutation();
-    //
-    // async function HandleSubmit(e) {
-    //     e.preventDefault()
-    //     let item = {username, password}
-    //
-    //     const result = await loginUser(item)
-    //     if (result) {
-    //         dispatch(setCredentials(result.data));
-    //     }
-    //     console.log(result)
-    // }
-
-    // const [username, setUsername] = useState('')
-    // const [password, setPassword] = useState('')
-    // const navigate = useNavigate()
-    // async function HandleSubmit(e) {
-    //     e.preventDefault()
-    //     let item = {username, password}
-    //     console.log(item)
-    //     let result = await fetch("http://127.0.0.1:5000/auth/login", {
-    //         method: 'POST',
-    //         body: JSON.stringify(item),
-    //         headers: {
-    //             "Content-Type": 'application/json',
-    //             "Accept": 'application/json'
-    //         },
-    //     })
-    //     result = await result.json()
-    //     console.log(result)
-    //     localStorage.setItem("user-info", JSON.stringify(result))
-    //     navigate("/userAccount")
-    // }
     return (
         <>
             <ImageContainer>
@@ -78,13 +44,13 @@ export default function SignIn() {
                     <form className={"form"} onSubmit={handleSubmit}>
                         <div className={"form_section"}>
                             <label className={"label"}>Username</label>
-                            <input onChange={handleUserInput} value={username} className={"input"}
+                            <input value={username} onChange={handleUserInput}   className={"input"}
                                 type={"text"} placeholder={"Choose a username"} />
                         </div>
 
                         <div className={"form_section"}>
                             <label className={"label"}>Password</label>
-                            <input onChange={handlePasswordInput} value={password} className={"input"}
+                            <input  className={"input"} value={password} onChange={handlePasswordInput}
                                 type={"password"} placeholder={"Choose a password"} />
                         </div>
 

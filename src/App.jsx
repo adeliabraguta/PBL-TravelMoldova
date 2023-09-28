@@ -12,10 +12,12 @@ import DestinationPageAccount from "./components/DestinationPageAccount.jsx";
 import SignUp from "./features/authentification/SignUp.jsx";
 import SignIn from "./features/authentification/SignIn.jsx";
 import UserAccount from "./features/authentification/UserAccount.jsx";
+import Layout from "./components/UI/Layout.jsx";
+import RequireAuth from "./components/UI/RequireAuth.jsx";
 
 function App() {
     const navigate = useNavigate();
-const account = true ;
+    const account = true;
     const [showNav, setShowNav] = useState(true);
 
     const navigateToSignUp = () => {
@@ -28,22 +30,25 @@ const account = true ;
             {shouldShowNav && <NavBar/>}
 
             <Routes>
+                    //public
                 <Route path={'/'} element={<HomePage/>}/>
                 <Route path={'/destinations'} element={<DestinationsPage/>}/>
-                {account ? <Route path={'/destinations/:id/:slug'} element={<DestinationPageAccount/>}/> :
                 <Route path={'/destinations/:id/:slug'} element={<DestinationPageNoAccount/>}/>
-                }
-
                 <Route path={"/signUp"} element={<SignUp/>}/>
                 <Route path={"/signIn"} element={<SignIn/>}/>
-                <Route path={"/userAccount"} element={<UserAccount/>}/>
-
                 <Route path={'*'} element={<NoMatch/>}/>
-            </Routes>
 
-            {shouldShowNav  && <FooterComponent/>}
-        </div>
-    )
+                <Route element={<RequireAuth/>}>
+                    <Route path={'/destinations/:id/:slug'} element={<DestinationPageAccount/>}/>
+                    <Route path={"/userAccount"} element={<UserAccount/>}/>
+            </Route>
+        </Routes>
+
+    {
+        shouldShowNav && <FooterComponent/>
+    }
+</div>
+)
 }
 
 export default App
