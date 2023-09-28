@@ -12,16 +12,16 @@ export default function SignIn() {
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
 
-    const [register, { isLoading, isSuccess, error, isError, data }] = useLoginUserMutation()
+    const [register, { isLoading, isSuccess, error, isError, data }] = useLoginUserMutation();
+    
     const dispatch = useDispatch()
-    const userData = data;
 
     useEffect(() => {
         if (isSuccess) {
-            dispatch(setCredentials({ ...userData, username}))
+            dispatch(setCredentials({ ...data, username}))
             navigate("/")
         }
-    }, [isSuccess])
+    }, [isSuccess, data, username, navigate]);
 
     const handleSubmit = useCallback((e) => {
         e.preventDefault()
