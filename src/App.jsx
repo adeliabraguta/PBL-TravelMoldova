@@ -14,10 +14,12 @@ import SignIn from "./features/authentification/SignIn.jsx";
 import UserAccount from "./features/authentification/UserAccount.jsx";
 import Layout from "./components/UI/Layout.jsx";
 import RequireAuth from "./components/UI/RequireAuth.jsx";
+import {useSelector} from "react-redux";
+import {selectCurrentToken} from "./features/authentification/authSlice.js";
 
 function App() {
     const navigate = useNavigate();
-    const account = true;
+    const token = useSelector(selectCurrentToken)
     const [showNav, setShowNav] = useState(true);
 
     const navigateToSignUp = () => {
@@ -33,15 +35,19 @@ function App() {
                     //public
                 <Route path={'/'} element={<HomePage/>}/>
                 <Route path={'/destinations'} element={<DestinationsPage/>}/>
-                <Route path={'/destinations/:id/:slug'} element={<DestinationPageNoAccount/>}/>
-                <Route path={"/signUp"} element={<SignUp/>}/>
-                <Route path={"/signIn"} element={<SignIn/>}/>
-                <Route path={'*'} element={<NoMatch/>}/>
-
-                <Route element={<RequireAuth/>}>
+                {token ?
+                    <>
                     <Route path={'/destinations/:id/:slug'} element={<DestinationPageAccount/>}/>
                     <Route path={"/userAccount"} element={<UserAccount/>}/>
-            </Route>
+                    </> :
+                    <>
+                <Route path={'/destinations/:id/:slug'} element={<DestinationPageNoAccount/>}/>
+                    </>}
+                <Route path={"/signUp"} element={<SignUp/>}/>
+                <Route path={"/signIn"} element={<SignIn/>}/>
+
+                <Route path={'*'} element={<NoMatch/>}/>
+
         </Routes>
 
     {

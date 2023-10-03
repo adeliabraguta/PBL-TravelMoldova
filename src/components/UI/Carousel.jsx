@@ -13,12 +13,12 @@ export default function Carousel({data}) {
         setSlide(slide === 0 ? data.length - 1 : slide - 1)
 
     }
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         nextSlide()
-    //     }, 5000);
-    //     return () => clearInterval(interval)
-    // })
+    useEffect(() => {
+        const interval = setInterval(() => {
+            nextSlide()
+        }, 3000);
+        return () => clearInterval(interval)
+    })
 
     return (
         <>

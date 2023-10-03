@@ -32,7 +32,7 @@ export const api = createApi({
                 method: 'POST',
                 body: {...credentials}
             })
-        })
+        }),
     })
 })
 
@@ -40,6 +40,6 @@ export const {
     useGetDestinationByIdQuery,
     useGetDestinationsQuery,
     useLoginUserMutation,
-    useRegisterUserMutation
+    useRegisterUserMutation,
 } = api;
 

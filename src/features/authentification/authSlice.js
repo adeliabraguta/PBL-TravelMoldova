@@ -6,14 +6,20 @@ const authPersistConfig ={
     key: "auth",
     storage,
 }
+const initialState ={ user: null,
+    access_token: null, username: null }
 const authSlice = createSlice({
     name: 'auth',
-    initialState: { user: null, access_token: null },
+    initialState,
     reducers: {
         setCredentials: (state, action) => {
             const { user, access_token } = action.payload
             state.user = user
             state.access_token = access_token
+        },
+        setUserName: (state, action) => {
+            const {username} = action.payload
+            state.username = username
         },
         unsetCredentials: (state, action) => {
             state.user = { name: null }
@@ -21,14 +27,9 @@ const authSlice = createSlice({
         },
     }
 })
-export const { setCredentials, unsetCredentials } = authSlice.actions;
-
-// Apply the persistReducer
+export const { setCredentials, unsetCredentials, setUserName } = authSlice.actions;
 const persistedAuthSlice = persistReducer(authPersistConfig, authSlice.reducer);
-
-// Export the reducer
 export default persistedAuthSlice;
-
-// Selectors remain the same
-export const selectCurrentUser = (state) => state.auth.user;
+export const selectCurrentUser = (state) => state.auth.username;
 export const selectCurrentToken = (state) => state.auth.access_token;
+
