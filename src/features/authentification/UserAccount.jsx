@@ -1,28 +1,29 @@
 import {Banner, Home, Line, Title} from "../../Styles/Banner.js";
 import styled from "styled-components";
+import {useSelector} from "react-redux";
+import {selectCurrentUser} from "./authSlice.js";
 
 export default function UserAccount() {
+    const user = useSelector(selectCurrentUser)
+    const userName = user.charAt(0).toUpperCase() + user.slice(1)
+
     return (
         <Home>
             <Line>
                 <Account>
-                        <img className={"img"} src={"/assets/testimonial2.webp"}/>
+                    <img className={"img"} src={"/assets/testimonial2.webp"}/>
                     <div>
-                    <Title>Adelia157</Title>
-                        <div className={'country'}>
-                            <h2>Country</h2>
-                            <p>Moldova</p>
-                        </div>
+                        <Title>Hello, {userName}</Title>
+                        <p>Young travel enthusiast</p>
                     </div>
                     <div>
-
                     </div>
                 </Account>
             </Line>
         </Home>
     )
 }
-const Account=styled.div`
+const Account = styled.div`
   display: flex;
   gap: 48px;
   align-items: center;
@@ -30,8 +31,8 @@ const Account=styled.div`
   padding: 48px 48px 96px 48px;
 
   .img {
-    height: 150px;
-    width: 150px;
+    height: 200px;
+    width: 200px;
     object-fit: cover;
   }
 

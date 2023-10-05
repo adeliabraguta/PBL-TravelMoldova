@@ -74,5 +74,39 @@
         "isFav": false,
         "accesed": false,
         "generalInformation": "Located in a remote but beautiful part of Moldova, Tipova Monastery comprises three main complexes that have been dug out of the rocks along the banks of the Dniestr River. The oldest complex is the Church of the Feast of the Holy Cross (11th century).  The remaining two are the Church of St Nicholas (14th century) and Horodiste (16th century). If you follow the path past the caves you’ll enjoy a nice nature hike that ends in a lovely waterfall. Within each cave are monk’s cells, enough for up to 700, though there are less than 20 monks living there now."
-    }]
+    }],
+    "stories": [ {
+        "id": 1,
+        "title": "Discover Transnistria, the capital of a country that doesn’t exist",
+        "slug": "tiraspol",
+        "date": "APRIL 13, 2022",
+        "img": "tiraspol.jpg",
+        "description": "We could discover Transnistria, on a visit to Tiraspol, just the week before the Russian troops broke into the Ukrainian borders.",
+        "author": "DANIGARCIAGIMENEZ",
+        "desc": "We could discover Transnistria, on a visit to Tiraspol, just the week before the Russian troops broke into the Ukrainian borders. Transnistria is a country that doesn’t exist. Or better said, it is not recognized by almost no other country in the world, besides a few more in similar condition. \n\nWe were in Chisinau celebrating Saint Valentine’s day. As other thousands we have chosen Moldova to do so. We decided to add a bit more of our way of romanticism. We had heard before that no United Nations member recognises Transnistria sovereignty and the region is officially part of Moldova to UN. As of 2011, only Abkhazia, the Republic of Artsakh and South Ossetia, all of them non-recognized countries as well, recognise the independence of this particular self-declared Republic. Once in Moldova, we asked how it is in this territory and they told us that it still works de facto as a Soviet Republic since they never accepted the failure of the union. For us it was interesting enough to decide to go. \n\nMoldova is a small country and if you have some extra time to spend you can take a look at Tiraspol. So far, it is easy and cheap to arrive, you can stay there for the night or go and come back on the same day. If you want to make true the famous song of the Beatles “Back to the USSR”, keep reading, we’ll explain to you how. ",
+        "images": [{
+            "img1": "tiraspol.jpg"
+        },{
+            "img1": "transnistria.jpg"
+
+        }]
+    },
+        {
+            "id": 2,
+            "title": "A visit to the most famous Moldovan wine cellars",
+            "slug": "cricova-winery",
+            "date": "MARCH 20, 2022",
+            "img": "cricova.jpg",
+            "description": "If you visit the Republic of Moldova, you can not miss a visit of most famous Moldovan wine cellars. An excellent base for wine lovers.",
+            "author": "DANIGARCIAGIMENEZ",
+            "desc": " If you visit the Republic of Moldova, you can not miss a visit of most famous Moldovan wine cellars. Probably, in your tour in the country you plan to stay some days in Chisinau, the capital. The capital of the country can be an excellent base for wine lovers who want to visit the historic and very famous Cricova. Moldova is a wine country. The wine has been one of the most important resources of its economy and especially critical during the soviet period. The country has 4 regions for the production of wine products with Protected Geographical Indication. Those regions are Codru, Ștefan Vodă, Valul lui Traian and Divin. There, Moldovans crop and process plenty of local and european varieties of grapes. ",
+            "images": [{
+                "img1": "cricova.jpg"
+            },{
+                "img1": "cricova2.jpg"
+
+            }]
+
+        }
+    ]
 }

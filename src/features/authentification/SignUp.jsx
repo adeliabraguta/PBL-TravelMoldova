@@ -37,7 +37,7 @@ export default function SignUp() {
     useEffect(() => {
         if (isSuccess) {
             dispatch(setCredentials({...userData, username}))
-            navigate("/userAccount")
+            navigate("/signIn")
         }
     }, [isSuccess])
     const handleMessage = () => {
