@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 export default function NavBar() {
     const token = useSelector(selectCurrentToken)
     const user = useSelector(selectCurrentUser)
-    const userName= user.charAt(0).toUpperCase() + user.slice(1)
+    // const userName= user.charAt(0).toUpperCase() + user.slice(1)
     console.log(user)
     const navLinkStyle = ({isActive}) => {
         return {
@@ -27,16 +27,17 @@ export default function NavBar() {
 
                 <div className={"right_side"}>
                     <div className={"links"}>
-                        <NavLink to={'/destinations'} className={`link title`}>DESTINATIONS</NavLink>
+                        <NavLink to={'/destinations'} className={`link title`}>DISCOVER</NavLink>
                         {/*<NavLink className={`${style.link} ${style.title}`}>STORIES</NavLink>*/}
                     </div>
                     {token ? <div className={"sign-up"}>
                             <IoPersonOutline className={"icon"}/>
-                            <NavLink to={"/userAccount"} className={"link-signup"}>{userName}</NavLink>
+                            <NavLink to={"/userAccount"} className={"link-signup"}>{user}</NavLink>
                         </div> :
                         <div className={"sign-up"}>
-                            <IoLogInOutline className={"icon"}/>
-                            <NavLink to={"/signIn"} className={"link-signup"}>Sign In</NavLink>
+                            {/*<IoLogInOutline className={"icon"}/>*/}
+                            <NavLink to={"/signIn"} className={"link-signin"}>Sign In</NavLink> |
+                            <NavLink to={"/signUp"} className={"link-signup"}>Sign Up</NavLink>
                         </div>
                     }
                 </div>
@@ -93,7 +94,7 @@ const Nav = styled.div`
 
     .right_side {
       display: flex;
-      gap: 128px;
+      gap: 96px;
       //color: var(--color-grey-0);
       .links {
         display: flex;
@@ -123,14 +124,30 @@ const Nav = styled.div`
         display: flex;
         align-items: center;
         color: var(--color-blue-5);
-
         justify-content: center;
-        transition: 0.3s ease;
 
-        .link-signup {
+        .link-signin {
           text-decoration: none;
           font-size: 20px;
           color: inherit;
+          transition: 0.3s ease;
+          
+          &:hover,
+          &:active {
+            color: var(--color-blue-0);
+          }
+        }
+        .link-signup {
+          text-decoration: none;
+          font-size: 20px;
+          color: var(--color-green-5);
+          transition: 0.3s ease;
+          font-weight: 600;
+          
+          &:hover,
+          &:active {
+            color: var(--color-green-1);
+          }
         }
 
         .icon {
@@ -141,10 +158,7 @@ const Nav = styled.div`
 
         }
 
-        &:hover,
-        &:active {
-          color: var(--color-blue-0);
-        }
+ 
       }
     }
   }

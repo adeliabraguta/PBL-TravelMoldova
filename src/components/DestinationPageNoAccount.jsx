@@ -6,9 +6,11 @@ import React, {useState} from "react";
 
 import Loading from "./UI/Loading.jsx";
 import {useGetDestinationByIdQuery} from "../app/services/apiService.js";
+import {Rating, Typography} from "@mui/material";
 
 export default function DestinationPageNoAccount() {
-    const {id} = useParams()
+    const [value, setValue] = useState(5);
+    const {id} = useParams();
     let navigate = useNavigate();
     const routeChange = () => {
         navigate("/signIn");
@@ -66,11 +68,8 @@ export default function DestinationPageNoAccount() {
                         <div className={"carousel"}>
                             <img className={"img"} src={`/assets/${destination.img}`} alt="image"/>
                             <img className={"img"} src={`/assets/${destination.img2}`} alt="image"/>
-
                             <img className={"img"} src={`/assets/${destination.img3}`} alt="image"/>
                             <img className={"img"} src={`/assets/${destination.img}`} alt="image"/>
-
-
                         </div>
                     </div>
                     <div className={"location"}>
@@ -81,16 +80,37 @@ export default function DestinationPageNoAccount() {
                             {destination.address}
                         </p>
                     </div>
+                    <div className={"map"}>
+                        <iframe
+                            className={"map-link"}
+                            src={destination.map}
+                            width="100%"
+                            height="100%"
+                            style={{ border: 0 }}
+                            allowFullScreen=""
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                        />
+                    </div>
 
                     <div className={"reviews"}>
                         <h2 className={"title"}>Reviews</h2>
+                        {/*<Typography component="legend">Controlled</Typography>*/}
+                        {/*<Rating*/}
+                        {/*    name="simple-controlled"*/}
+                        {/*    value={value}*/}
+                        {/*    onChange={(event, newValue) => {*/}
+                        {/*        setValue(newValue);*/}
+                        {/*    }}*/}
+                        {/*/>*/}
+                        <Typography component="legend">Read only</Typography>
+                        <Rating name="read-only" value={value} readOnly />
+
                         <div className={"place-review"} onClick={routeChange}>
                             <IoPersonCircleOutline className={"img"}/>
                             <textarea className={'text-area'} placeholder={"Add a review"}/>
-                            {/*<button className={'btn'} onClick={onClickHandler}>Place a review</button>*/}
                         </div>
                         <div className={"display-review"}>
-                            {/*{reviews.map((review, index) => <div className={"review"} key={index}>{review}</div>)}*/}
                         </div>
 
                     </div>
@@ -123,6 +143,7 @@ const Destination = styled.div`
     justify-content: center;
 
     .carousel {
+      width: 70vw;
       margin: 0;
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -131,15 +152,10 @@ const Destination = styled.div`
       justify-content: center;
 
       .img {
-        height: 40vh;
+        height: 100%;
         width: 100%;
         object-fit: cover;
         transition: 0.3s ease;
-        //&:hover{
-        //  transform: scale(1.5);
-        //  height: 100%;
-        //  width: 100%;
-        //}
       }
     }
   }
@@ -147,7 +163,7 @@ const Destination = styled.div`
   .destination {
     display: grid;
     grid-template-columns: 1fr;
-    padding: 48px 48px 24px 48px;
+    padding: 0px 48px 24px 48px;
     align-items: center;
     justify-items: center;
 
@@ -191,7 +207,7 @@ const Destination = styled.div`
   }
 
   .location {
-    padding: 32px 16px 48px 16px;
+    padding: 64px 16px 48px 16px;
     display: flex;
     align-items: center;
     gap: 16px;
@@ -209,6 +225,16 @@ const Destination = styled.div`
       font-weight: 400;
       font-size: 16px;
       font-style: italic;
+    }
+  }
+  .map{
+    padding-bottom: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .map-link{
+    width: 70vw;
+    height: 40vh;
     }
   }
 

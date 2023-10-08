@@ -1,7 +1,7 @@
 import {Home, Title} from "../../Styles/Banner.js";
 import {useNavigate, useNavigation} from "react-router-dom";
 import styled from "styled-components";
-import {IoChevronForwardOutline} from "react-icons/io5";
+import {IoChevronForwardOutline, IoHandRightOutline} from "react-icons/io5";
 
 const Button = styled.button`
   background-color: white;
@@ -32,7 +32,7 @@ export default function NoMatch() {
     return (
 
         <Container>
-            <Title> Page not Found :(</Title>
+            <Title> Page not Found <IoHandRightOutline/> </Title>
             <Button onClick={() => navigate(-1)}>Go Back<IoChevronForwardOutline/></Button>
         </Container>
 

@@ -4,11 +4,11 @@
         "title": "Princely Forest Nature Reserve",
         "slug": "princely-forest-nature-reserve",
         "address": "Glodeni and Falesti districts",
+        "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d269313.20795260114!2d27.000169651007056!3d47.556055138420916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40cb39ea402cae61%3A0xea8a0cd82266b435!2zUmV6ZXJ2YcibaWEgTmF0dXJhbMSDICJQxINkdXJlYSBEb21uZWFzY8SDIiwgUjU3LCBNb2xkb3Zh!5e0!3m2!1sro!2s!4v1696772078344!5m2!1sro!2s",
+
         "img": "padureadomneasca.jpg",
         "img2": "padureadomneasca2.jpg",
         "img3": "padureadomneasca3.jpg",
-        "isFav": false,
-        "accesed": false,
         "generalInformation": "Founded in 1993, this is the largest natural reserve in Moldova and is located in Glodeni. Here you’ll find the country’s oldest stand of old-growth oak tree where the oldest oak is estimated to be about 450 years old. Nature lovers will enjoy the many bird species with the most notable being the herons that nest near the river.  Discover the area known as “One Hundred Hills,” a landscape of rolling knolls – that no one understands how they were formed. Padurea Domneasca is a great way to spend a day outdoors with Mother Nature."
 
 
@@ -17,11 +17,10 @@
         "title": "Soroca Fortress",
         "slug": "soroca-fortress",
         "address": "Soroca, Soroca district",
+        "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2661.352891686875!2d28.302686976510177!3d48.161279571246205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40ccea098ceb98bf%3A0xa43b7cd18f3a2973!2sCetatea%20Soroca!5e0!3m2!1sro!2s!4v1696770076700!5m2!1sro!2s",
         "img": "soroca.png",
         "img2": "soroca2.jpg",
         "img3": "soroca3.png",
-        "isFav": true,
-        "accesed": false,
         "generalInformation":"Soroca has played a large and important role throughout Moldova’s history due to its location on the Dniestr River. During wars and sieges, armies were able to defend the country well from this vantage point. The highlight is Soroca Fortress, one in a chain of military strongholds built as early as the 14th century by princes looking to fortify their position against invaders. Because of the large Roma community here, Soroca is the unofficial Roma capital.  For fun, walk by the mansions of the Roma elite that line the streets of the city centre."
 
 
@@ -30,11 +29,10 @@
         "title": "Castel MIMI",
         "slug": "castel-mimi",
         "address": "Bulboaca village, Anenii Noi district",
+        "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2726.5392269492063!2d29.289020376440657!3d46.892112671133226!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c90c0ff7cc4f03%3A0xb3df2a66bd1e203c!2sCastel%20Mimi!5e0!3m2!1sro!2s!4v1696772140997!5m2!1sro!2s",
         "img": "castelmimi.jpg",
         "img2": "mimi2.jpg",
         "img3": "mimi3.jpg",
-        "isFav": false,
-        "accesed": false,
         "generalInformation": "In 2011 one of the most ambitious restoration projects in Moldavian history begun, at the end of which Castle Mimi got back its charming appearance from the beginning of the last century. The winery went through an intense modernization process, being endowed with best advanced equipment for wine production, storage and bottling, that are unique in Moldova."
 
     }, {
@@ -45,8 +43,7 @@
         "img2": "capriana2.jpg",
         "img3": "capriana3.jpg",
         "address": "Capriana commune, Straseni district",
-        "isFav": false,
-        "accesed": false,
+        "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2715.122832206627!2d28.505665388846612!3d47.11626419675918!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40cbce606bd997c3%3A0xcaf604dbd40164fc!2zTcSDbsSDc3RpcmVhIEPEg3ByaWFuYQ!5e0!3m2!1sro!2s!4v1696772214071!5m2!1sro!2s",
         "generalInformation": "Sitting in a lush green forest in Capriana is one of the oldest monasteries in Moldova.  Founded in the 15th century by Alexander the Good, it was once the home of the Moldavian bishop as well as Chiprian, one of the first Moldavian poets. It houses the largest convent library in the country and after years of neglect, was reopened in 1989 as a symbol of national revival. While you’re there, you can make some stops nearby to visit the oak tree of Stefan the Great and Codru, the oldest nature reserve in the country."
 
 
@@ -55,11 +52,10 @@
         "title": "Old Orhei",
         "slug": "old-orhei",
         "address": "Orhei city",
+        "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10819.523439449922!2d28.956367271297157!3d47.316665988632096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40cbe3e6b29eae8b%3A0x42fd81552e68ea18!2sOrheiul%20Vechi%2C%20Moldova!5e0!3m2!1sro!2s!4v1696772265739!5m2!1sro!2s",
         "img": "orhei.jpg",
         "img2": "orhei2.jpg",
         "img3": "orhei3.jpg",
-        "isFav": false,
-        "accesed": false,
         "generalInformation": "Taking you back some two thousand years ago, this archaeological complex, overlooks the Raut River and holds immense historical and cultural significance. Because of the vastness of the historical events witnessed by the Old Orhei, a museum has been put together to provide information to the visitors. Some major events that were witnessed by this mighty place were the Tatar and Mongol invasions that date back to the 1th century BC and the Golden Horde’s occupation in the 14th century BC. The natural beauty here is stunning and features caves, ruins, monasteries, baths, and fortifications which are as old as the Dacian tribe, which, to be precise, would be two thousand years."
 
 
@@ -71,8 +67,77 @@
         "img2": "tipova2.jpg",
         "img3": "tipova3.jpg",
         "address": "Tipova, Rezina district",
-        "isFav": false,
-        "accesed": false,
+        "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2690.2532894585775!2d28.987185676479406!3d47.60176437118942!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40cc0982cfe943a9%3A0x9227168c3a395aca!2zTcSDbsSDc3RpcmVhIFJ1cGVzdHJhIMiaaXBvdmE!5e0!3m2!1sro!2s!4v1696772301209!5m2!1sro!2s",
+        "generalInformation": "Located in a remote but beautiful part of Moldova, Tipova Monastery comprises three main complexes that have been dug out of the rocks along the banks of the Dniestr River. The oldest complex is the Church of the Feast of the Holy Cross (11th century).  The remaining two are the Church of St Nicholas (14th century) and Horodiste (16th century). If you follow the path past the caves you’ll enjoy a nice nature hike that ends in a lovely waterfall. Within each cave are monk’s cells, enough for up to 700, though there are less than 20 monks living there now."
+    }, {
+        "id": 7,
+        "title": "Castel MIMI",
+        "slug": "castel-mimi",
+        "address": "Bulboaca village, Anenii Noi district",
+        "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2726.5392269492063!2d29.289020376440657!3d46.892112671133226!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c90c0ff7cc4f03%3A0xb3df2a66bd1e203c!2sCastel%20Mimi!5e0!3m2!1sro!2s!4v1696772140997!5m2!1sro!2s",
+        "img": "castelmimi.jpg",
+        "img2": "mimi2.jpg",
+        "img3": "mimi3.jpg",
+        "generalInformation": "In 2011 one of the most ambitious restoration projects in Moldavian history begun, at the end of which Castle Mimi got back its charming appearance from the beginning of the last century. The winery went through an intense modernization process, being endowed with best advanced equipment for wine production, storage and bottling, that are unique in Moldova."
+
+    }, {
+        "id": 8,
+        "title": "Capriana Monastery",
+        "slug": "capriana-monastery",
+        "img": "capriana.jpg",
+        "img2": "capriana2.jpg",
+        "img3": "capriana3.jpg",
+        "address": "Capriana commune, Straseni district",
+        "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2715.122832206627!2d28.505665388846612!3d47.11626419675918!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40cbce606bd997c3%3A0xcaf604dbd40164fc!2zTcSDbsSDc3RpcmVhIEPEg3ByaWFuYQ!5e0!3m2!1sro!2s!4v1696772214071!5m2!1sro!2s",
+        "generalInformation": "Sitting in a lush green forest in Capriana is one of the oldest monasteries in Moldova.  Founded in the 15th century by Alexander the Good, it was once the home of the Moldavian bishop as well as Chiprian, one of the first Moldavian poets. It houses the largest convent library in the country and after years of neglect, was reopened in 1989 as a symbol of national revival. While you’re there, you can make some stops nearby to visit the oak tree of Stefan the Great and Codru, the oldest nature reserve in the country."
+
+
+    },{
+        "id": 9,
+        "title": "Princely Forest Nature Reserve",
+        "slug": "princely-forest-nature-reserve",
+        "address": "Glodeni and Falesti districts",
+        "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d269313.20795260114!2d27.000169651007056!3d47.556055138420916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40cb39ea402cae61%3A0xea8a0cd82266b435!2zUmV6ZXJ2YcibaWEgTmF0dXJhbMSDICJQxINkdXJlYSBEb21uZWFzY8SDIiwgUjU3LCBNb2xkb3Zh!5e0!3m2!1sro!2s!4v1696772078344!5m2!1sro!2s",
+
+        "img": "padureadomneasca.jpg",
+        "img2": "padureadomneasca2.jpg",
+        "img3": "padureadomneasca3.jpg",
+        "generalInformation": "Founded in 1993, this is the largest natural reserve in Moldova and is located in Glodeni. Here you’ll find the country’s oldest stand of old-growth oak tree where the oldest oak is estimated to be about 450 years old. Nature lovers will enjoy the many bird species with the most notable being the herons that nest near the river.  Discover the area known as “One Hundred Hills,” a landscape of rolling knolls – that no one understands how they were formed. Padurea Domneasca is a great way to spend a day outdoors with Mother Nature."
+
+
+    },{
+        "id": 10,
+        "title": "Soroca Fortress",
+        "slug": "soroca-fortress",
+        "address": "Soroca, Soroca district",
+        "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2661.352891686875!2d28.302686976510177!3d48.161279571246205!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40ccea098ceb98bf%3A0xa43b7cd18f3a2973!2sCetatea%20Soroca!5e0!3m2!1sro!2s!4v1696770076700!5m2!1sro!2s",
+        "img": "soroca.png",
+        "img2": "soroca2.jpg",
+        "img3": "soroca3.png",
+        "generalInformation":"Soroca has played a large and important role throughout Moldova’s history due to its location on the Dniestr River. During wars and sieges, armies were able to defend the country well from this vantage point. The highlight is Soroca Fortress, one in a chain of military strongholds built as early as the 14th century by princes looking to fortify their position against invaders. Because of the large Roma community here, Soroca is the unofficial Roma capital.  For fun, walk by the mansions of the Roma elite that line the streets of the city centre."
+
+
+    }, {
+        "id": 11,
+        "title": "Old Orhei",
+        "slug": "old-orhei",
+        "address": "Orhei city",
+        "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10819.523439449922!2d28.956367271297157!3d47.316665988632096!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40cbe3e6b29eae8b%3A0x42fd81552e68ea18!2sOrheiul%20Vechi%2C%20Moldova!5e0!3m2!1sro!2s!4v1696772265739!5m2!1sro!2s",
+        "img": "orhei.jpg",
+        "img2": "orhei2.jpg",
+        "img3": "orhei3.jpg",
+        "generalInformation": "Taking you back some two thousand years ago, this archaeological complex, overlooks the Raut River and holds immense historical and cultural significance. Because of the vastness of the historical events witnessed by the Old Orhei, a museum has been put together to provide information to the visitors. Some major events that were witnessed by this mighty place were the Tatar and Mongol invasions that date back to the 1th century BC and the Golden Horde’s occupation in the 14th century BC. The natural beauty here is stunning and features caves, ruins, monasteries, baths, and fortifications which are as old as the Dacian tribe, which, to be precise, would be two thousand years."
+
+
+    }, {
+        "id": 12,
+        "title": "Tipova Monastery",
+        "slug": "tipova",
+        "img": "tipova.jpg",
+        "img2": "tipova2.jpg",
+        "img3": "tipova3.jpg",
+        "address": "Tipova, Rezina district",
+        "map": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2690.2532894585775!2d28.987185676479406!3d47.60176437118942!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40cc0982cfe943a9%3A0x9227168c3a395aca!2zTcSDbsSDc3RpcmVhIFJ1cGVzdHJhIMiaaXBvdmE!5e0!3m2!1sro!2s!4v1696772301209!5m2!1sro!2s",
         "generalInformation": "Located in a remote but beautiful part of Moldova, Tipova Monastery comprises three main complexes that have been dug out of the rocks along the banks of the Dniestr River. The oldest complex is the Church of the Feast of the Holy Cross (11th century).  The remaining two are the Church of St Nicholas (14th century) and Horodiste (16th century). If you follow the path past the caves you’ll enjoy a nice nature hike that ends in a lovely waterfall. Within each cave are monk’s cells, enough for up to 700, though there are less than 20 monks living there now."
     }],
     "stories": [ {
@@ -81,15 +146,10 @@
         "slug": "tiraspol",
         "date": "APRIL 13, 2022",
         "img": "tiraspol.jpg",
+        "img1": "transnistria.jpg",
         "description": "We could discover Transnistria, on a visit to Tiraspol, just the week before the Russian troops broke into the Ukrainian borders.",
         "author": "DANIGARCIAGIMENEZ",
-        "desc": "We could discover Transnistria, on a visit to Tiraspol, just the week before the Russian troops broke into the Ukrainian borders. Transnistria is a country that doesn’t exist. Or better said, it is not recognized by almost no other country in the world, besides a few more in similar condition. \n\nWe were in Chisinau celebrating Saint Valentine’s day. As other thousands we have chosen Moldova to do so. We decided to add a bit more of our way of romanticism. We had heard before that no United Nations member recognises Transnistria sovereignty and the region is officially part of Moldova to UN. As of 2011, only Abkhazia, the Republic of Artsakh and South Ossetia, all of them non-recognized countries as well, recognise the independence of this particular self-declared Republic. Once in Moldova, we asked how it is in this territory and they told us that it still works de facto as a Soviet Republic since they never accepted the failure of the union. For us it was interesting enough to decide to go. \n\nMoldova is a small country and if you have some extra time to spend you can take a look at Tiraspol. So far, it is easy and cheap to arrive, you can stay there for the night or go and come back on the same day. If you want to make true the famous song of the Beatles “Back to the USSR”, keep reading, we’ll explain to you how. ",
-        "images": [{
-            "img1": "tiraspol.jpg"
-        },{
-            "img1": "transnistria.jpg"
-
-        }]
+        "desc": "We could discover Transnistria, on a visit to Tiraspol, just the week before the Russian troops broke into the Ukrainian borders. Transnistria is a country that doesn’t exist. Or better said, it is not recognized by almost no other country in the world, besides a few more in similar condition. \n\nWe were in Chisinau celebrating Saint Valentine’s day. As other thousands we have chosen Moldova to do so. We decided to add a bit more of our way of romanticism. We had heard before that no United Nations member recognises Transnistria sovereignty and the region is officially part of Moldova to UN. As of 2011, only Abkhazia, the Republic of Artsakh and South Ossetia, all of them non-recognized countries as well, recognise the independence of this particular self-declared Republic. Once in Moldova, we asked how it is in this territory and they told us that it still works de facto as a Soviet Republic since they never accepted the failure of the union. For us it was interesting enough to decide to go. \n\nMoldova is a small country and if you have some extra time to spend you can take a look at Tiraspol. So far, it is easy and cheap to arrive, you can stay there for the night or go and come back on the same day. If you want to make true the famous song of the Beatles “Back to the USSR”, keep reading, we’ll explain to you how. "
     },
         {
             "id": 2,
@@ -97,15 +157,10 @@
             "slug": "cricova-winery",
             "date": "MARCH 20, 2022",
             "img": "cricova.jpg",
+            "img1": "cricova2.jpg",
             "description": "If you visit the Republic of Moldova, you can not miss a visit of most famous Moldovan wine cellars. An excellent base for wine lovers.",
             "author": "DANIGARCIAGIMENEZ",
-            "desc": " If you visit the Republic of Moldova, you can not miss a visit of most famous Moldovan wine cellars. Probably, in your tour in the country you plan to stay some days in Chisinau, the capital. The capital of the country can be an excellent base for wine lovers who want to visit the historic and very famous Cricova. Moldova is a wine country. The wine has been one of the most important resources of its economy and especially critical during the soviet period. The country has 4 regions for the production of wine products with Protected Geographical Indication. Those regions are Codru, Ștefan Vodă, Valul lui Traian and Divin. There, Moldovans crop and process plenty of local and european varieties of grapes. ",
-            "images": [{
-                "img1": "cricova.jpg"
-            },{
-                "img1": "cricova2.jpg"
-
-            }]
+            "desc": " If you visit the Republic of Moldova, you can not miss a visit of most famous Moldovan wine cellars. Probably, in your tour in the country you plan to stay some days in Chisinau, the capital. The capital of the country can be an excellent base for wine lovers who want to visit the historic and very famous Cricova. Moldova is a wine country. The wine has been one of the most important resources of its economy and especially critical during the soviet period. The country has 4 regions for the production of wine products with Protected Geographical Indication. Those regions are Codru, Ștefan Vodă, Valul lui Traian and Divin. There, Moldovans crop and process plenty of local and european varieties of grapes. "
 
         }
     ]

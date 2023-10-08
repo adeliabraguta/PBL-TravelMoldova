@@ -1,17 +1,16 @@
 import Carousel from "./UI/Carousel.jsx";
 import {slides} from "./Data/carouselData.json"
 import React, {useEffect, useState} from "react";
-import DestinationComponent from "./DestinationComponent.jsx";
+import DestinationComponent from "/src/components/DestinationComponent";
 import {Home, Line, Banner, Title, Desc} from '../Styles/Banner.js'
 import styled from "styled-components";
 import InformationComponent from "./UI/InformationComponent.jsx";
 import informationData from "./Data/Information.json";
 import testimonialsData from "./Data/Information.json";
 import TestimonialsComponent from "./UI/TestimonialsComponent.jsx";
-
-import Data from "./Data/Information.json";
-import {useGetDestinationsQuery} from "../app/services/apiService.js";
+import {useGetDestinationsQuery, useGetStoriesQuery} from "../app/services/apiService.js";
 import Loading from "./UI/Loading.jsx";
+import StoriesComponent from "/src/components/UI/StoriesComponent";
 
 export default function HomePage() {
     const [information, setInformation] = useState(informationData.accordion)
@@ -25,6 +24,9 @@ export default function HomePage() {
         error
     } = useGetDestinationsQuery();
 
+    const {
+        data: stories = [],
+    } = useGetStoriesQuery(1);
     if (isLoading || isFetching) {
         return (
             <Loading/>
@@ -99,7 +101,14 @@ export default function HomePage() {
                 </div>
             </TravelDestinations>
 
-
+            <Testimonial>
+                <div className={"testimonials"}>
+                    <h1 className={"title"}>What Our Users Say About Us</h1>
+                    {testimonials.map((testimonial, index) => (
+                        <TestimonialsComponent className={"testimonial-item"} key={index} testimonial={testimonial}/>
+                    ))}
+                </div>
+            </Testimonial>
             <Information>
                 <ul className="list">
                     <p className="desc">NEED TO KNOW</p>
@@ -109,14 +118,27 @@ export default function HomePage() {
                     ))}
                 </ul>
             </Information>
-            <Testimonial>
-                <div className={"testimonials"}>
-                    <h1 className={"title"}>What Our Users Say About Us</h1>
-                    {testimonials.map((testimonial, index) => (
-                        <TestimonialsComponent className={"testimonial-item"} key={index} testimonial={testimonial}/>
-                    ))}
-                </div>
-            </Testimonial>
+            <div>
+                <TravelDestinations>
+                    <div className={"guide"}>
+                        <h1 className={"title"}>
+                            Travel Destinations
+                        </h1>
+                    </div>
+                </TravelDestinations>
+                <Stories>
+                    <div className="desc-div">
+                        <p className="desc">Here you can discover fascinating travel stories from Moldova.
+                            This will not leave you indifferent.
+                            Moldova is about wonderful nature and interesting adventures.</p>
+                    </div>
+                    <div className="stories">
+                        {stories.map((story, index) => (
+                            <StoriesComponent key={index} story={story}/>
+                        ))}
+                    </div>
+                </Stories>
+            </div>
         </Home>
     )
 }
@@ -265,6 +287,34 @@ const Information = styled.div`
 
     .grid {
       max-width: 60vw;
+    }
+  }
+`
+const Stories = styled.div `
+  padding: 0 96px 96px 96px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 96px;
+  justify-content: center;
+  align-items: center;
+  .desc{
+    margin: 0;
+    padding: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: solid #BCCCDC;
+    border-left: solid #BCCCDC;
+    font-size: 18px;
+    text-align: center;
+  }
+  .stories{
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+    .story{
+      align-items: center;
+      justify-content: center;
     }
   }
 `
