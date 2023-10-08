@@ -6,6 +6,7 @@ import React, {useState} from "react";
 
 import Loading from "./UI/Loading.jsx";
 import {useGetDestinationByIdQuery} from "../app/services/apiService.js";
+import {Rating, Typography} from "@mui/material";
 
 export default function DestinationPageNoAccount() {
     const {id} = useParams()
@@ -21,8 +22,11 @@ export default function DestinationPageNoAccount() {
         isError,
         error
     } = useGetDestinationByIdQuery(id)
-    const [review, setReview] = useState("")
-    const [reviews, setReviews] = useState([])
+    const [reviews, setReviews] = useState([]);
+    const [review, setReview] = useState({ text: "", rating: 0 });
+    const [value, setValue] = useState(0);
+
+
     if (isLoading || isFetching) {
         return (
             <Loading/>
@@ -33,12 +37,24 @@ export default function DestinationPageNoAccount() {
         return <div>{error.status}</div>;
     }
     const onChangeHandler = (e) => {
-        setReview(e.target.value)
-    }
+        setReview({ ...review, text: e.target.value });
+    };
+
     const onClickHandler = () => {
-        setReviews(comments => [...comments, review])
-        setReview('')
-    }
+        const newComment = {
+            text: review.text,
+            rating: value,
+        };
+
+        setReviews((comments) => [...comments, newComment]);
+
+        // Clear the review text and reset the rating
+        setReview({ ...review, text: '' });
+        setValue(0);
+    };
+
+
+
 
     return (
         <Home>
@@ -95,23 +111,87 @@ export default function DestinationPageNoAccount() {
                         />
                     </div>
 
-                    <div className={"reviews"}>
-                        <h2 className={"title"}>Reviews</h2>
+                    <Banner className={"reviews"}>
+                        <Desc >REVIEW TIME</Desc>
+                        <Title>Share your thoughts </Title>
                         <div className={"place-review"} >
-                            <IoPersonCircleOutline className={"img"}/>
-                            <textarea rows='1' value={review} onChange={onChangeHandler} className={'text-area'} placeholder={"Add a review"}/>
-                            <button className={'btn'} onClick={onClickHandler}>Place Review</button>
-                        </div>
-                        <div className={"display-review"}>
-                            {reviews.map((review, index) => <div className={"review"} key={index}>{review}</div>)}
+                            <div className={"place-review-input"}>
+                                <div className={"rating stars"}>
+                                <div className={"review-title"}>Your rating:</div>
+                            <StyledRating
+                                name="simple-controlled"
+                                value={value}
+                                onChange={(event, newValue) => {
+                                    setValue(newValue);
+                                }}
+                            />
+                                </div>
+                                <div className={"rating"}>
+                                <div className={"review-title"}>Your review:</div>
+                                    <textarea
+                                        rows='1'
+                                        value={review.text}
+                                        onChange={onChangeHandler}
+                                        className={'text-area'}
+                                        placeholder={"I enjoyed..."}
+                                    />
+                                </div>
+                            </div>
+                                <button className={'btn'} onClick={onClickHandler}>Place Review</button>
                         </div>
 
-                    </div>
+                        <div className={"display-review"}>
+                            {reviews.map((reviewItem, index) => (
+                                <div className={"review"} key={index}>
+                                    <div className={"review-name-text"}>
+                                    <p className={"name"}>MariaNegrescu</p>
+                                    <div className={"review-rating"}>
+                                        <StyledRating name={`rating-${index}`} value={reviewItem.rating} readOnly />
+                                    </div>
+                                    </div>
+                                    <div className={"review-text"}>{reviewItem.text}</div>
+                                </div>
+                            ))}
+                            <div className={"review"} key={1}>
+                                <div className={"review-name-text"}>
+                                    <p className={"name"}>MariaNegrescu</p>
+                                    <div className={"review-rating"}>
+                                        <StyledRating name={`rating-1`} value={5} readOnly />
+                                    </div>
+                                </div>
+                                <div className={"review-text"}>
+                                    I am from Romania, and trips through Moldova have become my favorite activity during the summer. I recommend you to visit Old Orhei and Capriana Monastery. It is amazing!
+                                </div>
+                            </div>
+
+                            <div className={"review"} key={2}>
+                                <div className={"review-name-text"}>
+                                    <p className={"name"}>JohnDoe</p>
+                                    <div className={"review-rating"}>
+                                        <StyledRating name={`rating-2`} value={4} readOnly />
+                                    </div>
+                                </div>
+                                <div className={"review-text"}>
+                                    Moldova is a hidden gem in Eastern Europe. The beautiful landscapes and historical sites make it a perfect destination. I had a great time exploring Chisinau and the wine cellars.
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </Banner>
                 </Destination>
             </Line>
         </Home>
     )
 }
+export const StyledRating = styled(Rating)({
+    '& .MuiRating-iconFilled': {
+        color: '#079A82',
+    },
+    '& .MuiRating-iconHover': {
+        color: '#016457',
+    },
+});
 const Destination = styled.div`
   .interactions {
     display: flex;
@@ -220,18 +300,21 @@ const Destination = styled.div`
       font-style: italic;
     }
   }
-  .map{
+
+  .map {
     padding-bottom: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    .map-link{
+
+    .map-link {
       width: 70vw;
       height: 40vh;
     }
   }
 
   .reviews {
+    padding-top: 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -244,15 +327,45 @@ const Destination = styled.div`
     }
 
     .place-review {
+      margin-top: 24px;
+      border: 2px solid var(--color-grey-8);
+      padding: 48px;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       gap: 24px;
       max-width: 60vw;
 
-      .img {
-        height: 70px;
-        width: 70px;
-        color: var(--color-grey-8);
+      .place-review-input {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+
+        .rating {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+
+          .review-title {
+            font-size: 18px;
+            letter-spacing: 1px;
+            color: var(--color-blue-0);
+            font-weight: 600;
+          }
+        }
+
+        .stars {
+          flex-direction: row;
+          gap: 18px;
+        }
       }
+
+      //.img {
+      //  height: 70px;
+      //  width: 70px;
+      //  color: var(--color-grey-8);
+      //}
 
       .text-area {
         border: none;
@@ -265,30 +378,61 @@ const Destination = styled.div`
         resize: none;
         width: 60vw;
 
-        &:focus{
-          border-bottom: 2px solid var(--color-blue-5);
+        &:focus {
+          border-bottom: 2px solid var(--color-green-5);
         }
+
         &:disabled {
           background-color: white;
         }
       }
-      .btn{
-        background-color: white;
-        color: var(--color-grey-7);
-        border: 2px solid var(--color-grey-7);
+
+      .btn {
+        margin-top: 24px;
+        background-color: var(--color-grey-7);
+        padding: 12px 18px;
+        color: white;
+        //border: 2px solid var(--color-grey-7);
+        border: none;
         font-weight: 600;
         transition: 0.3s ease;
         cursor: pointer;
         letter-spacing: 1.1px;
         font-size: 16px;
-        &:hover{
-          color: var(--color-blue-5);
-          border: 2px solid var(--color-blue-5);
+
+        &:hover {
+          background-color: var(--color-green-2);
+          color: white;
+          //border: 2px solid var(--color-blue-5);
+          border: none;
         }
       }
     }
-    .display-review{
+
+    .display-review {
+      width: 70vw;
       padding-top: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      .review{
+        background-color: var(--color-grey-9);
+        padding: 16px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+      .review-name-text{
+        display: flex;
+        gap: 16px;
+      }
+      .name{
+        margin: 0;
+        color: var(--color-blue-3);
+        font-size: 18px;
+        font-weight: 600;
+        letter-spacing: 1.1px;
+      }
     }
   }
 

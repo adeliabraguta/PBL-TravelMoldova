@@ -34,13 +34,14 @@ function App() {
                     key={location.key}
                     classNames="fade"
                     timeout={450}
-                    appea
+                    appear
                     enter
                     exit
                 >
                     <Routes>
                         <Route path={'/'} element={<HomePage/>}/>
                         <Route path={'/destinations'} element={<DestinationsPage/>}/>
+                        <Route path={'/story/:id/:slug'} element={<StoryPage/>}/>
                         {token ?
                             <>
                                 <Route path={'/destinations/:id/:slug'} element={<DestinationPageAccount/>}/>
@@ -49,7 +50,6 @@ function App() {
                             <>
 
                                 <Route path={'/destinations/:id/:slug'} element={<DestinationPageNoAccount/>}/>
-                                <Route path={'/story/:id/:slug'} element={<StoryPage/>}/>
                             </>}
                         <Route path={"/signUp"} element={<SignUp/>}/>
                         <Route path={"/signIn"} element={<SignIn/>}/>

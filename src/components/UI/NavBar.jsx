@@ -1,15 +1,25 @@
 import {Link, NavLink} from "react-router-dom";
 import styled from "styled-components";
 import {IoLogInOutline, IoPersonAddOutline, IoPersonOutline} from "react-icons/io5";
-import {selectCurrentToken, selectCurrentUser, setCredentials} from "../../features/authentification/authSlice.js";
+import {
+    selectCurrentToken,
+    selectCurrentUser,
+    setCredentials,
+    unsetCredentials
+} from "../../features/authentification/authSlice.js";
 import {useDispatch, useSelector} from "react-redux";
+import {useEffect} from "react";
 
 
 export default function NavBar() {
     const token = useSelector(selectCurrentToken)
     const user = useSelector(selectCurrentUser)
-    // const userName= user.charAt(0).toUpperCase() + user.slice(1)
-    console.log(user)
+    const userName= user.charAt(0).toUpperCase() + user.slice(1)
+    const dispatch = useDispatch()
+
+    const handleLogout = () => {
+        dispatch(unsetCredentials());
+    };
     const navLinkStyle = ({isActive}) => {
         return {
             color: isActive ? 'var(--color-blue-3)' : 'var(--color-grey-0)',
@@ -32,7 +42,7 @@ export default function NavBar() {
                     </div>
                     {token ? <div className={"sign-up"}>
                             <IoPersonOutline className={"icon"}/>
-                            <NavLink to={"/userAccount"} className={"link-signup"}>{user}</NavLink>
+                            <NavLink to={"/"} className={"link-signin"} onClick={handleLogout}>Log out</NavLink>
                         </div> :
                         <div className={"sign-up"}>
                             {/*<IoLogInOutline className={"icon"}/>*/}
