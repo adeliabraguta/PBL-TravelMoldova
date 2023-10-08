@@ -18,9 +18,9 @@ export default function DestinationsPage() {
         error
     } = useGetDestinationsQuery(page);
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [page]);
+    // useEffect(() => {
+    //     window.scrollTo(0, 0);
+    // }, [page]);
     if (isLoading || isFetching) {
         return (
             <Loading/>

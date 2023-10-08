@@ -14,10 +14,16 @@ export const api = createApi({
     }),
     endpoints: (builder) => ({
         getDestinations: builder.query({
-            query: (page = 1) => `destinations?_page=${page}&_limit=5`
+            query: (page = 1) => `destinations?_page=${page}&_limit=6`
         }),
         getDestinationById: builder.query({
             query: (id) => `destinations/${id}`,
+        }),
+        getStories: builder.query({
+            query: (page =1) => `stories?_page=${page}&_limit=5`
+        }),
+        getStoryById: builder.query({
+            query: (id) => `stories/${id}`
         }),
         registerUser: builder.mutation({
             query: credentials => ({
@@ -39,6 +45,8 @@ export const api = createApi({
 export const {
     useGetDestinationByIdQuery,
     useGetDestinationsQuery,
+    useGetStoriesQuery,
+    useGetStoryByIdQuery,
     useLoginUserMutation,
     useRegisterUserMutation,
 } = api;
