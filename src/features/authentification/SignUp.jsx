@@ -14,7 +14,6 @@ export default function SignUp() {
     const [terms, setTerms] = useState(false)
     const [email, setEmail] = useState('')
     const [isPasswordTouched, setIsPasswordTouched] = useState(false);
-
     const [mess, setMess] = useState([])
 
 
@@ -52,7 +51,6 @@ export default function SignUp() {
     }, [username, password]);
 
     const handleUserInput = (e) => setUsername(e.target.value)
-
     const handlePasswordInput = (e) => setPassword(e.target.value)
     const handleEmailInput = (e) => setEmail(e.target.value)
     const handleConfirmPasswordInput = (e) => {

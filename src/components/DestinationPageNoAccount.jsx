@@ -1,5 +1,5 @@
 import {Banner, Desc, Home, Line, Title} from "../Styles/Banner.js";
-import {Link, useLocation, useNavigate, useParams} from "react-router-dom";
+import {Link, NavLink, useLocation, useNavigate, useParams} from "react-router-dom";
 import {IoLocationOutline, IoBookmarkOutline, IoCheckmarkOutline, IoPersonCircleOutline} from "react-icons/io5";
 import styled from "styled-components";
 import React, {useState} from "react";
@@ -8,9 +8,10 @@ import Loading from "./UI/Loading.jsx";
 import {useGetDestinationByIdQuery} from "../app/services/apiService.js";
 import {Rating, Typography} from "@mui/material";
 import {StyledRating} from "./DestinationPageAccount.jsx";
-
+import ImageGallery from "react-image-gallery";
+import  "react-image-gallery/styles/css/image-gallery.css";
 export default function DestinationPageNoAccount() {
-    const {id} = useParams();
+    const {slug} = useParams();
     let navigate = useNavigate();
     const routeChange = () => {
         navigate("/signIn");
@@ -22,7 +23,7 @@ export default function DestinationPageNoAccount() {
         isFetching,
         isError,
         error
-    } = useGetDestinationByIdQuery(id)
+    } = useGetDestinationByIdQuery(slug)
     const [review, setReview] = useState("")
     const [reviews, setReviews] = useState([])
     if (isLoading || isFetching) {
@@ -40,7 +41,9 @@ export default function DestinationPageNoAccount() {
     const onClickHandler = () => {
         setReviews(comments => [...comments, review])
     }
-
+    const handleTransform = () => {
+        
+    }
     return (
         <Home>
             <Line>
@@ -61,16 +64,16 @@ export default function DestinationPageNoAccount() {
                                 </div>
                             </div>
                         </Banner>
-                        <p className={"information"}>{destination.generalInformation}</p>
+                        <p className={"information"}>{destination.long_desc}</p>
 
                     </div>
                     <div className={"carousel_section"}>
                         <div className={"carousel"}>
-                            <img className={"img"} src={`/assets/${destination.img}`} alt="image"/>
-                            <img className={"img"} src={`/assets/${destination.img2}`} alt="image"/>
-                            <img className={"img"} src={`/assets/${destination.img3}`} alt="image"/>
-                            <img className={"img"} src={`/assets/${destination.img}`} alt="image"/>
+                            {destination.images.map((img, index) => (
+                                <img onClick={handleTransform} className={"img"} src={`http://127.0.0.1:5000${img}`} alt="image" key={index} />
+                            ))}
                         </div>
+
                     </div>
                     <div className={"location"}>
                         <IoLocationOutline
@@ -86,21 +89,21 @@ export default function DestinationPageNoAccount() {
                             src={destination.map}
                             width="100%"
                             height="100%"
-                            style={{ border: 0 }}
+                            style={{border: 0}}
                             allowFullScreen=""
                             loading="lazy"
                             referrerPolicy="no-referrer-when-downgrade"
                         />
                     </div>
 
-                    <Banner className={"reviews"} >
-                        <Desc >REVIEW TIME</Desc>
+                    <Banner className={"reviews"}>
+                        <Desc>REVIEW TIME</Desc>
                         <Title>Share your thoughts </Title>
-                        <Link to="/signIn" className={"place-review"} >
+                        <NavLink to={"/signIn"} className={"place-review"}>
                             <div className={"place-review-input"}>
                                 <div className={"rating stars"}>
                                     <div className={"review-title"}>Your rating:</div>
-                                    <StyledRating name={`rating-1`} value={0} readOnly />
+                                    <StyledRating name={`rating-1`} value={0} readOnly/>
                                 </div>
                                 <div className={"rating"}>
                                     <div className={"review-title"}>Your review:</div>
@@ -113,29 +116,33 @@ export default function DestinationPageNoAccount() {
                                 </div>
                             </div>
                             <button className={'btn'} disabled>Place Review</button>
-                        </Link>
+                        </NavLink>
 
                         <div className={"display-review"}>
-                            <div className={"review"} >
+                            <div className={"review"}>
                                 <div className={"review-name-text"}>
                                     <p className={"name"}>MariaNegrescu</p>
                                     <div className={"review-rating"}>
-                                        <StyledRating name={`rating-1`} value={5} readOnly />
+                                        <StyledRating name={`rating-1`} value={5} readOnly/>
                                     </div>
                                 </div>
                                 <div className={"review-text"}>
-                                    I am from Romania, and trips through Moldova have become my favorite activity during the summer. I recommend you to visit Old Orhei and Capriana Monastery. It is amazing!
+                                    I am from Romania, and trips through Moldova have become my favorite activity during
+                                    the summer. I recommend you to visit Old Orhei and Capriana Monastery. It is
+                                    amazing!
                                 </div>
                             </div>
                             <div className={"review"} key={2}>
                                 <div className={"review-name-text"}>
                                     <p className={"name"}>JohnDoe</p>
                                     <div className={"review-rating"}>
-                                        <StyledRating name={`rating-2`} value={4} readOnly />
+                                        <StyledRating name={`rating-2`} value={4} readOnly/>
                                     </div>
                                 </div>
                                 <div className={"review-text"}>
-                                    Moldova is a hidden gem in Eastern Europe. The beautiful landscapes and historical sites make it a perfect destination. I had a great time exploring Chisinau and the wine cellars.
+                                    Moldova is a hidden gem in Eastern Europe. The beautiful landscapes and historical
+                                    sites make it a perfect destination. I had a great time exploring Chisinau and the
+                                    wine cellars.
                                 </div>
                             </div>
                         </div>
@@ -254,16 +261,19 @@ const Destination = styled.div`
       font-style: italic;
     }
   }
-  .map{
+
+  .map {
     padding-bottom: 48px;
     display: flex;
     align-items: center;
     justify-content: center;
-    .map-link{
-    width: 70vw;
-    height: 40vh;
+
+    .map-link {
+      width: 70vw;
+      height: 40vh;
     }
   }
+
   .reviews {
     padding-top: 24px;
     display: flex;
@@ -351,7 +361,7 @@ const Destination = styled.div`
         cursor: pointer;
         letter-spacing: 1.1px;
         font-size: 16px;
-        
+
       }
     }
 
@@ -361,18 +371,21 @@ const Destination = styled.div`
       display: flex;
       flex-direction: column;
       gap: 24px;
-      .review{
+
+      .review {
         background-color: var(--color-grey-9);
         padding: 16px 24px;
         display: flex;
         flex-direction: column;
         gap: 8px;
       }
-      .review-name-text{
+
+      .review-name-text {
         display: flex;
         gap: 16px;
       }
-      .name{
+
+      .name {
         margin: 0;
         color: var(--color-blue-3);
         font-size: 18px;
@@ -382,6 +395,6 @@ const Destination = styled.div`
     }
   }
 
-  
+
 
 `

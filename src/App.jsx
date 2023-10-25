@@ -13,7 +13,7 @@ import SignIn from "./features/authentification/SignIn.jsx";
 import UserAccount from "./features/authentification/UserAccount.jsx";
 import {useSelector} from "react-redux";
 import {selectCurrentToken} from "./features/authentification/authSlice.js";
-import StoryPage from "./components/StoryPage"
+// import StoryPage from "./components/StoryPage"
 import {TransitionGroup, CSSTransition} from "react-transition-group";
 import { useLocation } from "react-router-dom";
 
@@ -40,16 +40,16 @@ function App() {
                 >
                     <Routes>
                         <Route path={'/'} element={<HomePage/>}/>
-                        <Route path={'/destinations'} element={<DestinationsPage/>}/>
-                        <Route path={'/story/:id/:slug'} element={<StoryPage/>}/>
+                        <Route path={'/posts'} element={<DestinationsPage/>}/>
+                        {/*<Route path={'/story/:id/:slug'} element={<StoryPage/>}/>*/}
                         {token ?
                             <>
-                                <Route path={'/destinations/:id/:slug'} element={<DestinationPageAccount/>}/>
+                                <Route path={'/posts/:slug'} element={<DestinationPageAccount/>}/>
                                 <Route path={"/userAccount"} element={<UserAccount/>}/>
                             </> :
                             <>
 
-                                <Route path={'/destinations/:id/:slug'} element={<DestinationPageNoAccount/>}/>
+                                <Route path={'/posts/:slug'} element={<DestinationPageNoAccount/>}/>
                             </>}
                         <Route path={"/signUp"} element={<SignUp/>}/>
                         <Route path={"/signIn"} element={<SignIn/>}/>

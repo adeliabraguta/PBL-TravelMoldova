@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const api = createApi({
     baseQuery: fetchBaseQuery({
-        baseUrl: "http://localhost:3000",
+        baseUrl: "http://127.0.0.1:5000",
         // credentials: 'include',
         prepareHeaders: (headers, { getState }) => {
             const token = getState().auth.access_token
@@ -14,16 +14,10 @@ export const api = createApi({
     }),
     endpoints: (builder) => ({
         getDestinations: builder.query({
-            query: (page = 1) => `destinations?_page=${page}&_limit=6`
+            query: (page = 1) => `posts?_page=${page}&_limit=6`
         }),
         getDestinationById: builder.query({
-            query: (id) => `destinations/${id}`,
-        }),
-        getStories: builder.query({
-            query: (page =1) => `stories?_page=${page}&_limit=5`
-        }),
-        getStoryById: builder.query({
-            query: (id) => `stories/${id}`
+            query: (slug) => `posts/${slug}`,
         }),
         registerUser: builder.mutation({
             query: credentials => ({
@@ -39,15 +33,16 @@ export const api = createApi({
                 body: {...credentials}
             })
         }),
+
     })
 })
+
 
 export const {
     useGetDestinationByIdQuery,
     useGetDestinationsQuery,
-    useGetStoriesQuery,
-    useGetStoryByIdQuery,
     useLoginUserMutation,
     useRegisterUserMutation,
 } = api;
+
 

@@ -6,11 +6,11 @@ export default function DestinationComponent({destination}) {
     return (
         <div>
             <Destination>
-                <Link to={`/destinations/${destination.id}/${destination.slug}`} >
+                <Link to={`/posts/${destination.slug}`} >
                     <div className={"img-container"}>
                         <img
                             className={"img"}
-                            src={`../assets/${destination.img}`}
+                            src={`http://127.0.0.1:5000${destination?.images[0]}`}
                         />
                     </div>
 

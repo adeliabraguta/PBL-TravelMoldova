@@ -1,9 +1,9 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { setupListeners } from "@reduxjs/toolkit/query";
-import { api } from "./services/apiService.js";
-import { persistReducer, persistStore } from "redux-persist";
+import {configureStore} from "@reduxjs/toolkit";
+import {setupListeners} from "@reduxjs/toolkit/query";
+import {api} from "./services/apiService.js";
+import {persistReducer, persistStore} from "redux-persist";
 import storage from "redux-persist/lib/storage";
-import { rootReducer } from "./rootReducer.jsx";
+import {rootReducer} from "./rootReducer.jsx";
 
 const persistConfig = {
     key: "root",

@@ -8,7 +8,8 @@ import InformationComponent from "./UI/InformationComponent.jsx";
 import informationData from "./Data/Information.json";
 import testimonialsData from "./Data/Information.json";
 import TestimonialsComponent from "./UI/TestimonialsComponent.jsx";
-import {useGetDestinationsQuery, useGetStoriesQuery} from "../app/services/apiService.js";
+import {useGetDestinationsQuery} from "../app/services/apiService.js";
+// import {} from "../app/services/apiStories.js"
 import Loading from "./UI/Loading.jsx";
 import StoriesComponent from "/src/components/UI/StoriesComponent";
 
@@ -24,9 +25,9 @@ export default function HomePage() {
         error
     } = useGetDestinationsQuery();
 
-    const {
-        data: stories = [],
-    } = useGetStoriesQuery(1);
+    // const {
+    //     data: stories = [],
+    // } = useGetStoriesQuery(1);
     if (isLoading || isFetching) {
         return (
             <Loading/>
@@ -94,7 +95,7 @@ export default function HomePage() {
                 </div>
                 <div className={"list"}>
                     {destinations.map(destination => (
-                        <DestinationComponent key={destination.id} destination={destination}/>
+                        <DestinationComponent key={destination.slug} destination={destination}/>
                     )).slice(0, 3)}
                 </div>
                 <div>
@@ -133,9 +134,9 @@ export default function HomePage() {
                             Moldova is about wonderful nature and interesting adventures.</p>
                     </div>
                     <div className="stories">
-                        {stories.map((story, index) => (
-                            <StoriesComponent key={index} story={story}/>
-                        ))}
+                        {/*{stories.map((story, index) => (*/}
+                        {/*    <StoriesComponent key={index} story={story}/>*/}
+                        {/*))}*/}
                     </div>
                 </Stories>
             </div>

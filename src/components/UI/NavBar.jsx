@@ -37,7 +37,7 @@ export default function NavBar() {
 
                 <div className={"right_side"}>
                     <div className={"links"}>
-                        <NavLink to={'/destinations'} className={`link title`}>DISCOVER</NavLink>
+                        <NavLink to={'/posts'} className={`link title`}>DISCOVER</NavLink>
                         {/*<NavLink className={`${style.link} ${style.title}`}>STORIES</NavLink>*/}
                     </div>
                     {token ? <div className={"sign-up"}>

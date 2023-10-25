@@ -38,14 +38,12 @@ export default function SignIn() {
                 navigate("/")
             }
         }
-
         },
         [isSuccess,isError, data, username]
     )
     const handleSubmit = useCallback((e) => {
         e.preventDefault()
         login({username, password});
-
     }, [username, password]);
 
     const handleUserInput = (e) => setUsername(e.target.value)
