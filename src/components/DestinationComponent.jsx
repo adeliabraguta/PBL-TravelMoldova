@@ -6,7 +6,7 @@ export default function DestinationComponent({destination}) {
     return (
         <div>
             <Destination>
-                <Link to={`/posts/${destination.slug}`} >
+                <Link className={"link"} to={`/posts/${destination.slug}`} >
                     <div className={"img-container"}>
                         <img
                             className={"img"}
@@ -20,9 +20,11 @@ export default function DestinationComponent({destination}) {
                     {/*</div>*/}
                 </Link>
                 <div className={"desc"}>
+                    <Link className={"link"} to={`/posts/${destination.slug}`} >
                     <h2 className={"title"}>
                         {destination.title}
                     </h2>
+                    </Link>
                 </div>
                 <div className={"location"}>
                     <IoLocationOutline
@@ -59,30 +61,9 @@ const Destination= styled.div`
     object-fit: cover;
     position: relative;
   }
-    
-
-  //.see{
-  //  width: 21vw;
-  //  height: 31vh;
-  //  position: absolute;
-  //  opacity: 0;
-  //  background-color: white;
-  //  transform: translate(0%, -100%);
-  //  display: flex;
-  //  justify-content: center;
-  //  align-content: center;
-  //  align-items: center;
-  //  gap: 12px;
-  //  font-size: 20px;
-  //  font-weight: 600;
-  //  letter-spacing: 1px;
-  //  transition: 0.5s;
-  //  &:hover{
-  //    opacity: 80%;
-  //    color: var(--color-blue-1);
-  //
-  //  }
-  //}
+  .link{
+    text-decoration: none;
+  }
   .desc {
     display: flex;
     align-items: center;

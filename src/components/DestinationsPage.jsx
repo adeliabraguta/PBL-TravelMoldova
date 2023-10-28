@@ -18,9 +18,6 @@ export default function DestinationsPage() {
         error
     } = useGetDestinationsQuery(page);
 
-    // useEffect(() => {
-    //     window.scrollTo(0, 0);
-    // }, [page]);
     if (isLoading || isFetching) {
         return (
             <Loading/>
@@ -48,7 +45,7 @@ export default function DestinationsPage() {
 
                 <List>
                     {destinations.map(destination => (
-                        <DestinationComponent key={destination.id} destination={destination}/>
+                        <DestinationComponent key={destination.slug} destination={destination}/>
                     ))}
                 </List>
                 <Pagination>

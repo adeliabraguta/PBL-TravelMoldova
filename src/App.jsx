@@ -15,8 +15,10 @@ import {useSelector} from "react-redux";
 import {selectCurrentToken} from "./features/authentification/authSlice.js";
 // import StoryPage from "./components/StoryPage"
 import {TransitionGroup, CSSTransition} from "react-transition-group";
-import { useLocation } from "react-router-dom";
-
+import {useLocation} from "react-router-dom";
+import VerificationEmail from "./features/authentification/VerificationEmail.jsx";
+import PostDestination from "./features/postDestination/PostDestination.jsx";
+import ResetPassword from "./features/authentification/ResetPassword.jsx";
 
 
 function App() {
@@ -24,7 +26,9 @@ function App() {
     const [showNav, setShowNav] = useState(true);
     const location = useLocation();
 
-    const shouldShowNav = showNav && location.pathname !== '/signUp' && location.pathname !== '/signIn';
+    const shouldShowNav = showNav && location.pathname !== '/signUp'
+        && location.pathname !== '/signIn' && location.pathname !== '/signUp/verificationEmail'
+        && location.pathname !== '/resetPassword';
 
     return (
         <div className="App">
@@ -46,13 +50,15 @@ function App() {
                             <>
                                 <Route path={'/posts/:slug'} element={<DestinationPageAccount/>}/>
                                 <Route path={"/userAccount"} element={<UserAccount/>}/>
+                                <Route path={"/postDestination"} element={<PostDestination/>}/>
                             </> :
                             <>
-
                                 <Route path={'/posts/:slug'} element={<DestinationPageNoAccount/>}/>
                             </>}
+                        <Route path={"/signUp/verificationEmail"} element={<VerificationEmail/>}/>
                         <Route path={"/signUp"} element={<SignUp/>}/>
                         <Route path={"/signIn"} element={<SignIn/>}/>
+                        <Route path={"resetPassword"} element={<ResetPassword/>}/>
 
                         <Route path={'*'} element={<NoMatch/>}/>
 

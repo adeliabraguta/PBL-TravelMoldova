@@ -120,25 +120,25 @@ export default function HomePage() {
                 </ul>
             </Information>
             <div>
-                <TravelDestinations>
-                    <div className={"guide"}>
-                        <h1 className={"title"}>
-                            Travel Destinations
-                        </h1>
-                    </div>
-                </TravelDestinations>
-                <Stories>
-                    <div className="desc-div">
-                        <p className="desc">Here you can discover fascinating travel stories from Moldova.
-                            This will not leave you indifferent.
-                            Moldova is about wonderful nature and interesting adventures.</p>
-                    </div>
-                    <div className="stories">
-                        {/*{stories.map((story, index) => (*/}
-                        {/*    <StoriesComponent key={index} story={story}/>*/}
-                        {/*))}*/}
-                    </div>
-                </Stories>
+                {/*<TravelDestinations>*/}
+                {/*    <div className={"guide"}>*/}
+                {/*        <h1 className={"title"}>*/}
+                {/*            Travel Destinations*/}
+                {/*        </h1>*/}
+                {/*    </div>*/}
+                {/*</TravelDestinations>*/}
+                {/*<Stories>*/}
+                {/*    <div className="desc-div">*/}
+                {/*        <p className="desc">Here you can discover fascinating travel stories from Moldova.*/}
+                {/*            This will not leave you indifferent.*/}
+                {/*            Moldova is about wonderful nature and interesting adventures.</p>*/}
+                {/*    </div>*/}
+                {/*    <div className="stories">*/}
+                {/*        /!*{stories.map((story, index) => (*!/*/}
+                {/*        /!*    <StoriesComponent key={index} story={story}/>*!/*/}
+                {/*        /!*))}*!/*/}
+                {/*    </div>*/}
+                {/*</Stories>*/}
             </div>
         </Home>
     )
