@@ -10,6 +10,7 @@ import {Rating, Typography} from "@mui/material";
 import {StyledRating} from "./DestinationPageAccount.jsx";
 import ImageGallery from "react-image-gallery";
 import  "react-image-gallery/styles/css/image-gallery.css";
+import GetReview from "../features/reviews/GetReview.jsx";
 export default function DestinationPageNoAccount() {
     const {slug} = useParams();
     let navigate = useNavigate();
@@ -24,8 +25,7 @@ export default function DestinationPageNoAccount() {
         isError,
         error
     } = useGetDestinationByIdQuery(slug)
-    const [review, setReview] = useState("")
-    const [reviews, setReviews] = useState([])
+
     if (isLoading || isFetching) {
         return (
             <Loading/>
@@ -35,15 +35,7 @@ export default function DestinationPageNoAccount() {
         console.log({error});
         return <div>{error.status}</div>;
     }
-    const onChangeHandler = (e) => {
-        setReview(e.target.value)
-    }
-    const onClickHandler = () => {
-        setReviews(comments => [...comments, review])
-    }
-    const handleTransform = () => {
-        
-    }
+
     return (
         <Home>
             <Line>
@@ -52,17 +44,17 @@ export default function DestinationPageNoAccount() {
                         <Banner>
                             <Desc>DISCOVER NOW</Desc>
                             <Title>{destination.title}</Title>
-                            <div className={"interactions"}>
-                                <div className={"interested interact"} onClick={routeChange}>
-                                    <IoBookmarkOutline className={"icon"}/>
-                                    <span>Not interested</span>
+                            {/*<div className={"interactions"}>*/}
+                            {/*    <div className={"interested interact"} onClick={routeChange}>*/}
+                            {/*        <IoBookmarkOutline className={"icon"}/>*/}
+                            {/*        <span>Not interested</span>*/}
 
-                                </div>
-                                <div className={"visited interact"} onClick={routeChange}>
-                                    <IoCheckmarkOutline className={"icon"}/>
-                                    <span>Not visited</span>
-                                </div>
-                            </div>
+                            {/*    </div>*/}
+                            {/*    <div className={"visited interact"} onClick={routeChange}>*/}
+                            {/*        <IoCheckmarkOutline className={"icon"}/>*/}
+                            {/*        <span>Not visited</span>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
                         </Banner>
                         <p className={"information"}>{destination.long_desc}</p>
 
@@ -117,36 +109,7 @@ export default function DestinationPageNoAccount() {
                             </div>
                             <button className={'btn'} disabled>Place Review</button>
                         </NavLink>
-
-                        <div className={"display-review"}>
-                            <div className={"review"}>
-                                <div className={"review-name-text"}>
-                                    <p className={"name"}>MariaNegrescu</p>
-                                    <div className={"review-rating"}>
-                                        <StyledRating name={`rating-1`} value={5} readOnly/>
-                                    </div>
-                                </div>
-                                <div className={"review-text"}>
-                                    I am from Romania, and trips through Moldova have become my favorite activity during
-                                    the summer. I recommend you to visit Old Orhei and Capriana Monastery. It is
-                                    amazing!
-                                </div>
-                            </div>
-                            <div className={"review"} key={2}>
-                                <div className={"review-name-text"}>
-                                    <p className={"name"}>JohnDoe</p>
-                                    <div className={"review-rating"}>
-                                        <StyledRating name={`rating-2`} value={4} readOnly/>
-                                    </div>
-                                </div>
-                                <div className={"review-text"}>
-                                    Moldova is a hidden gem in Eastern Europe. The beautiful landscapes and historical
-                                    sites make it a perfect destination. I had a great time exploring Chisinau and the
-                                    wine cellars.
-                                </div>
-                            </div>
-                        </div>
-
+                        <GetReview/>
                     </Banner>
                 </Destination>
             </Line>

@@ -2,18 +2,23 @@ import {Banner, Desc, Home, Line, Title} from "../Styles/Banner.js";
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {IoLocationOutline, IoBookmarkOutline, IoCheckmarkOutline, IoPersonCircleOutline} from "react-icons/io5";
 import styled from "styled-components";
-import React, {useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 
 import Loading from "./UI/Loading.jsx";
-import {useGetDestinationByIdQuery} from "../app/services/apiService.js";
+import {useGetDestinationByIdQuery, useGetReviewQuery, usePostReviewMutation} from "../app/services/apiService.js";
 import {Rating, Typography} from "@mui/material";
+import {setComment} from "../features/reviews/reviewSlice.js";
+import {setCredentials} from "../features/authentification/authSlice.js";
+import {useDispatch} from "react-redux";
+import PostReview from "../features/reviews/PostReview.jsx";
+import GetReview from "../features/reviews/GetReview.jsx";
+import ImageCarousel from "./UI/ImageCarousel.jsx";
 
 export default function DestinationPageNoAccount() {
-    const {id} = useParams()
-    let navigate = useNavigate();
-    const routeChange = () => {
-        navigate("/signIn");
-    }
+
+    const {slug} = useParams()
+    const dispatch = useDispatch()
+
 
     const {
         data: destination = [],
@@ -21,10 +26,7 @@ export default function DestinationPageNoAccount() {
         isFetching,
         isError,
         error
-    } = useGetDestinationByIdQuery(id)
-    const [reviews, setReviews] = useState([]);
-    const [review, setReview] = useState({ text: "", rating: 0 });
-    const [value, setValue] = useState(0);
+    } = useGetDestinationByIdQuery(slug)
 
 
     if (isLoading || isFetching) {
@@ -36,24 +38,6 @@ export default function DestinationPageNoAccount() {
         console.log({error});
         return <div>{error.status}</div>;
     }
-    const onChangeHandler = (e) => {
-        setReview({ ...review, text: e.target.value });
-    };
-
-    const onClickHandler = () => {
-        const newComment = {
-            text: review.text,
-            rating: value,
-        };
-
-        setReviews((comments) => [...comments, newComment]);
-
-        // Clear the review text and reset the rating
-        setReview({ ...review, text: '' });
-        setValue(0);
-    };
-
-
 
 
     return (
@@ -64,31 +48,26 @@ export default function DestinationPageNoAccount() {
                         <Banner>
                             <Desc>DISCOVER NOW</Desc>
                             <Title>{destination.title}</Title>
-                            <div className={"interactions"}>
-                                <div className={"interested interact"}>
-                                    <IoBookmarkOutline className={"icon"}/>
-                                    <span>Save</span>
+                            {/*<div className={"interactions"}>*/}
+                            {/*    <div className={"interested interact"}>*/}
+                            {/*        <IoBookmarkOutline className={"icon"}/>*/}
+                            {/*        <span>Save</span>*/}
 
-                                </div>
-                                <div className={"visited interact"}>
-                                    <IoCheckmarkOutline className={"icon"}/>
-                                    <span>Not Visited</span>
-                                </div>
-                            </div>
+                            {/*    </div>*/}
+                            {/*    <div className={"visited interact"}>*/}
+                            {/*        <IoCheckmarkOutline className={"icon"}/>*/}
+                            {/*        <span>Not Visited</span>*/}
+                            {/*    </div>*/}
+                            {/*</div>*/}
                         </Banner>
-                        <p className={"information"}>{destination.generalInformation}</p>
+                        <p className={"information"}>{destination.long_desc}</p>
 
                     </div>
-                    <div className={"carousel_section"}>
-                        <div className={"carousel"}>
-                            <img className={"img"} src={`/assets/${destination.img}`} alt="image"/>
-                            <img className={"img"} src={`/assets/${destination.img2}`} alt="image"/>
-
-                            <img className={"img"} src={`/assets/${destination.img3}`} alt="image"/>
-                            <img className={"img"} src={`/assets/${destination.img}`} alt="image"/>
-
-
-                        </div>
+                    <div className={"image-container"}>
+                        {/*{destination.images.map((img, index) => (*/}
+                        {/*    <img className={"img"} src={`http://127.0.0.1:5000${img}`} alt="image" key={index}/>*/}
+                        {/*))}*/}
+                        <ImageCarousel destination = {destination.images}/>
                     </div>
                     <div className={"location"}>
                         <IoLocationOutline
@@ -101,83 +80,20 @@ export default function DestinationPageNoAccount() {
                     <div className={"map"}>
                         <iframe
                             className={"map-link"}
-                            src={destination.map}
+                            src={destination.iframe}
                             width="100%"
                             height="100%"
-                            style={{ border: 0 }}
+                            style={{border: 0}}
                             allowFullScreen=""
                             loading="lazy"
                             referrerPolicy="no-referrer-when-downgrade"
                         />
                     </div>
-
                     <Banner className={"reviews"}>
-                        <Desc >REVIEW TIME</Desc>
+                        <Desc>REVIEW TIME</Desc>
                         <Title>Share your thoughts </Title>
-                        <div className={"place-review"} >
-                            <div className={"place-review-input"}>
-                                <div className={"rating stars"}>
-                                <div className={"review-title"}>Your rating:</div>
-                            <StyledRating
-                                name="simple-controlled"
-                                value={value}
-                                onChange={(event, newValue) => {
-                                    setValue(newValue);
-                                }}
-                            />
-                                </div>
-                                <div className={"rating"}>
-                                <div className={"review-title"}>Your review:</div>
-                                    <textarea
-                                        rows='1'
-                                        value={review.text}
-                                        onChange={onChangeHandler}
-                                        className={'text-area'}
-                                        placeholder={"I enjoyed..."}
-                                    />
-                                </div>
-                            </div>
-                                <button className={'btn'} onClick={onClickHandler}>Place Review</button>
-                        </div>
-
-                        <div className={"display-review"}>
-                            {reviews.map((reviewItem, index) => (
-                                <div className={"review"} key={index}>
-                                    <div className={"review-name-text"}>
-                                    <p className={"name"}>MariaNegrescu</p>
-                                    <div className={"review-rating"}>
-                                        <StyledRating name={`rating-${index}`} value={reviewItem.rating} readOnly />
-                                    </div>
-                                    </div>
-                                    <div className={"review-text"}>{reviewItem.text}</div>
-                                </div>
-                            ))}
-                            <div className={"review"} key={1}>
-                                <div className={"review-name-text"}>
-                                    <p className={"name"}>MariaNegrescu</p>
-                                    <div className={"review-rating"}>
-                                        <StyledRating name={`rating-1`} value={5} readOnly />
-                                    </div>
-                                </div>
-                                <div className={"review-text"}>
-                                    I am from Romania, and trips through Moldova have become my favorite activity during the summer. I recommend you to visit Old Orhei and Capriana Monastery. It is amazing!
-                                </div>
-                            </div>
-
-                            <div className={"review"} key={2}>
-                                <div className={"review-name-text"}>
-                                    <p className={"name"}>JohnDoe</p>
-                                    <div className={"review-rating"}>
-                                        <StyledRating name={`rating-2`} value={4} readOnly />
-                                    </div>
-                                </div>
-                                <div className={"review-text"}>
-                                    Moldova is a hidden gem in Eastern Europe. The beautiful landscapes and historical sites make it a perfect destination. I had a great time exploring Chisinau and the wine cellars.
-                                </div>
-                            </div>
-                        </div>
-
-
+                        <PostReview/>
+                        <GetReview/>
                     </Banner>
                 </Destination>
             </Line>
@@ -210,28 +126,20 @@ const Destination = styled.div`
     }
   }
 
-  .carousel_section {
-    display: flex;
-    align-content: center;
+  .image-container {
+   display: flex;
+    align-items: center;
     justify-content: center;
+    
 
-    .carousel {
-      width: 70vw;
-      margin: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-content: center;
-      justify-content: center;
-
-      .img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        transition: 0.3s ease;
-      }
+    .img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      transition: 0.3s ease;
     }
   }
+
 
   .destination {
     display: grid;
@@ -319,121 +227,6 @@ const Destination = styled.div`
     flex-direction: column;
     align-items: center;
     padding-bottom: 96px;
-
-    .title {
-      color: var(--color-blue-0);
-      font-size: 24px;
-      letter-spacing: 1.1px;
-    }
-
-    .place-review {
-      margin-top: 24px;
-      border: 2px solid var(--color-grey-8);
-      padding: 48px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      gap: 24px;
-      max-width: 60vw;
-
-      .place-review-input {
-        display: flex;
-        flex-direction: column;
-        gap: 24px;
-
-        .rating {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-
-          .review-title {
-            font-size: 18px;
-            letter-spacing: 1px;
-            color: var(--color-blue-0);
-            font-weight: 600;
-          }
-        }
-
-        .stars {
-          flex-direction: row;
-          gap: 18px;
-        }
-      }
-
-      //.img {
-      //  height: 70px;
-      //  width: 70px;
-      //  color: var(--color-grey-8);
-      //}
-
-      .text-area {
-        border: none;
-        overflow: auto;
-        outline: none;
-        padding: 12px 20px;
-        box-sizing: border-box;
-        border-bottom: 2px solid var(--color-grey-7);
-        font-size: 16px;
-        resize: none;
-        width: 60vw;
-
-        &:focus {
-          border-bottom: 2px solid var(--color-green-5);
-        }
-
-        &:disabled {
-          background-color: white;
-        }
-      }
-
-      .btn {
-        margin-top: 24px;
-        background-color: var(--color-grey-7);
-        padding: 12px 18px;
-        color: white;
-        //border: 2px solid var(--color-grey-7);
-        border: none;
-        font-weight: 600;
-        transition: 0.3s ease;
-        cursor: pointer;
-        letter-spacing: 1.1px;
-        font-size: 16px;
-
-        &:hover {
-          background-color: var(--color-green-2);
-          color: white;
-          //border: 2px solid var(--color-blue-5);
-          border: none;
-        }
-      }
-    }
-
-    .display-review {
-      width: 70vw;
-      padding-top: 48px;
-      display: flex;
-      flex-direction: column;
-      gap: 24px;
-      .review{
-        background-color: var(--color-grey-9);
-        padding: 16px 24px;
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-      }
-      .review-name-text{
-        display: flex;
-        gap: 16px;
-      }
-      .name{
-        margin: 0;
-        color: var(--color-blue-3);
-        font-size: 18px;
-        font-weight: 600;
-        letter-spacing: 1.1px;
-      }
-    }
   }
 
 `
