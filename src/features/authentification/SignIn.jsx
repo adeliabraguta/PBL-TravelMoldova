@@ -11,35 +11,29 @@ import Loading from "../../components/UI/Loading.jsx";
 export default function SignIn() {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [err,setErr] = useState('')
     const navigate = useNavigate()
-
     const getEnabledStatus = (inputValue) => inputValue.length > 0;
 
     const enabledUsername = getEnabledStatus(username);
     const enabledPassword = getEnabledStatus(password);
 
-    const [login, { isSuccess, isError, data, user}] = useLoginUserMutation()
+    const [login, { isSuccess, isError, error, data}] = useLoginUserMutation()
     const dispatch = useDispatch()
+    const parser = new DOMParser();
+    const document= parser.parseFromString(error?.data, 'text/html')
+    const errorMessage = document.querySelector('p')?.textContent
 
     const enabled =
         username.length > 0 &&
         password.length > 0;
 
     useEffect(() => {
-        if(data){
-            if (data.error){
-                setErr('validate')
-                console.log(data.error)
-
-            } else {
+        if(isSuccess) {
                 dispatch(setCredentials({...data, username}))
-                console.log(dispatch(setUserName({username})))
                 navigate("/")
             }
-        }
         },
-        [isSuccess,isError, data, username]
+        [isSuccess]
     )
     const handleSubmit = useCallback((e) => {
         e.preventDefault()
@@ -58,6 +52,9 @@ export default function SignIn() {
                     <Desc>
                         Travel Moldova
                     </Desc>
+                    <div className={"not-confirmed"}>
+                        {isError && errorMessage }
+                    </div>
                     <form className={"form"} onSubmit={handleSubmit} >
                         <div className={"form_section"}>
                             <div className={"label-div"}>
@@ -78,6 +75,10 @@ export default function SignIn() {
                                    type={"password"} placeholder={"Choose a password"}/>
                         </div>
                         <button className={"btn"} disabled={!enabled} >Sign In</button>
+                        {/*<div className={"log-in"}>*/}
+                        {/*    <span className={'login-text'}>Forgot your password?</span><Link*/}
+                        {/*    className={"link-login"} to={"/resetPassword"}>Reset Password</Link>*/}
+                        {/*</div>*/}
                         <div className={"log-in"}>
                             <span className={'login-text'}>Don't have an account yet?</span><Link
                             className={"link-login"} to={"/signUp"}>Sign Up</Link>

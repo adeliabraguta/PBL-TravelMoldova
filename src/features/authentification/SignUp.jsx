@@ -7,18 +7,18 @@ import {useDispatch} from "react-redux";
 import {setCredentials} from "./authSlice.js";
 
 export default function SignUp() {
-    const [register, {isLoading, isSuccess, error, isError, data}] = useRegisterUserMutation()
+    const [register, {isSuccess, error, isError, data}] = useRegisterUserMutation()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [terms, setTerms] = useState(false)
     const [email, setEmail] = useState('')
     const [isPasswordTouched, setIsPasswordTouched] = useState(false);
-    const [mess, setMess] = useState([])
 
-
+    const parser = new DOMParser();
+    const document= parser.parseFromString(error?.data, 'text/html')
+    const errorMessage = document.querySelector('p')?.textContent
     const getEnabledStatus = (inputValue) => inputValue.length > 0;
-
     const enabledUsername = getEnabledStatus(username);
     const enabledEmail = getEnabledStatus(email);
     const enabledPassword = getEnabledStatus(password);
@@ -29,34 +29,30 @@ export default function SignUp() {
         password.length > 7 && confirmPassword.length > 7 && terms === true
 
     const navigate = useNavigate()
-
     const dispatch = useDispatch()
-    const userData = data;
 
     useEffect(() => {
         if (isSuccess) {
-            dispatch(setCredentials({...userData, username}))
-            navigate("/signIn")
+            dispatch(setCredentials({...data, username, password, email}))
+            navigate("/signUp/verificationEmail")
         }
     }, [isSuccess])
     const handleMessage = () => {
         setIsPasswordTouched(true);
-
     }
 
     const handleSubmit = useCallback((e) => {
         e.preventDefault()
-        register({username, password});
+        register({username, password, email});
 
     }, [username, password]);
 
     const handleUserInput = (e) => setUsername(e.target.value)
     const handlePasswordInput = (e) => setPassword(e.target.value)
-    const handleEmailInput = (e) => setEmail(e.target.value)
     const handleConfirmPasswordInput = (e) => {
         setConfirmPassword(e.target.value)
-
     }
+    const handleEmailInput = (e) => setEmail(e.target.value)
     const handleTermsInput = (e) => setTerms(current => !current)
     return (<>
             <ImageContainer>
@@ -67,6 +63,9 @@ export default function SignUp() {
                     <Desc>
                         Join Travel Moldova
                     </Desc>
+                    <div className={"not-confirmed"}>
+                        {isError && errorMessage}
+                    </div>
                     <form className={"form"} onSubmit={handleSubmit}>
                         <div className={"form_section"}>
                             <div className={'label-div'}>
@@ -76,14 +75,14 @@ export default function SignUp() {
                             <input onChange={handleUserInput} value={username} className={"input"}
                                    type={"text"} placeholder={"Choose a username"}/>
                         </div>
-                        {/*<div className={"form_section"}>*/}
-                        {/*    <div className={'label-div'}>*/}
+                        <div className={"form_section"}>
+                            <div className={'label-div'}>
 
-                        {/*    <label className={"label"}>Email Address </label>*/}
-                        {/*        {!enabledEmail ? <span>&#42;Required</span> : ''}*/}
-                        {/*</div>*/}
-                        {/*    <input className={"input"} value={email} onChange={handleEmailInput} type={"email"} placeholder={"Enter your email"}/>*/}
-                        {/*</div>*/}
+                            <label className={"label"}>Email Address </label>
+                                {!enabledEmail ? <span>&#42;Required</span> : ''}
+                        </div>
+                            <input className={"input"} value={email} onChange={handleEmailInput} type={"email"} placeholder={"Enter your email"}/>
+                        </div>
 
                         <div className={"form_section"}>
                             <div className={'label-div'}>
@@ -93,7 +92,6 @@ export default function SignUp() {
                             </div>
                             <input onChange={handlePasswordInput} onBlur={handleMessage} value={password} className={"input"}
                                    type={"password"} placeholder={"Choose a password"} name="new-password"
-                                   id="new-password"
                                    autoComplete="new-password"/>
                             {isPasswordTouched && password.length < 7 ? (
                                 <div className={"not-confirmed"}>Password must have at least 7 characters</div>
@@ -137,7 +135,6 @@ export const ImageContainer = styled.div`
   height: 100vh;
   display: flex;
   justify-content: center;
-  align-items: center;
 
   &::before {
     content: "";
@@ -153,18 +150,17 @@ export const ImageContainer = styled.div`
   }
 
   .banner {
-    background-color: rgba(255, 255, 255, 1); /* White background with full opacity */
-    position: relative; /* Add this to establish a new stacking context */
+    background-color: rgba(255, 255, 255, 1);
     z-index: 1;
-    padding: 48px;
+    padding: 48px 96px;
     display: flex;
     flex-direction: column;
-    max-width: 400px;
+    max-width: 30vw;
+
   }
 
   .form {
     align-self: flex-start;
-    padding-top: 24px;
     display: flex;
     flex-direction: column;
     gap: 12px;
@@ -225,11 +221,22 @@ export const ImageContainer = styled.div`
     font-weight: 400;
     font-size: 14px;
     color: #ff0044;
-    //text-align: end;
-    //min-height: 16px;
-    //font-size: 16px;
+    height: 14px;
   }
-
+  .expired{
+    opacity: 0.5;
+    cursor: not-allowed;
+    
+    .label{
+      cursor: not-allowed;
+    }
+    .input{
+      cursor: not-allowed;
+    }
+  }
+  .disable{
+    visibility: hidden;
+  }
   .btn {
     background-color: var(--color-green-2);
     border: none;
@@ -253,6 +260,7 @@ export const ImageContainer = styled.div`
       background-color: var(--color-green-4);
     }
   }
+    
 
   .log-in {
     align-self: center;
