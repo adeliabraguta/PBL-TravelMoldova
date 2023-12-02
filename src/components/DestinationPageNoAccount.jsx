@@ -1,16 +1,15 @@
 import {Banner, Desc, Home, Line, Title} from "../Styles/Banner.js";
-import {Link, NavLink, useLocation, useNavigate, useParams} from "react-router-dom";
-import {IoLocationOutline, IoBookmarkOutline, IoCheckmarkOutline, IoPersonCircleOutline} from "react-icons/io5";
+import {NavLink, useNavigate, useParams} from "react-router-dom";
+import {IoLocationOutline} from "react-icons/io5";
 import styled from "styled-components";
 import React, {useState} from "react";
 
 import Loading from "./UI/Loading.jsx";
 import {useGetDestinationByIdQuery} from "../app/services/apiService.js";
-import {Rating, Typography} from "@mui/material";
 import {StyledRating} from "./DestinationPageAccount.jsx";
-import ImageGallery from "react-image-gallery";
 import  "react-image-gallery/styles/css/image-gallery.css";
 import GetReview from "../features/reviews/GetReview.jsx";
+import ImageCarousel from "./UI/ImageCarousel.jsx";
 export default function DestinationPageNoAccount() {
     const {slug} = useParams();
     let navigate = useNavigate();
@@ -59,13 +58,8 @@ export default function DestinationPageNoAccount() {
                         <p className={"information"}>{destination.long_desc}</p>
 
                     </div>
-                    <div className={"carousel_section"}>
-                        <div className={"carousel"}>
-                            {destination.images.map((img, index) => (
-                                <img onClick={handleTransform} className={"img"} src={`http://127.0.0.1:5000${img}`} alt="image" key={index} />
-                            ))}
-                        </div>
-
+                    <div className={"image-container"}>
+                        <ImageCarousel destination = {destination.images}/>
                     </div>
                     <div className={"location"}>
                         <IoLocationOutline
@@ -78,7 +72,7 @@ export default function DestinationPageNoAccount() {
                     <div className={"map"}>
                         <iframe
                             className={"map-link"}
-                            src={destination.map}
+                            src={destination.iframe}
                             width="100%"
                             height="100%"
                             style={{border: 0}}
@@ -134,26 +128,17 @@ const Destination = styled.div`
     }
   }
 
-  .carousel_section {
+  .image-container {
     display: flex;
-    align-content: center;
+    align-items: center;
     justify-content: center;
 
-    .carousel {
-      width: 70vw;
-      margin: 0;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 48px;
-      align-content: center;
-      justify-content: center;
 
-      .img {
-        height: 100%;
-        width: 100%;
-        object-fit: cover;
-        transition: 0.3s ease;
-      }
+    .img {
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      transition: 0.3s ease;
     }
   }
 
@@ -196,10 +181,7 @@ const Destination = styled.div`
     color: #102A43;
     line-height: 1.3;
     margin-top: 32px;
-    max-width: 60vw;
-    //border-right: solid #D9E2EC;
-    //border-left: solid #D9E2EC;
-    //padding:0 48px 32px 48px;
+    max-width: 65vw;
     text-align: center;
   }
 
@@ -232,7 +214,7 @@ const Destination = styled.div`
     justify-content: center;
 
     .map-link {
-      width: 70vw;
+      width: 65vw;
       height: 40vh;
     }
   }
@@ -260,7 +242,7 @@ const Destination = styled.div`
       justify-content: center;
       align-items: center;
       gap: 24px;
-      max-width: 60vw;
+      max-width: 65vw;
 
       .place-review-input {
         display: flex;
@@ -285,13 +267,7 @@ const Destination = styled.div`
           gap: 18px;
         }
       }
-
-      //.img {
-      //  height: 70px;
-      //  width: 70px;
-      //  color: var(--color-grey-8);
-      //}
-
+      
       .text-area {
         border: none;
         overflow: auto;
@@ -317,7 +293,6 @@ const Destination = styled.div`
         background-color: var(--color-grey-7);
         padding: 12px 18px;
         color: white;
-        //border: 2px solid var(--color-grey-7);
         border: none;
         font-weight: 600;
         transition: 0.3s ease;

@@ -1,17 +1,15 @@
 import {Banner} from "../../Styles/Banner.js";
 import {StyledRating} from "../../components/DestinationPageAccount.jsx";
-import React, {useRef} from "react";
-import {useGetReviewQuery} from "../../app/services/apiService.js";
+import React, {useRef, useState} from "react";
+import { useGetReviewQuery} from "../../app/services/apiService.js";
 import {useParams} from "react-router-dom";
 import styled from "styled-components";
 
 export default function GetReview(){
-    const ref= useRef()
-    const slug = useParams()
+    const {slug} = useParams()
     const {
         data: comments = []
-    } = useGetReviewQuery(slug.slug)
-
+    } = useGetReviewQuery(slug)
     return(
         <Banner>
             <GetReviews className={"display-review"}>
@@ -32,7 +30,7 @@ export default function GetReview(){
     )
 }
 const GetReviews = styled.div`
-    width: 70vw;
+    width: 65vw;
     padding-top: 48px;
     display: flex;
     flex-direction: column;

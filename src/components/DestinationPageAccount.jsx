@@ -64,9 +64,6 @@ export default function DestinationPageNoAccount() {
 
                     </div>
                     <div className={"image-container"}>
-                        {/*{destination.images.map((img, index) => (*/}
-                        {/*    <img className={"img"} src={`http://127.0.0.1:5000${img}`} alt="image" key={index}/>*/}
-                        {/*))}*/}
                         <ImageCarousel destination = {destination.images}/>
                     </div>
                     <div className={"location"}>
@@ -109,6 +106,10 @@ export const StyledRating = styled(Rating)({
     },
 });
 const Destination = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   .interactions {
     display: flex;
     gap: 48px;
@@ -180,10 +181,7 @@ const Destination = styled.div`
     color: #102A43;
     line-height: 1.3;
     margin-top: 32px;
-    max-width: 60vw;
-    //border-right: solid #D9E2EC;
-    //border-left: solid #D9E2EC;
-    //padding:0 48px 32px 48px;
+    max-width: 65vw;
     text-align: center;
   }
 
@@ -216,7 +214,7 @@ const Destination = styled.div`
     justify-content: center;
 
     .map-link {
-      width: 70vw;
+      width: 65vw;
       height: 40vh;
     }
   }

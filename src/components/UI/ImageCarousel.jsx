@@ -60,7 +60,7 @@ const CarouselComponent = styled.div`
     position: relative;
     justify-content: center;
     align-content: center;
-    width: 65%;
+    width: 70%;
   
 
     .slide {

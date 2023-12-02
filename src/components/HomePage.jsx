@@ -9,25 +9,17 @@ import informationData from "./Data/Information.json";
 import testimonialsData from "./Data/Information.json";
 import TestimonialsComponent from "./UI/TestimonialsComponent.jsx";
 import {useGetDestinationsQuery} from "../app/services/apiService.js";
-// import {} from "../app/services/apiStories.js"
 import Loading from "./UI/Loading.jsx";
-import StoriesComponent from "/src/components/UI/StoriesComponent";
 
 export default function HomePage() {
-    const [information, setInformation] = useState(informationData.accordion)
-    const [testimonials, setTestimonials] = useState(testimonialsData.testimonials)
+    const information = informationData.accordion
+    const testimonials = testimonialsData.testimonials
 
     const {
         data: destinations = [],
         isLoading,
         isFetching,
-        isError,
-        error
     } = useGetDestinationsQuery();
-
-    // const {
-    //     data: stories = [],
-    // } = useGetStoriesQuery(1);
     if (isLoading || isFetching) {
         return (
             <Loading/>

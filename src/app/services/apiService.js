@@ -13,7 +13,7 @@ export const api = createApi({
     }),
     endpoints: (builder) => ({
         getDestinations: builder.query({
-            query: (page = 1) => `posts?_page=${page}&_limit=6`
+            query: (page) => `posts/?page=${page}&pagesize=6`
         }),
         getDestinationById: builder.query({
             query: (slug) => `posts/${slug}`,
@@ -29,7 +29,7 @@ export const api = createApi({
             query: ({information, slug}) => ({
                 url: `posts/${slug}/image`,
                 method: "PUT",
-                formData: {...information}
+                body: information
             })
         }),
         registerUser: builder.mutation({

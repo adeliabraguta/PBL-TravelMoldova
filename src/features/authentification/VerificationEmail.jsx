@@ -1,10 +1,9 @@
-import {ImageContainer} from "./SignUp.jsx";
 import {Banner, Desc, Title} from "../../Styles/Banner.js";
-import {Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import React, {useCallback, useEffect, useRef, useState} from "react";
 import {useReVerificationEmailMutation, useVerificationEmailMutation} from "../../app/services/apiService.js";
-import {setCredentials} from "./authSlice.js";
 import {useDispatch} from "react-redux";
+import {ImageContainer} from "../../Styles/Auth.styled.js";
 
 export default function VerificationEmail() {
     const [verification, { isSuccess: isSuccess, isError: isError, error: error, data: data}] = useVerificationEmailMutation()
@@ -34,7 +33,6 @@ export default function VerificationEmail() {
             total, minutes, seconds
         };
     }
-
     const startTimer = (e) => {
         let {total, minutes, seconds}
             = getTimeRemaining(e);
@@ -68,7 +66,7 @@ export default function VerificationEmail() {
     }
     useEffect(() => {
             if(isSuccess) {
-                navigate("/")
+                navigate("/signIn")
             }
         },
         [isSuccess]
@@ -77,6 +75,8 @@ export default function VerificationEmail() {
         if(isError){
             setMessage("Incorrect Code")
             console.log(message)
+            console.log(error)
+            
         }
         if (isErrorEmail){
             setMessage(errorMessageEmail)

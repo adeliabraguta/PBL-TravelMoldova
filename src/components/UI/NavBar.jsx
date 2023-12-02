@@ -1,20 +1,17 @@
 import {Link, NavLink} from "react-router-dom";
 import styled from "styled-components";
-import {IoLogInOutline, IoPersonAddOutline, IoPersonOutline} from "react-icons/io5";
+import { IoPersonOutline} from "react-icons/io5";
 import {
     selectCurrentToken,
     selectCurrentUser,
-    setCredentials,
     unsetCredentials
 } from "../../features/authentification/authSlice.js";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect} from "react";
 
 
 export default function NavBar() {
     const token = useSelector(selectCurrentToken)
     const user = useSelector(selectCurrentUser)
-    const userName= user.charAt(0).toUpperCase() + user.slice(1)
     const dispatch = useDispatch()
 
     const handleLogout = () => {
@@ -45,7 +42,6 @@ export default function NavBar() {
                             <NavLink to={"/"} className={"link-signin"} onClick={handleLogout}>Log out</NavLink>
                         </div> :
                         <div className={"sign-up"}>
-                            {/*<IoLogInOutline className={"icon"}/>*/}
                             <NavLink to={"/signIn"} className={"link-signin"}>Sign In</NavLink> |
                             <NavLink to={"/signUp"} className={"link-signup"}>Sign Up</NavLink>
                         </div>
