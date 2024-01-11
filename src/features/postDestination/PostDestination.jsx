@@ -10,6 +10,7 @@ import { setDestination } from "./destinationSlice.js";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Loading from "../../components/UI/Loading.jsx";
+import {toast} from "react-toastify";
 
 export default function PostDestination() {
   const dispatch = useDispatch();
@@ -44,6 +45,7 @@ export default function PostDestination() {
       );
       setSlug(data.slug);
       setMessage("Post Added Successful");
+      toast.success("Post Added Successful")
     }
   });
 
@@ -65,7 +67,6 @@ export default function PostDestination() {
       e.preventDefault();
       const formData = new FormData();
       formData.append("file", img);
-      console.log(formData);
       postDestinationImg({ information: formData, slug });
       setImg("");
     },

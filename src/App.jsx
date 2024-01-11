@@ -3,7 +3,7 @@ import './App.css'
 import NavBar from "./components/UI/NavBar.jsx";
 import HomePage from "./components/HomePage.jsx";
 import FooterComponent from "./components/UI/FooterComponent.jsx";
-import {Routes, Route, useNavigate} from "react-router-dom";
+import {Routes, Route} from "react-router-dom";
 import DestinationsPage from "./components/DestinationsPage.jsx";
 import NoMatch from "./components/UI/NoMatch.jsx";
 import DestinationPageNoAccount from "./components/DestinationPageNoAccount.jsx";
@@ -13,7 +13,7 @@ import SignIn from "./features/authentification/SignIn.jsx";
 import UserAccount from "./features/authentification/UserAccount.jsx";
 import {useSelector} from "react-redux";
 import {selectCurrentToken} from "./features/authentification/authSlice.js";
-// import StoryPage from "./components/StoryPage"
+import StoryPage from "./components/StoryPage"
 import {TransitionGroup, CSSTransition} from "react-transition-group";
 import {useLocation} from "react-router-dom";
 import VerificationEmail from "./features/authentification/VerificationEmail.jsx";
@@ -45,7 +45,7 @@ function App() {
                     <Routes>
                         <Route path={'/'} element={<HomePage/>}/>
                         <Route path={'/posts'} element={<DestinationsPage/>}/>
-                        {/*<Route path={'/story/:id/:slug'} element={<StoryPage/>}/>*/}
+                        <Route path={'/story/:id/:slug'} element={<StoryPage/>}/>
                         {token ?
                             <>
                                 <Route path={'/posts/:slug'} element={<DestinationPageAccount/>}/>
@@ -61,7 +61,6 @@ function App() {
                         <Route path={"resetPassword"} element={<ResetPassword/>}/>
 
                         <Route path={'*'} element={<NoMatch/>}/>
-
                     </Routes>
                 </CSSTransition>
             </TransitionGroup>

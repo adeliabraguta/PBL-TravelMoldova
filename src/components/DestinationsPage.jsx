@@ -63,7 +63,7 @@ export default function DestinationsPage() {
                                 smooth={true}
                                 duration={200}>
                         <button className={"btn"}
-                                disabled={page >= 1}
+                                disabled={page >= 2}
                                 onClick={() => setPage(prev => prev + 1)}><IoChevronForward
                             className={"icon"}/></button>
                     </ScrollLink>
