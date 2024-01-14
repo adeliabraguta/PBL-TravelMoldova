@@ -10,7 +10,7 @@ import { setDestination } from "./destinationSlice.js";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Loading from "../../components/UI/Loading.jsx";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 export default function PostDestination() {
   const dispatch = useDispatch();
@@ -45,7 +45,7 @@ export default function PostDestination() {
       );
       setSlug(data.slug);
       setMessage("Post Added Successful");
-      toast.success("Post Added Successful")
+      toast.success("Post Added Successful");
     }
   });
 
@@ -72,40 +72,23 @@ export default function PostDestination() {
     },
     [img],
   );
-  // if (isSuccessImg) {
-  //     setImgNr(img => img+1)
-  // }
-  // const handleFinish = useCallback((e)=>{
-  //     e.preventDefault()
-  //     setSlug('');
-  //     setTitle('')
-  //     setAddress('')
-  //     setLong_desc('')
-  //     setImg('')
-  // })
+
   if (isLoading || isLoadingImg) {
     return (
-      <Home>
-        <Line>
-          <Banner>
-            <Desc>TRAVEL MOLDOVA</Desc>
-            <Title>Upload a Destination</Title>
-            <Loading />
-          </Banner>
-        </Line>
-      </Home>
+        <Banner>
+          <Desc>Your Profile</Desc>
+          <Title>Upload a Destination</Title>
+          <Loading />
+        </Banner>
     );
   }
   return (
-    <Home>
-      <Line>
-        <Banner>
-          <Desc>TRAVEL MOLDOVA</Desc>
-          <Title>Upload a Destination</Title>
-        </Banner>
-      </Line>
+    <div>
+      <Banner>
+        <Desc>Your Profile</Desc>
+        <Title>Upload a Destination</Title>
+      </Banner>
       <Destination>
-        <p className={"message"}>{message}</p>
         <form className={"post-destination"} onSubmit={handleSubmit}>
           <div className={"input-container"}>
             <label className={"review-title"}>Destination's Name</label>
@@ -161,11 +144,8 @@ export default function PostDestination() {
             </p>
           </form>
         </div>
-        {/*<div className={'finish'}>*/}
-        {/*    <button className={'btn'}>Finish</button>*/}
-        {/*</div>*/}
       </Destination>
-    </Home>
+    </div>
   );
 }
 const Destination = styled.div`
@@ -173,7 +153,6 @@ const Destination = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: 96px;
 
   .message {
     color: var(--color-green-2);
@@ -181,7 +160,6 @@ const Destination = styled.div`
   }
 
   .post-destination {
-    margin-top: 24px;
     border: 2px solid var(--color-grey-8);
     padding: 48px;
     display: flex;

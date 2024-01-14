@@ -1,7 +1,7 @@
 import {Banner, Desc, Title} from "../../Styles/Banner.js";
 import {Link} from "react-router-dom";
 import React, {useState} from "react";
-import {ImageContainer} from "../../Styles/Auth.styled.js";
+import {AuthContainer} from "../../Styles/Auth.styled.js";
 
 export default function ResetPassword(){
     const [password, setPassword] = useState('')
@@ -21,7 +21,7 @@ export default function ResetPassword(){
     }
     return(
         <>
-            <ImageContainer>
+            <AuthContainer>
                 <Banner className={"banner"}>
                     <Title>
                         Reset Password
@@ -69,7 +69,7 @@ export default function ResetPassword(){
                         </div>
                     </form>
                 </Banner>
-            </ImageContainer>
+            </AuthContainer>
 
         </>
     )

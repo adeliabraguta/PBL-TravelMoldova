@@ -5,7 +5,7 @@ import styled from "styled-components";
 import React, {useState} from "react";
 
 import Loading from "./UI/Loading.jsx";
-import {useGetDestinationByIdQuery} from "../app/services/apiService.js";
+import {useGetDestinationByIdQuery, useGetReviewQuery} from "../app/services/apiService.js";
 import {StyledRating} from "./DestinationPageAccount.jsx";
 import  "react-image-gallery/styles/css/image-gallery.css";
 import GetReview from "../features/reviews/GetReview.jsx";
@@ -24,6 +24,10 @@ export default function DestinationPageNoAccount() {
         isError,
         error
     } = useGetDestinationByIdQuery(slug)
+
+    const {
+        data: comments = []
+    } = useGetReviewQuery(slug)
 
     if (isLoading || isFetching) {
         return (
@@ -103,7 +107,7 @@ export default function DestinationPageNoAccount() {
                             </div>
                             <button className={'btn'} disabled>Place Review</button>
                         </NavLink>
-                        <GetReview/>
+                        <GetReview comments={comments} />
                     </Banner>
                 </Destination>
             </Line>

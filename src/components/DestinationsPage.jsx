@@ -76,7 +76,7 @@ export default function DestinationsPage() {
 const Destinations = styled.div`
   min-height: 70vh;
 `
-const List = styled.div`
+export const List = styled.div`
   padding: 24px 128px 24px 128px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

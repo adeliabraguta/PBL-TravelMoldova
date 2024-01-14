@@ -45,7 +45,6 @@ export default function NavBar() {
             <NavLink to={"/posts"} className={"link"}>
               DISCOVER
             </NavLink>
-            {/*<NavLink className={'link'}>STORIES</NavLink>*/}
           </div>
           {token ? (
             <div
@@ -53,17 +52,10 @@ export default function NavBar() {
               ref={ref}
               onClick={() => setShowDropdown(!showDropdown)}
             >
-              <p className={"link "}>
-                <IoPersonOutline className={"icon"} /> {user}
-              </p>
-              <div className={showDropdown ? "dropdown" : "dropdown-hide"}>
-                <NavLink to={"/postDestination"} className={"link"}>
-                  <p>Post Destination</p>
-                </NavLink>
-                <NavLink to={"/"} className={"link"} onClick={handleLogout}>
-                  <p>Sign Out</p>
-                </NavLink>
-              </div>
+              <NavLink to={"profileNavigation"} className={"link "}>
+                <IoPersonOutline className={"icon"} />
+                {user}'s Profile
+              </NavLink>
             </div>
           ) : (
             <AuthContainer>
@@ -148,6 +140,8 @@ const NavigationBar = styled.div`
         font-size: 20px;
         font-weight: 600;
         cursor: pointer;
+        display: flex;
+        gap: 12px;
 
         &:hover {
           color: var(--color-blue-1);
@@ -157,7 +151,6 @@ const NavigationBar = styled.div`
 
     .menu_dropdown {
       position: relative;
-      padding-right: 60px;
     }
 
     .dropdown-hide {

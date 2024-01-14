@@ -73,6 +73,16 @@ export const api = createApi({
       }),
       invalidatesTags: ["getReview"],
     }),
+    getUserReviews: builder.query({
+      query: (username) => `comments/user/${username}`,
+    }),
+    putResetPassword: builder.mutation({
+      query: (details) => ({
+        url: `auth/reset-password`,
+        method: "PUT",
+        body: { ...details },
+      }),
+    }),
   }),
 });
 
@@ -87,6 +97,6 @@ export const {
   useLoginUserMutation,
   useGetReviewQuery,
   usePostReviewMutation,
+  useGetUserReviewsQuery,
+  usePutResetPasswordMutation,
 } = api;
-
-

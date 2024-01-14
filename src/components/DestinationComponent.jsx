@@ -3,15 +3,16 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { IoIosHeart } from "react-icons/io";
 import { FaHeart } from "react-icons/fa";
-import { setFavourite } from "./UI/favSlice.js";
-import { useDispatch } from "react-redux";
+import {selectFavoriteDestinations, setFavourite} from "./UI/favSlice.js";
+import {useDispatch, useSelector} from "react-redux";
 import { useState } from "react";
 
 export default function DestinationComponent({ destination }) {
   const dispatch = useDispatch();
+  const destinations = useSelector(selectFavoriteDestinations);
+
   const favState = Boolean(
-    localStorage.getItem("favouriteDestinations") &&
-      JSON.parse(localStorage.getItem("favouriteDestinations")).find(
+    destinations.find(
         (item) => item.slug === destination.slug,
       ),
   );
@@ -29,7 +30,6 @@ export default function DestinationComponent({ destination }) {
   const hideMessage = () => {
     setIsMessage(false);
   };
-
   return (
     <div>
       <Destination>
@@ -79,7 +79,7 @@ export default function DestinationComponent({ destination }) {
 }
 const Destination = styled.div`
   width: 100%;
-  display: flex;
+  display: grid;
   flex-direction: column;
   gap: 4px;
 
@@ -94,11 +94,13 @@ const Destination = styled.div`
   }
 
   .img {
+    aspect-ratio: 5/3;
     transition: transform 0.5s ease;
     width: 100%;
     height: 100%;
     object-fit: cover;
     position: relative;
+    
   }
 
   .link {
@@ -108,7 +110,6 @@ const Destination = styled.div`
   .desc {
     display: flex;
     align-items: center;
-    align-content: center;
     justify-content: space-between;
 
     .route {
@@ -149,7 +150,6 @@ const Destination = styled.div`
     align-items: center;
     align-content: center;
     gap: 16px;
-    //border-bottom: solid #D9E2EC;
     padding-bottom: 16px;
 
     .icon {
@@ -167,6 +167,8 @@ const Destination = styled.div`
 
   .fav-container {
     position: relative;
+    display: flex;
+    justify-content: center;
 
     .icon_fav {
       height: 20px;

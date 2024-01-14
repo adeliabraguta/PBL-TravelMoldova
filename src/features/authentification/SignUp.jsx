@@ -4,13 +4,20 @@ import React, { useEffect } from "react";
 import { useRegisterUserMutation } from "../../app/services/apiService.js";
 import { useFormik } from "formik";
 import { registerSchema } from "./schemas/schemaRegister.js";
-import {ImageContainer} from "../../Styles/Auth.styled.js";
-import {toast} from "react-toastify";
+import {
+  AuthContainer,
+  ErrorMessageAuth,
+  Field,
+  Form,
+  Input,
+  Label,
+} from "../../Styles/Auth.styled.js";
+import { toast } from "react-toastify";
+import {Button} from "../../Styles/Button.js";
 
 export default function SignUp() {
   const navigate = useNavigate();
-  const [register, { isSuccess, isError }] =
-    useRegisterUserMutation();
+  const [register, { isSuccess, isError }] = useRegisterUserMutation();
   const onSubmit = () => {
     register({
       username: values.username,
@@ -19,16 +26,17 @@ export default function SignUp() {
     });
   };
 
-  const { values, handleBlur,errors,touched, handleChange, handleSubmit } = useFormik({
-    initialValues: {
-      username: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    },
-    validationSchema: registerSchema,
-    onSubmit,
-  });
+  const { values, handleBlur, errors, touched, handleChange, handleSubmit } =
+    useFormik({
+      initialValues: {
+        username: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      },
+      validationSchema: registerSchema,
+      onSubmit,
+    });
 
   useEffect(() => {
     if (isSuccess) {
@@ -36,97 +44,98 @@ export default function SignUp() {
 
       navigate("/signUp/verificationEmail");
     }
-    if(isError){
+    if (isError) {
       toast.error("Username or email already exist");
-
     }
   }, [isSuccess]);
   return (
     <>
-      <ImageContainer>
-        <Banner className={"banner"}>
+      <AuthContainer>
+        <Banner className={"auth_section"}>
           <Title>Create Your Account</Title>
           <Desc>Join Travel Moldova</Desc>
-          <div className={"not-confirmed"}></div>
-          <form className={"form"} onSubmit={handleSubmit}>
-            <div className={"form_section"}>
-              <div className={"label-div"}>
-                <label className={"label"}>Username </label>
-              </div>
-              <input
+          <Form onSubmit={handleSubmit}>
+            <Field>
+              <Label>
+                <label>Username </label>
+              </Label>
+              <Input
                 id="username"
                 onChange={handleChange}
                 value={values.username}
                 onBlur={handleBlur}
-                className={errors.username && touched.username ? "input-error" : "input"}
+                $isError={errors.username && touched.username}
                 type={"text"}
                 placeholder={"Choose a username"}
               />
-              {errors.username && touched.username &&
-              <div className={"not-confirmed"}>{errors.username}</div>}
-            </div>
-            <div className={"form_section"}>
-              <div className={"label-div"}>
-                <label className={"label"}>Email Address </label>
-              </div>
-              <input
+              {errors.username && touched.username && (
+                <ErrorMessageAuth>{errors.username}</ErrorMessageAuth>
+              )}
+            </Field>
+            <Field>
+              <Label>
+                <label>Email Address </label>
+              </Label>
+              <Input
                 id="email"
-                className={errors.email && touched.email ? "input-error" : "input"}
+                $isError={errors.email && touched.email}
                 value={values.email}
                 onBlur={handleBlur}
                 onChange={handleChange}
                 type={"email"}
                 placeholder={"Enter your email"}
               />
-              {errors.email && touched.email &&
-                  <div className={"not-confirmed"}>{errors.email}</div>}
-            </div>
+              {errors.email && touched.email && (
+                <ErrorMessageAuth>{errors.email}</ErrorMessageAuth>
+              )}
+            </Field>
 
-            <div className={"form_section"}>
-              <div className={"label-div"}>
-                <label className={"label"}>Password </label>
-              </div>
-              <input
+            <Field>
+              <Label>
+                <label>Password </label>
+              </Label>
+              <Input
                 id="password"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 value={values.password}
-                className={errors.password && touched.password ? "input-error" : "input"}
+                $isError={errors.password && touched.password}
                 type={"password"}
                 placeholder={"Choose a password"}
               />
-              {errors.password && touched.password &&
-                  <div className={"not-confirmed"}>{errors.password}</div>}
-            </div>
-            <div className={"form_section"}>
-              <div className={"label-div"}>
-                <label className={"label"}>Confirm Password </label>
-              </div>
-              <input
+              {errors.password && touched.password && (
+                <ErrorMessageAuth>{errors.password}</ErrorMessageAuth>
+              )}
+            </Field>
+            <Field>
+              <Label>
+                <label>Confirm Password </label>
+              </Label>
+              <Input
                 id="confirmPassword"
-                className={errors.confirmPassword && touched.confirmPassword ? "input-error" : "input"}
+                $isError={errors.confirmPassword && touched.confirmPassword}
                 type={"password"}
                 value={values.confirmPassword}
                 placeholder={"Repeat password"}
                 onChange={handleChange}
                 onBlur={handleBlur}
               />
-              {errors.confirmPassword && touched.confirmPassword &&
-                  <div className={"not-confirmed"}>{errors.confirmPassword}</div>}
-            </div>
-            <button type={"submit"} className={"btn"}>
+              {errors.confirmPassword && touched.confirmPassword && (
+                <ErrorMessageAuth>{errors.confirmPassword}</ErrorMessageAuth>
+              )}
+            </Field>
+            <Button type={"submit"}>
               Create Account
-            </button>
+            </Button>
             <div className={"log-in"}>
               <span className={"login-text"}>Already have an account?</span>
               <Link className={"link-login"} to={"/signIn"}>
                 Sign In
               </Link>
             </div>
-          </form>
+          </Form>
         </Banner>
-      </ImageContainer>
+      </AuthContainer>
     </>
   );
 }
-

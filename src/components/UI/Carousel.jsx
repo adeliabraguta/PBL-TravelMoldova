@@ -57,7 +57,6 @@ export default function Carousel({data}) {
     )
 }
 const CarouselComponent = styled.div`
-    //display: flex;
     position: relative;
     justify-content: center;
     align-content: center;

@@ -1,65 +1,81 @@
-import {Banner} from "../../Styles/Banner.js";
-import {StyledRating} from "../../components/DestinationPageAccount.jsx";
-import React, {useRef, useState} from "react";
-import { useGetReviewQuery} from "../../app/services/apiService.js";
-import {useParams} from "react-router-dom";
+import { Banner } from "../../Styles/Banner.js";
+import { StyledRating } from "../../components/DestinationPageAccount.jsx";
+import React, { useRef, useState } from "react";
+import { useGetReviewQuery } from "../../app/services/apiService.js";
+import { Link, useParams } from "react-router-dom";
 import styled from "styled-components";
 
-export default function GetReview(){
-    const {slug} = useParams()
-    const {
-        data: comments = []
-    } = useGetReviewQuery(slug)
-    return(
-        <Banner>
-            <GetReviews className={"display-review"}>
-                {comments.map((reviewItem, index) => (
-                    <div className={"review"} key={index}>
-                        <div className={"review-name-text"}>
-                            <p className={"name"}>{reviewItem.username}</p>
-                            <div className={"review-rating"}>
-                                <StyledRating name={`rating-${index}`} value={reviewItem.rating} readOnly />
-                                <span className={"date"}>{reviewItem.created_at}</span>
-                            </div>
-                        </div>
-                        <div className={"review-text"}>{reviewItem.body}</div>
-                    </div>
-                )).reverse()}
-            </GetReviews>
-        </Banner>
-    )
+export default function GetReview({ comments }) {
+  return (
+    <Reviews>
+      {comments
+        .map((reviewItem, index) => (
+          <Review key={index}>
+            <div>
+              <div>
+                {reviewItem.username && (
+                  <p className={"title"}>{reviewItem.username}</p>
+                )}
+                {reviewItem.slug && (
+                  <Link className={"title"} to={`/posts/${reviewItem.slug}`}>
+                    {reviewItem.slug?.split("-").join(" ")}
+                  </Link>
+                )}
+
+                <StyledRating
+                  name={`rating-${index}`}
+                  value={reviewItem.rating}
+                  readOnly
+                />
+              </div>
+              <span>{reviewItem.created_at}</span>
+            </div>
+            <p>{reviewItem.body}</p>
+          </Review>
+        ))
+        .reverse()}
+      {comments.length === 0 && (
+        <Review>
+          <p>No comments yet for this destination.</p>
+        </Review>
+      )}
+    </Reviews>
+  );
 }
-const GetReviews = styled.div`
-    width: 65vw;
-    padding-top: 48px;
+const Reviews = styled.div`
+  width: 50vw;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`;
+const Review = styled.div`
+  background-color: var(--color-grey-9);
+  padding: 16px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  div {
     display: flex;
-    flex-direction: column;
-    gap: 24px;
-    .review{
-      background-color: var(--color-grey-9);
-      padding: 16px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-    .review-name-text{
-      display: flex;
-      gap: 16px;
-      .review-rating{
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-      .date{
-        color: #9FB3C8;
-      }
-    }
-    .name{
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+
+    .title {
       margin: 0;
       color: var(--color-blue-3);
       font-size: 18px;
       font-weight: 600;
       letter-spacing: 1.1px;
+      text-decoration: none;
     }
-`
+  }
+
+  span {
+    color: #9fb3c8;
+  }
+  p{
+    white-space: normal;
+    word-wrap: break-word
+  }
+`;

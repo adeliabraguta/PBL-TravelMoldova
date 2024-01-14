@@ -13,12 +13,6 @@ export default function ImageCarousel({destination}) {
         setSlide(slide === 0 ? destination.length - 1 : slide - 1)
 
     }
-    // useEffect(() => {
-    //     const interval = setInterval(() => {
-    //         nextSlide()
-    //     }, 3000);
-    //     return () => clearInterval(interval)
-    // })
 
     return (
         <>
@@ -57,74 +51,83 @@ export default function ImageCarousel({destination}) {
     )
 }
 const CarouselComponent = styled.div`
-    position: relative;
-    justify-content: center;
-    align-content: center;
-    width: 70%;
-  
+  position: relative;
+  justify-content: center;
+  align-content: center;
 
-    .slide {
-      opacity: 0.5;
-      transition: opacity 1s ease;
-    }
 
-    .slide.active {
-      opacity: 1;
-      transition: opacity 1s ease;
-      
-    }
+  .slide {
+    opacity: 0.5;
+    transition: opacity 1s ease;
   }
 
-  .nav {
-    .btn {
-      position: absolute;
-      padding: 0 16px;
-      transition: transform .2s;
-      top: 50%;
-      cursor: pointer;
+  .slide.active {
+    opacity: 1;
+    transition: opacity 1s ease;
 
-      &:nth-of-type(1) {
-        transform: translate(0%, -50%);
-        left: 10px;
-      }
-
-      &:nth-of-type(2) {
-        transform: translate(0%, -50%);
-        right: 10px;
-      }
-    }
-
-    .btn_icon {
-      color: white;
-      height: 40px;
-      width: 40px;
-      transition: transform .2s;
-
-      &:hover {
-        transform: scale(1.3);
-      }
-    }
   }
-  .pagination {
+}
+
+.img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  transition: 0.3s ease;
+}
+
+.nav {
+  .btn {
     position: absolute;
-    bottom: 24px;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 16px;
-    span {
-      cursor: pointer;
-      width: 12px;
-      height: 12px;
-      background-color: #F0F4F8;
-      color: transparent;
-      border-radius: 50%;
-      box-shadow: 0 0 5px 0 rgba(33, 35, 38, 0.06);
-      font-size: 12px;
+    padding: 0 16px;
+    transition: transform .2s;
+    top: 50%;
+    cursor: pointer;
+
+    &:nth-of-type(1) {
+      transform: translate(0%, -50%);
+      left: 10px;
     }
-    .active {
-      background-color: #2680C2;
+
+    &:nth-of-type(2) {
+      transform: translate(0%, -50%);
+      right: 10px;
     }
-  
+  }
+
+  .btn_icon {
+    color: white;
+    height: 40px;
+    width: 40px;
+    transition: transform .2s;
+
+    &:hover {
+      transform: scale(1.3);
+    }
+  }
+}
+
+.pagination {
+  position: absolute;
+  bottom: 24px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+
+  span {
+    cursor: pointer;
+    width: 12px;
+    height: 12px;
+    background-color: #F0F4F8;
+    color: transparent;
+    border-radius: 50%;
+    box-shadow: 0 0 5px 0 rgba(33, 35, 38, 0.06);
+    font-size: 12px;
+  }
+
+  .active {
+    background-color: #2680C2;
+  }
+
 `
