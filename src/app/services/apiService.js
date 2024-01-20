@@ -83,6 +83,9 @@ export const api = createApi({
         body: { ...details },
       }),
     }),
+    getResetEmail: builder.query({
+      query: (email) => `auth/forgot-password?username_or_email=${email}`,
+    }),
   }),
 });
 
@@ -99,4 +102,5 @@ export const {
   usePostReviewMutation,
   useGetUserReviewsQuery,
   usePutResetPasswordMutation,
+  useGetResetEmailQuery,
 } = api;

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { IoIosHeart } from "react-icons/io";
 import { FaHeart } from "react-icons/fa";
-import {selectFavoriteDestinations, setFavourite} from "./UI/favSlice.js";
-import {useDispatch, useSelector} from "react-redux";
+import { selectFavoriteDestinations, setFavourite } from "./UI/favSlice.js";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 
 export default function DestinationComponent({ destination }) {
@@ -12,9 +12,7 @@ export default function DestinationComponent({ destination }) {
   const destinations = useSelector(selectFavoriteDestinations);
 
   const favState = Boolean(
-    destinations.find(
-        (item) => item.slug === destination.slug,
-      ),
+    destinations.find((item) => item.slug === destination.slug),
   );
   const [isFav, setIsFav] = useState(favState);
   const [isMessage, setIsMessage] = useState(false);
@@ -100,7 +98,6 @@ const Destination = styled.div`
     height: 100%;
     object-fit: cover;
     position: relative;
-    
   }
 
   .link {

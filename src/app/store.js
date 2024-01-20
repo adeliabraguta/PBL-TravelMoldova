@@ -11,7 +11,7 @@ import {
   PURGE,
   REGISTER,
 } from "redux-persist";
-import storage from "redux-persist/lib/storage";
+import storage from 'redux-persist/lib/storage/session'
 import { rootReducer } from "./rootReducer.js";
 import {storiesApi} from "./services/apiStories.js";
 

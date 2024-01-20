@@ -1,11 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import storage from "redux-persist/lib/storage";
-import { persistReducer } from "redux-persist";
 
-const authPersistConfig = {
-  key: "auth",
-  storage,
-};
 const initialState = {
   user: null,
   access_token: null,
@@ -32,8 +26,7 @@ const authSlice = createSlice({
 });
 export const { setCredentials, unsetCredentials, setUserName } =
   authSlice.actions;
-const persistedAuthSlice = persistReducer(authPersistConfig, authSlice.reducer);
-export default persistedAuthSlice;
+export default authSlice.reducer;
 export const selectCurrentUser = (state) => state.auth.username;
 export const selectCurrentToken = (state) => state.auth.access_token;
 

@@ -69,8 +69,9 @@ const CarouselComponent = styled.div`
 }
 
 .img {
+  aspect-ratio: 5/3;
   height: 100%;
-  width: 100%;
+  width: 60vw;
   object-fit: cover;
   transition: 0.3s ease;
 }

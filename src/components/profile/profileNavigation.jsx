@@ -24,9 +24,6 @@ function ProfileNavigation(props) {
           <NavLink className={"link"} activeclassname="active" to={"/profileNavigation/postDestination"}>
             <p>Post a Destination</p>
           </NavLink>
-          <NavLink className={"link"} to={"/profileNavigation/profileResetPassword"}>
-            <p>Reset Password</p>
-          </NavLink>
           <NavLink to={"/"} className={"link"} onClick={handleLogout}>
             <p>Sign Out</p>
           </NavLink>

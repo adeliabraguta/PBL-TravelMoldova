@@ -75,9 +75,11 @@ export default function DestinationsPage() {
 
 const Destinations = styled.div`
   min-height: 70vh;
+  padding: 24px 96px;
+  
+  
 `
 export const List = styled.div`
-  padding: 24px 128px 24px 128px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   gap: 64px;
@@ -86,6 +88,7 @@ export const List = styled.div`
   will-change: box-shadow, transform;
 `
 const Pagination = styled.div`
+  padding-top: 24px;
   display: flex;
   gap: 16px;
   align-items: center;

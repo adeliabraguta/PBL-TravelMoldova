@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const storiesApi = createApi({
   reducerPath: "storiesApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000", // Adjust the base URL for the stories API
+    baseUrl: "http://localhost:3000",
   }),
   endpoints: (builder) => ({
     getStories: builder.query({

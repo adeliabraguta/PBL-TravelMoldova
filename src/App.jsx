@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "./App.css";
 import NavBar from "./components/UI/NavBar.jsx";
 import HomePage from "./components/HomePage.jsx";
@@ -10,11 +10,10 @@ import DestinationPageNoAccount from "./components/DestinationPageNoAccount.jsx"
 import DestinationPageAccount from "./components/DestinationPageAccount.jsx";
 import SignUp from "./features/authentification/SignUp.jsx";
 import SignIn from "./features/authentification/SignIn.jsx";
-import UserAccount from "./features/authentification/UserAccount.jsx";
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "./features/authentification/authSlice.js";
 import StoryPage from "./components/StoryPage";
-import { TransitionGroup, CSSTransition } from "react-transition-group";
+import { TransitionGroup } from "react-transition-group";
 import { useLocation } from "react-router-dom";
 import VerificationEmail from "./features/authentification/VerificationEmail.jsx";
 import PostDestination from "./features/postDestination/PostDestination.jsx";
@@ -22,7 +21,7 @@ import ResetPassword from "./features/authentification/ResetPassword.jsx";
 import ProfileNavigation from "./components/profile/profileNavigation.jsx";
 import ProfileFav from "./components/profile/profileFav.jsx";
 import ProfileActivity from "./components/profile/ProfileActivity.jsx";
-import ProfileResetPassword from "./components/profile/ProfileResetPassword.jsx";
+import ResetEmail from "./features/authentification/ResetEmail.jsx";
 
 function App() {
   const token = useSelector(selectCurrentToken);
@@ -34,20 +33,13 @@ function App() {
     location.pathname !== "/signUp" &&
     location.pathname !== "/signIn" &&
     location.pathname !== "/signUp/verificationEmail" &&
-    location.pathname !== "/resetPassword";
+    location.pathname !== "/signIn/sendEmail" &&
+    location.pathname !== "/signIn/sendEmail/resetPassword";
 
   return (
     <div className="App">
       {shouldShowNav && <NavBar />}
       <TransitionGroup>
-        {/*<CSSTransition*/}
-        {/*  key={location.key}*/}
-        {/*  classNames="fade"*/}
-        {/*  timeout={450}*/}
-        {/*  appear*/}
-        {/*  enter*/}
-        {/*  exit*/}
-        {/*>*/}
         <Routes>
           <Route path={"/"} element={<HomePage />} />
           <Route path={"/posts"} element={<DestinationsPage />} />
@@ -78,10 +70,6 @@ function App() {
                   path={"/profileNavigation/profileFav"}
                   element={<ProfileFav />}
                 />
-                <Route
-                  path={"/profileNavigation/profileResetPassword"}
-                  element={<ProfileResetPassword />}
-                />
               </Route>
             </>
           ) : (
@@ -97,12 +85,15 @@ function App() {
             element={<VerificationEmail />}
           />
           <Route path={"/signUp"} element={<SignUp />} />
-          <Route path={"/signIn"} element={<SignIn />} />
-          <Route path={"resetPassword"} element={<ResetPassword />} />
+          <Route path={"/signIn"} element={<SignIn />}/>
+          <Route path={"/signIn/sendEmail"} element={<ResetEmail />} />
+          <Route
+            path={"/signIn/sendEmail/resetPassword"}
+            element={<ResetPassword />}
+          />
 
           <Route path={"*"} element={<NoMatch />} />
         </Routes>
-        {/*</CSSTransition>*/}
       </TransitionGroup>
       {shouldShowNav && <FooterComponent />}
     </div>

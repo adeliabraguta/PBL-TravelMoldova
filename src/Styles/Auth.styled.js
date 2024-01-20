@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import {boolean} from "yup";
 
-export const AuthContainer = styled.div`
+export const
+    AuthContainer = styled.div`
   position: relative;
   height: 100vh;
   display: grid;

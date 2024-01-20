@@ -21,7 +21,7 @@ function ProfileActivity() {
     <div>
       <Banner>
         <Desc>Your Profile</Desc>
-        <Title>Your Activity</Title>
+        <Title>Reviews you left</Title>
       </Banner>
         {(isFetching || isLoading) && <Loading />}
         {isSuccess && <GetReview comments={comments} />}

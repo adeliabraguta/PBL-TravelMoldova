@@ -5,7 +5,6 @@ import {storiesApi} from "./services/apiStories.js";
 import favouriteSlice from "../components/UI/favSlice.js";
 
 
-
 export const rootReducer = combineReducers({
     [api.reducerPath]: api.reducer,
     [storiesApi.reducerPath] : storiesApi.reducer,

@@ -86,7 +86,7 @@ export default function DestinationPageNoAccount() {
   );
 }
 
-const ReviewContainer = styled.div`
+export const ReviewContainer = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 64px;
@@ -101,7 +101,7 @@ export const StyledRating = styled(Rating)({
     color: "#016457",
   },
 });
-const Destination = styled.div`
+export const Destination = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -111,6 +111,8 @@ const Destination = styled.div`
   .image_container {
     width: 100%;
     padding-bottom: 96px;
+    display: flex;
+    justify-content: center;
   }
 
   .information {
@@ -118,6 +120,8 @@ const Destination = styled.div`
     line-height: 1.3;
     margin-top: 32px;
     text-align: center;
+    width: 60vw;
+    
   }
 
   .location {

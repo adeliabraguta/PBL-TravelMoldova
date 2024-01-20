@@ -15,7 +15,7 @@ import {
   Input,
   Label,
 } from "../../Styles/Auth.styled.js";
-import {Button} from "../../Styles/Button.js";
+import { Button } from "../../Styles/Button.js";
 
 export default function SignIn() {
   const navigate = useNavigate();
@@ -89,13 +89,13 @@ export default function SignIn() {
                 <ErrorMessageAuth>{errors.passwordLogin}</ErrorMessageAuth>
               )}
             </Field>
-            <Button type={"submit"}>
-              Sign In
-            </Button>
-            {/*<div className={"log-in"}>*/}
-            {/*    <span className={'login-text'}>Forgot your password?</span><Link*/}
-            {/*    className={"link-login"} to={"/resetPassword"}>Reset Password</Link>*/}
-            {/*</div>*/}
+            <Button type={"submit"}>Sign In</Button>
+            <div className={"log-in"}>
+              <span className={"login-text"}>Forgot your password?</span>
+              <Link className={"link-login"} to={"/signIn/sendEmail"}>
+                Reset Password
+              </Link>
+            </div>
             <div className={"log-in"}>
               <span className={"login-text"}>Don't have an account yet?</span>
               <Link className={"link-login"} to={"/signUp"}>

@@ -60,12 +60,12 @@ const CarouselComponent = styled.div`
     position: relative;
     justify-content: center;
     align-content: center;
-    height: 65vh;
+    height: 55vh;
     width: 100%;
 
     .img {
       width: 100%;
-      height: 65vh;
+      height: 55vh;
       object-fit: cover;
     }
 
