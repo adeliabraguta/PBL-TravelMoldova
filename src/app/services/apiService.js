@@ -33,13 +33,6 @@ export const api = createApi({
         body: information,
       }),
     }),
-    registerUser: builder.mutation({
-      query: (credentials) => ({
-        url: "http://127.0.0.1:5000/auth/register",
-        method: "POST",
-        body: { ...credentials },
-      }),
-    }),
     verificationEmail: builder.mutation({
       query: (token) => ({
         url: `http://127.0.0.1:5000/auth/verify-email?token=${token}`,
@@ -52,13 +45,6 @@ export const api = createApi({
         url: `http://127.0.0.1:5000/auth/verify-email?email=${email}`,
         method: "POST",
         query: email,
-      }),
-    }),
-    loginUser: builder.mutation({
-      query: (credentials) => ({
-        url: "http://127.0.0.1:5000/auth/login",
-        method: "POST",
-        body: { ...credentials },
       }),
     }),
     getReview: builder.query({
@@ -75,6 +61,7 @@ export const api = createApi({
     }),
     getUserReviews: builder.query({
       query: (username) => `comments/user/${username}`,
+      providesTags: ["deleteReview"],
     }),
     putResetPassword: builder.mutation({
       query: (details) => ({
@@ -86,6 +73,14 @@ export const api = createApi({
     getResetEmail: builder.query({
       query: (email) => `auth/forgot-password?username_or_email=${email}`,
     }),
+    deleteReview: builder.mutation({
+      query: (comment) => ({
+        url: `/comments/${comment}`,
+        method: "DELETE",
+        body: { ...comment },
+      }),
+      invalidatesTags: ["deleteReview"],
+    }),
   }),
 });
 
@@ -94,13 +89,12 @@ export const {
   useGetDestinationByIdQuery,
   usePostDestinationMutation,
   usePostDestinationImgMutation,
-  useRegisterUserMutation,
   useVerificationEmailMutation,
   useReVerificationEmailMutation,
-  useLoginUserMutation,
   useGetReviewQuery,
   usePostReviewMutation,
   useGetUserReviewsQuery,
   usePutResetPasswordMutation,
   useGetResetEmailQuery,
+  useDeleteReviewMutation,
 } = api;

@@ -11,7 +11,7 @@ import {
 } from "../../Styles/Auth.styled.js";
 import { Button } from "../../Styles/Button.js";
 import { useSelector } from "react-redux";
-import { selectCurrentToken } from "./authSlice.js";
+import { selectIsAuthenticated } from "./authSlice.js";
 import { useGetResetEmailQuery } from "../../app/services/apiService.js";
 import { toast } from "react-toastify";
 import { useFormik } from "formik";

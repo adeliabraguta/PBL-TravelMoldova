@@ -1,79 +1,71 @@
 import styled from "styled-components";
-import {boolean} from "yup";
+import { boolean } from "yup";
 
-export const
-    AuthContainer = styled.div`
-  position: relative;
-  height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  justify-content: center;
-
-  &::before {
-    content: "";
+export const AuthContainer = styled.div`
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.3);
+    z-index: 2;
     height: 100vh;
     width: 100vw;
-    position: absolute;
-    background-image: url("../assets/carousel1.jpg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    opacity: 0.6;
-    z-index: 0;
-  }
-
-  .auth_section {
-    background-color: rgba(255, 255, 255, 1);
-    z-index: 1;
-    padding: 48px 96px;
-    display: flex;
-    flex-direction: column;
-    max-width: 30vw;
-  }
-
-
-
-  .expired {
-    opacity: 0.5;
-    cursor: not-allowed;
-
-    .label {
-      cursor: not-allowed;
-    }
-
-    .input {
-      cursor: not-allowed;
-    }
-  }
-
-  .disable {
-    visibility: hidden;
-  }
-  
-  .log-in {
-    align-self: center;
-    display: flex;
-    gap: 8px;
-    font-size: 16px;
-
-    .login-text {
-      color: var(--color-grey-5);
-    }
-
-    .link-login {
-      color: var(--color-blue-0);
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.3s ease;
-
-      &:hover {
-        color: var(--color-blue-5);
-      }
-    }
-  }
 `;
+
+export const Auth = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+    background-color: white;
+
+    .auth_section {
+        background-color: transparent;
+        padding: 48px 96px;
+        display: flex;
+        flex-direction: column;
+    }
+    .close_btn{
+        position: absolute;
+        background-color: transparent;
+        border: none;
+        right: 24px;
+        top: 24px;
+        cursor: pointer;
+        z-index: 3;
+        color: var(--color-grey-0);
+        font-size: 24px;
+        transition: 0.3s all ease;
+        &:hover{
+            color: var(--color-grey-3);
+        }
+    }
+    .log-in {
+        align-self: center;
+        display: flex;
+        gap: 8px;
+        font-size: 16px;
+
+        .login-text {
+            color: var(--color-grey-5);
+        }
+
+        .link-login {
+            cursor: pointer;
+            color: var(--color-blue-0);
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s ease;
+
+            &:hover {
+                color: var(--color-blue-5);
+            }
+        }
+    }
+`
+
 export const Form = styled.form`
-  align-self: flex-start;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -112,4 +104,4 @@ export const ErrorMessageAuth = styled.span`
   font-size: 14px;
   color: #ff0044;
   height: 14px;
-`
+`;

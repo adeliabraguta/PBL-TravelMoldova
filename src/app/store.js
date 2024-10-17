@@ -14,6 +14,7 @@ import {
 import storage from 'redux-persist/lib/storage/session'
 import { rootReducer } from "./rootReducer.js";
 import {storiesApi} from "./services/apiStories.js";
+import {authApi} from "./services/authService.js";
 
 const persistConfig = {
   key: "root",
@@ -30,7 +31,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(api.middleware, storiesApi.middleware),
+    }).concat(api.middleware,authApi.middleware, storiesApi.middleware),
 });
 export const persistor = persistStore(store);
 
