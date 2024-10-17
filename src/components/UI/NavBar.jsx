@@ -2,7 +2,7 @@ import { Link, NavLink } from "react-router-dom";
 import styled from "styled-components";
 import { IoPersonOutline } from "react-icons/io5";
 import {
-  selectCurrentToken,
+  selectIsAuthenticated,
   selectCurrentUser,
   unsetCredentials,
 } from "../../features/authentification/authSlice.js";
@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
 
 export default function NavBar() {
-  const token = useSelector(selectCurrentToken);
+  const token = useSelector(selectIsAuthenticated);
   const user = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
   const [showDropdown, setShowDropdown] = useState(false);
@@ -18,6 +18,7 @@ export default function NavBar() {
   const handleLogout = () => {
     dispatch(unsetCredentials());
   };
+  console.log(user)
   useEffect(() => {
     const handle = (event) => {
       if (!ref.current?.contains(event.target)) {
