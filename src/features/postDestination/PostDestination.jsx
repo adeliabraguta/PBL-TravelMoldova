@@ -1,87 +1,63 @@
-import { Banner, Desc, Home, Title, Line } from "../../Styles/Banner.js";
-import { StyledRating } from "../../components/DestinationPageAccount.jsx";
-import React, { useCallback, useEffect, useState } from "react";
-import {
-  usePostDestinationImgMutation,
-  usePostDestinationMutation,
-} from "../../app/services/apiService.js";
-import { useDispatch } from "react-redux";
-import { setDestination } from "./destinationSlice.js";
-import { useNavigate } from "react-router-dom";
+import { Banner, Desc, Title } from "../../Styles/Banner.js";
+import React, { useEffect } from "react";
+import { usePostDestinationMutation } from "../../app/services/apiService.js";
 import styled from "styled-components";
+import { SiGooglemaps } from "react-icons/si";
+import { useFormik } from "formik";
+import { postDestinationSchema } from "./schemas/postDestinationSchema.js";
 import Loading from "../../components/UI/Loading.jsx";
 import { toast } from "react-toastify";
 
 export default function PostDestination() {
-  const dispatch = useDispatch();
-  const [
-    postDestination,
-    { isSuccess: isSuccess, error, isError, data, isLoading: isLoading },
-  ] = usePostDestinationMutation();
-  const [
-    postDestinationImg,
-    { isSuccess: isSuccessImg, isLoading: isLoadingImg },
-  ] = usePostDestinationImgMutation();
-  const [address, setAddress] = useState("");
-  const [long_desc, setLong_desc] = useState("");
-  const [img, setImg] = useState(null);
-  const [slug, setSlug] = useState("");
-  const short_desc = " ";
-  const [title, setTitle] = useState("");
-  const enabled =
-    title.length > 0 && long_desc.length > 0 && address.length > 0;
-  const [message, setMessage] = useState("");
-  let [imgNr, setImgNr] = useState(0);
+  const [postDestination, { isSuccess, isLoading }] =
+    usePostDestinationMutation();
+
   useEffect(() => {
     if (isSuccess) {
-      dispatch(
-        setDestination({
-          ...data,
-          address,
-          long_desc: long_desc,
-          short_desc: short_desc,
-          title,
-        }),
-      );
-      setSlug(data.slug);
-      setMessage("Post Added Successful");
-      toast.success("Post Added Successful");
+      toast.success("Destination Added Successful");
+    } else {
+      toast.error("Failed adding a destination");
     }
-  });
+  }, [isSuccess]);
 
-  const handleSubmit = useCallback(
-    (e) => {
-      e.preventDefault();
-      postDestination({
-        address,
-        long_desc: long_desc,
-        short_desc: short_desc,
-        title,
-      });
-    },
-    [address, long_desc, short_desc, title],
-  );
+  const onSubmit = () => {
+    const formData = new FormData();
+    formData.append("name", values.name);
+    formData.append("description", values.description);
+    formData.append("location", values.location);
+    formData.append("map", values.map);
+    values.images.forEach((image) => formData.append("images", image));
+    postDestination(formData);
+  };
 
-  const handleSubmitImg = useCallback(
-    (e) => {
-      e.preventDefault();
-      const formData = new FormData();
-      formData.append("file", img);
-      postDestinationImg({ information: formData, slug });
-      setImg("");
-    },
-    [img],
-  );
+  const { values, setFieldValue, handleChange, touched, errors, handleSubmit } =
+    useFormik({
+      initialValues: {
+        name: "",
+        description: "",
+        location: "",
+        map: "",
+        images: [],
+      },
+      validationSchema: postDestinationSchema,
+      onSubmit,
+    });
 
-  if (isLoading || isLoadingImg) {
+  const handleImageChange = (event) => {
+    const files = Array.from(event.target.files);
+    setFieldValue("images", files);
+  };
+
+  if (isLoading) {
     return (
-        <Banner>
-          <Desc>Your Profile</Desc>
-          <Title>Upload a Destination</Title>
-          <Loading />
-        </Banner>
+      <Banner>
+        <Desc>Your Profile</Desc>
+        <Title>Upload a Destination</Title>
+        <Loading />
+      </Banner>
     );
   }
+
   return (
     <div>
       <Banner>
@@ -89,61 +65,101 @@ export default function PostDestination() {
         <Title>Upload a Destination</Title>
       </Banner>
       <Destination>
-        <form className={"post-destination"} onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          className={"post-destination"}
+          autoComplete={"off"}
+        >
           <div className={"input-container"}>
-            <label className={"review-title"}>Destination's Name</label>
-            <input
+            <Label $isError={errors.name && touched.name}>
+              {errors.name && touched.name && <span>{errors.name}</span>}
+              Name
+            </Label>
+            <Input
+              name="name"
               className={"input"}
-              value={title}
+              value={values.name}
               type={"text"}
-              onChange={(e) => setTitle(e.target.value)}
+              onChange={handleChange}
               placeholder={"Write here..."}
             />
           </div>
           <div className={"input-container"}>
-            <label className={"review-title"}>Destination's Description</label>
-            <textarea
+            <Label $isError={errors.description && touched.description}>
+              {errors.description && touched.description && (
+                <span>{errors.description}</span>
+              )}
+              Description
+            </Label>
+            <TextArea
+              name="description"
               rows="5"
-              value={long_desc}
-              onChange={(e) => setLong_desc(e.target.value)}
+              value={values.description}
+              onChange={handleChange}
               className={"text-area"}
               placeholder={"Write here..."}
             />
           </div>
           <div className={"input-container"}>
-            <label className={"review-title"}>Destination's Address</label>
-            <input
+            <Label $isError={errors.location && touched.location}>
+              {errors.location && touched.location && (
+                <span>{errors.location}</span>
+              )}
+              Location
+            </Label>
+            <Input
+              name="location"
               className={"input"}
-              value={address}
+              value={values.location}
               type={"text"}
-              onChange={(e) => setAddress(e.target.value)}
+              onChange={handleChange}
               placeholder={"Write here..."}
             />
           </div>
-          <button className={"btn"} disabled={!enabled}>
-            Next Step
+          <div className={"input-container"}>
+            <Label $isError={errors.map && touched.map}>
+              {errors.map && touched.map && <span>{errors.map}</span>}
+              Google Maps Link <SiGooglemaps />
+            </Label>
+            <Input
+              name="map"
+              className={"input"}
+              value={values.map}
+              type={"text"}
+              onChange={handleChange}
+              placeholder={"Write here..."}
+            />
+          </div>
+          <div className={"input-container"}>
+            <Label $isError={errors.images && touched.images}>
+              {errors.images && touched.images && <span>{errors.images}</span>}
+              Images
+            </Label>
+            <Input
+              className={"input"}
+              type={"file"}
+              name="images"
+              multiple="multiple"
+              accept={"image/*"}
+              onChange={(event) => handleImageChange(event)}
+              placeholder={"Write here..."}
+            />
+          </div>
+          <div className={"images_container"}>
+            {values.images &&
+              values.images.map((image, index) => (
+                <img
+                  key={index}
+                  className={"image"}
+                  src={URL.createObjectURL(image)}
+                  alt={index}
+                />
+              ))}
+          </div>
+          <button type="submit" className={"btn"}>
+            Upload
           </button>
         </form>
-        <div className={`${isSuccess ? "" : "disabled"}`}>
-          <form
-            className={`post-destination--image`}
-            onSubmit={handleSubmitImg}
-          >
-            <div className={"input-container"}>
-              <label className={"review-title"}>Upload Images</label>
-              <input
-                className={"input"}
-                type={"file"}
-                onChange={(e) => setImg(e.target.files[0])}
-                placeholder={"Write here..."}
-              />
-            </div>
-            <button className={"btn"}>Upload</button>
-            <p className={"imgNr"}>
-              <strong>{imgNr}</strong> images uploaded
-            </p>
-          </form>
-        </div>
       </Destination>
     </div>
   );
@@ -165,7 +181,6 @@ const Destination = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     gap: 24px;
     width: 60vw;
   }
@@ -180,20 +195,9 @@ const Destination = styled.div`
     cursor: pointer;
     transition: 0.3s ease;
 
-    &:disabled {
-      color: var(--color-grey-4);
-      cursor: not-allowed;
-      border: 2px solid var(--color-grey-4);
-
-      &:hover {
-        color: var(--color-grey-4);
-        cursor: not-allowed;
-        border: 2px solid var(--color-grey-4);
-      }
-    }
-
     &:hover {
-      color: var(--color-green-4);
+      color: white;
+      background-color: var(--color-green-4);
       border: 2px solid var(--color-green-4);
     }
   }
@@ -204,124 +208,77 @@ const Destination = styled.div`
     width: 100%;
   }
 
-  .text-area {
-    border: none;
-    overflow: auto;
-    outline: none;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border-bottom: 2px solid var(--color-grey-7);
-    font-size: 16px;
-    resize: none;
-    width: 60vw;
-
-    &:focus {
-      border-bottom: 2px solid var(--color-green-5);
-    }
-
-    &:disabled {
-      background-color: white;
-    }
-  }
-
-  .review-title {
-    font-size: 18px;
-    letter-spacing: 1px;
-    color: var(--color-blue-0);
-    font-weight: 600;
-  }
-
-  .input {
-    font-family: monospace;
-    border: none;
-    overflow: auto;
-    outline: none;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border-bottom: 2px solid var(--color-grey-7);
-    font-size: 16px;
-
-    &:focus {
-      border-bottom: 2px solid var(--color-green-5);
-    }
-
-    &:disabled {
-      background-color: white;
-    }
-  }
-
-  .post-destination--image {
-    margin-top: 24px;
-    border: 2px solid var(--color-grey-8);
-    padding: 48px;
-    display: grid;
-    grid-template-columns: 5fr 1fr;
-    align-items: end;
-    gap: 24px;
-    width: 60vw;
-
-    .imgNr {
-      margin: 0;
-      padding-bottom: 12px;
-    }
-
-    .btn {
-      padding: 8px;
-      font-size: 16px;
-    }
-  }
-
-  .disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-
-    .btn {
-      color: var(--color-grey-4);
-      cursor: not-allowed;
-      border: 2px solid var(--color-grey-4);
-
-      &:hover {
-        color: var(--color-grey-4);
-        cursor: not-allowed;
-        border: 2px solid var(--color-grey-4);
-      }
-    }
-
-    .input {
-      cursor: not-allowed;
-    }
-  }
-
-  .finish {
-    padding-top: 24px;
+  .images_container {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 65%;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
 
-    .btn {
-      width: 100%;
-      background-color: var(--color-green-2);
-      border: none;
-      padding: 12px;
-      color: white;
-      font-size: 20px;
-      letter-spacing: 1.1px;
-      cursor: pointer;
-      transition: 0.3s ease;
+  .image {
+    height: 150px;
+    width: 150px;
+    object-fit: cover;
+  }
+`;
 
-      &:disabled {
-        background-color: var(--color-grey-4);
-        cursor: not-allowed;
+const Label = styled.label`
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: var(--color-blue-0);
+  font-weight: 600;
+  display: flex;
+  gap: 4px;
+  align-content: center;
 
-        &:hover {
-          background-color: var(--color-grey-4);
-        }
-      }
+  span {
+    position: relative;
+    top: -6px;
+    font-weight: 400;
+    font-size: 24px;
+    color: #ff0044;
+  }
+`;
 
-      &:hover {
-        background-color: var(--color-green-4);
-      }
+const Input = styled.input`
+  font-family: monospace;
+  border: none;
+  overflow: auto;
+  outline: none;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-bottom: 2px solid var(--color-grey-8);
+  font-size: 16px;
+
+  &:focus {
+    border-bottom: 2px solid var(--color-grey-5);
+  }
+
+  &::file-selector-button {
+    color: var(--color-grey-0);
+    background-color: transparent;
+    padding: 0.5em;
+    border: 2px solid var(--color-grey-8);
+    cursor: pointer;
+    transition: 0.3s ease;
+
+    &:hover {
+      border: 2px solid var(--color-grey-5);
     }
+  }
+`;
+
+const TextArea = styled.textarea`
+  border: none;
+  overflow: auto;
+  outline: none;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-bottom: 2px solid var(--color-grey-8);
+  font-size: 16px;
+  resize: none;
+  width: 60vw;
+
+  &:focus {
+    border-bottom: 2px solid var(--color-grey-5);
   }
 `;
