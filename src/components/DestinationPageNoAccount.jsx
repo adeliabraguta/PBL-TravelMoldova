@@ -1,46 +1,42 @@
 import { Banner, Desc, Home, Line, Title } from "../Styles/Banner.js";
-import { NavLink, useNavigate, useParams } from "react-router-dom";
-import { IoLocationOutline } from "react-icons/io5";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import React, { useState } from "react";
+import React from "react";
 
 import Loading from "./UI/Loading.jsx";
 import {
   useGetDestinationByIdQuery,
-  useGetReviewQuery,
+  useGetReviewsQuery,
 } from "../app/services/apiService.js";
 import {
   Destination,
   ReviewContainer,
-  StyledRating,
 } from "./DestinationPageAccount.jsx";
 import "react-image-gallery/styles/css/image-gallery.css";
 import GetReview from "../features/reviews/GetReview.jsx";
-import ImageCarousel from "./UI/ImageCarousel.jsx";
 import PostReview from "../features/reviews/PostReview.jsx";
+import DestinationPageComponent from "./DestinationPageComponent.jsx";
+import {useDispatch} from "react-redux";
+import {setAuthPopup} from "../features/authentification/authSlice.js";
 
 export default function DestinationPageNoAccount() {
-  const { slug } = useParams();
-  let navigate = useNavigate();
-  const routeChange = () => {
-    navigate("/signIn");
-  };
+  const { id } = useParams();
+  const dispatch = useDispatch()
 
   const {
-    data: destination = [],
+    data,
     isLoading,
     isFetching,
     isError,
     error,
-  } = useGetDestinationByIdQuery(slug);
+  } = useGetDestinationByIdQuery(id);
 
-  const { data: comments = [] } = useGetReviewQuery(slug);
+  const { data: reviews } = useGetReviewsQuery(id);
 
   if (isLoading || isFetching) {
     return <Loading />;
   }
   if (isError) {
-    console.log({ error });
     return <div>{error.status}</div>;
   }
 
@@ -50,39 +46,23 @@ export default function DestinationPageNoAccount() {
         <Destination>
           <Banner>
             <Desc>DISCOVER NOW</Desc>
-            <Title>{destination.title}</Title>
-            <p className={"information"}>{destination.long_desc}</p>
+            <Title>{data.name}</Title>
           </Banner>
-          <div className={"image_container"}>
-            <ImageCarousel destination={destination.images} />
-          </div>
-          <div className={"location"}>
-            <IoLocationOutline className={"icon"} />
-            <p className={"address"}>{destination.address}</p>
-          </div>
-          <div className={"map"}>
-            <iframe
-              className={"map-link"}
-              src={destination.iframe}
-              width="100%"
-              height="300px"
-              style={{ border: 0 }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
-          </div>
+          <DestinationPageComponent data={data} />
           <Banner>
             <Desc>REVIEW TIME</Desc>
             <Title>Share your thoughts </Title>
           </Banner>
           <ReviewContainer>
             <PostReviewContainer>
-              <NavLink to={"/signIn"} className={"place-review"}>
+              <div
+                onClick={() => dispatch(setAuthPopup())}
+                className={"place-review"}
+              >
                 <PostReview />
-              </NavLink>
+              </div>
             </PostReviewContainer>
-            <GetReview comments={comments} />
+            { reviews && <GetReview reviews={reviews}/> }
           </ReviewContainer>
         </Destination>
       </Line>
@@ -92,5 +72,6 @@ export default function DestinationPageNoAccount() {
 const PostReviewContainer = styled.div`
   .place-review {
     text-decoration: none;
+    cursor: pointer;
   }
 `;

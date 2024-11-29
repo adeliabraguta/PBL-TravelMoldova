@@ -9,16 +9,8 @@ import Loading from "../../components/UI/Loading.jsx";
 import { toast } from "react-toastify";
 
 export default function PostDestination() {
-  const [postDestination, { isSuccess, isLoading }] =
+  const [postDestination, { isSuccess, isLoading, isError, data, error }] =
     usePostDestinationMutation();
-
-  useEffect(() => {
-    if (isSuccess) {
-      toast.success("Destination Added Successful");
-    } else {
-      toast.error("Failed adding a destination");
-    }
-  }, [isSuccess]);
 
   const onSubmit = () => {
     const formData = new FormData();
@@ -26,27 +18,45 @@ export default function PostDestination() {
     formData.append("description", values.description);
     formData.append("location", values.location);
     formData.append("map", values.map);
+    formData.append("type", values.type);
     values.images.forEach((image) => formData.append("images", image));
     postDestination(formData);
   };
 
-  const { values, setFieldValue, handleChange, touched, errors, handleSubmit } =
-    useFormik({
-      initialValues: {
-        name: "",
-        description: "",
-        location: "",
-        map: "",
-        images: [],
-      },
-      validationSchema: postDestinationSchema,
-      onSubmit,
-    });
+  const {
+    values,
+    resetForm,
+    setFieldValue,
+    handleChange,
+    touched,
+    errors,
+    handleSubmit,
+  } = useFormik({
+    initialValues: {
+      name: "",
+      description: "",
+      location: "",
+      map: "",
+      images: [],
+      type: ""
+    },
+    validationSchema: postDestinationSchema,
+    onSubmit,
+  });
 
   const handleImageChange = (event) => {
     const files = Array.from(event.target.files);
     setFieldValue("images", files);
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data.message);
+      resetForm();
+    } else if (isError) {
+      toast.error(error.data.message);
+    }
+  }, [isSuccess, isError, data, error]);
 
   if (isLoading) {
     return (
@@ -57,7 +67,7 @@ export default function PostDestination() {
       </Banner>
     );
   }
-
+  console.log(values.type)
   return (
     <div>
       <Banner>
@@ -71,7 +81,7 @@ export default function PostDestination() {
           autoComplete={"off"}
         >
           <div className={"input-container"}>
-            <Label $isError={errors.name && touched.name}>
+            <Label>
               {errors.name && touched.name && <span>{errors.name}</span>}
               Name
             </Label>
@@ -85,7 +95,7 @@ export default function PostDestination() {
             />
           </div>
           <div className={"input-container"}>
-            <Label $isError={errors.description && touched.description}>
+            <Label>
               {errors.description && touched.description && (
                 <span>{errors.description}</span>
               )}
@@ -101,7 +111,7 @@ export default function PostDestination() {
             />
           </div>
           <div className={"input-container"}>
-            <Label $isError={errors.location && touched.location}>
+            <Label>
               {errors.location && touched.location && (
                 <span>{errors.location}</span>
               )}
@@ -117,7 +127,7 @@ export default function PostDestination() {
             />
           </div>
           <div className={"input-container"}>
-            <Label $isError={errors.map && touched.map}>
+            <Label>
               {errors.map && touched.map && <span>{errors.map}</span>}
               Google Maps Link <SiGooglemaps />
             </Label>
@@ -131,7 +141,23 @@ export default function PostDestination() {
             />
           </div>
           <div className={"input-container"}>
-            <Label $isError={errors.images && touched.images}>
+            <Label>
+              {errors.type && touched.type && <span>{errors.type}</span>}
+              Type
+            </Label>
+            <Select name={"type"} value={values.type} onChange={handleChange}>
+              <option disabled value="">--Please choose an option--</option>
+              <option value="Monastery">Monastery</option>
+              <option value="Church">Church</option>
+              <option value="Fortress">Fortress</option>
+              <option value="Park">Park</option>
+              <option value="Reservation">Reservation</option>
+              <option value="Winery">Winery</option>
+              <option value="Zoo">Zoo</option>
+            </Select>
+          </div>
+          <div className={"input-container"}>
+            <Label>
               {errors.images && touched.images && <span>{errors.images}</span>}
               Images
             </Label>
@@ -266,6 +292,35 @@ const Input = styled.input`
     }
   }
 `;
+
+const Select = styled.select`
+  font-family: monospace;
+  border: none;
+  overflow: auto;
+  outline: none;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-bottom: 2px solid var(--color-grey-8);
+  font-size: 16px;
+  //width: 250px;
+
+  &:focus {
+    border-bottom: 2px solid var(--color-grey-5);
+  }
+
+  &::file-selector-button {
+    color: var(--color-grey-0);
+    background-color: transparent;
+    padding: 0.5em;
+    border: 2px solid var(--color-grey-8);
+    cursor: pointer;
+    transition: 0.3s ease;
+
+    &:hover {
+      border: 2px solid var(--color-grey-5);
+    }
+  }
+`
 
 const TextArea = styled.textarea`
   border: none;

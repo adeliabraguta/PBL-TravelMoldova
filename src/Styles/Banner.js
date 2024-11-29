@@ -22,10 +22,10 @@ export const Title = styled.h1`
   font-weight: 600;
 `
 export const Line = styled.div`
-  border-top: solid var(--color-grey-0);
-  margin: 0 48px;
+  border-top: 2px solid var(--color-grey-4);
+  margin: 0 64px;
   padding-top: 32px;
 `
 export const Home = styled.div`
-  padding-top: 96px;
+  padding-top: 69px;
 `

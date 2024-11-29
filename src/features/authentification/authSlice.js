@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: null,
-  username: null,
-  isAuthenticated: null,
-  role: null,
+  user: {
+    username: null,
+    isAuthenticated: false,
+    role: null,
+  },
   isAuthPopupVisible: false,
 };
 const authSlice = createSlice({
@@ -12,20 +13,19 @@ const authSlice = createSlice({
   initialState,
   reducers: {
     setAuthStatus: (state, action) => {
-      state.isAuthenticated = action.payload;
+      state.user.isAuthenticated = action.payload;
     },
     setCredentials: (state, action) => {
-      state.username = action.payload.user.username;
-      state.role = action.payload.user.role;
-      state.isAuthenticated = action.payload.isAuthenticated;
-    },
-    setUserName: (state, action) => {
-      const { username } = action.payload;
-      state.username = username;
+      state.user.username = action.payload.user.username;
+      state.user.role = action.payload.user.role;
+      state.user.isAuthenticated = action.payload.isAuthenticated;
     },
     unsetCredentials: (state, action) => {
-      state.user = { name: null };
-      state.isAuthenticated = null;
+      state.user = {
+        username: null,
+        isAuthenticated: false,
+        role: null,
+      };
     },
     setAuthPopup(state) {
       state.isAuthPopupVisible = true;
@@ -39,10 +39,9 @@ export const {
   setAuthStatus,
   setCredentials,
   unsetCredentials,
-  setUserName,
   setAuthPopup,
   unsetAuthPopup,
 } = authSlice.actions;
 export default authSlice.reducer;
-export const selectCurrentUser = (state) => state.auth.username;
-export const selectIsAuthenticated = (state) => state.auth.isAuthenticated;
+export const selectCurrentUser = (state) => state.auth.user.username;
+export const selectIsAuthenticated = (state) => state.auth.user.isAuthenticated;

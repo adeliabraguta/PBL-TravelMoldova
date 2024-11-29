@@ -1,42 +1,41 @@
 import React from "react";
 import { StyledRating } from "../../components/DestinationPageAccount.jsx";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-function ReviewComponent(comments) {
-  console.log(comments)
+function ReviewComponent({ reviewItem, index }) {
+  const date = new Date(reviewItem.date);
+  const options = {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  const formattedDate = new Intl.DateTimeFormat("en-Us", options).format(date);
+
   return (
-    <GetReviews>
-      {comments
-        .map((reviewItem, index) => (
-          <Review className={"review"}>
-            <div className={"review-name-text"}>
-              <p className={"name"}>{reviewItem.username}</p>
-              <div className={"review-rating"}>
-                <StyledRating
-                  name={`rating-${index}`}
-                  value={reviewItem.rating}
-                  readOnly
-                />
-                <span className={"date"}>{reviewItem.created_at}</span>
-              </div>
-            </div>
-            <div className={"review-text"}>{reviewItem.body}</div>
-          </Review>
-        ))
-        .reverse()}
-    </GetReviews>
+    <Review>
+      <div>
+        <div>
+          {reviewItem && <p className={"title"}>{reviewItem._user.username}</p>}
+          {reviewItem._destination._id && (
+            <Link className={"title"} to={`/posts/${reviewItem._destination._id}`}>
+              {reviewItem._destination.name}
+            </Link>
+          )}
+          <StyledRating
+            name={`rating-${index}`}
+            value={reviewItem.rating}
+            readOnly
+          />
+        </div>
+        <span>on {formattedDate}</span>
+      </div>
+      <p>{reviewItem.comment}</p>
+    </Review>
   );
 }
 
 export default ReviewComponent;
-
-const GetReviews = styled.div`
-  width: 65vw;
-  padding-top: 48px;
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-`;
 
 const Review = styled.div`
   background-color: var(--color-grey-9);
@@ -45,27 +44,28 @@ const Review = styled.div`
   flex-direction: column;
   gap: 8px;
 
-  .review-name-text {
+  div {
     display: flex;
-    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
 
-    .review-rating {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .date {
-      color: #9fb3c8;
+    .title {
+      margin: 0;
+      color: var(--color-blue-3);
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 1.1px;
+      text-decoration: none;
     }
   }
 
-  .name {
-    margin: 0;
-    color: var(--color-blue-3);
-    font-size: 18px;
-    font-weight: 600;
-    letter-spacing: 1.1px;
+  span {
+    color: #9fb3c8;
+  }
+
+  p {
+    white-space: normal;
+    word-wrap: break-word;
   }
 `;

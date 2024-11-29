@@ -1,42 +1,22 @@
 import { Banner, Desc, Home, Line, Title } from "../Styles/Banner.js";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import {
-  IoLocationOutline,
-  IoBookmarkOutline,
-  IoCheckmarkOutline,
-  IoPersonCircleOutline,
-} from "react-icons/io5";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import React, { useCallback, useEffect, useState } from "react";
 
 import Loading from "./UI/Loading.jsx";
 import {
-  useGetDestinationByIdQuery,
-  useGetReviewQuery,
-  usePostReviewMutation,
+    useGetDestinationByIdQuery, useGetReviewsQuery,
 } from "../app/services/apiService.js";
-import { Rating, Typography } from "@mui/material";
-import { setComment } from "../features/reviews/reviewSlice.js";
-import { setCredentials } from "../features/authentification/authSlice.js";
-import { useDispatch } from "react-redux";
+import { Rating } from "@mui/material";
 import PostReview from "../features/reviews/PostReview.jsx";
+import DestinationPageComponent from "./DestinationPageComponent.jsx";
 import GetReview from "../features/reviews/GetReview.jsx";
-import ImageCarousel from "./UI/ImageCarousel.jsx";
 
 export default function DestinationPageNoAccount() {
-  const { slug } = useParams();
-  const dispatch = useDispatch();
+  const { id } = useParams();
+  const { data, isLoading, isFetching, isError, error } =
+    useGetDestinationByIdQuery(id);
 
-  const {
-    data: destination = [],
-    isLoading,
-    isFetching,
-    isError,
-    error,
-  } = useGetDestinationByIdQuery(slug);
-
-  const { data: comments = [] } = useGetReviewQuery(slug);
-
+  const { data: reviews } = useGetReviewsQuery(id);
   if (isLoading || isFetching) {
     return <Loading />;
   }
@@ -50,36 +30,17 @@ export default function DestinationPageNoAccount() {
         <Destination>
           <Banner>
             <Desc>DISCOVER NOW</Desc>
-            <Title>{destination.title}</Title>
-            <p className={"information"}>{destination.long_desc}</p>
+            <Title>{data.name}</Title>
           </Banner>
-          <div className={"image_container"}>
-            <ImageCarousel destination={destination.images} />
-          </div>
-          <div className={"location"}>
-            <IoLocationOutline className={"icon"} />
-            <p className={"address"}>{destination.address}</p>
-          </div>
-          <div className={'map'}>
-          <iframe
-            className={"map-link"}
-            src={destination.iframe}
-            width="100%"
-            height="300px"
-            style={{ border: 0 }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-          </div>
-            <Banner>
-              <Desc>REVIEW TIME</Desc>
-              <Title>Share your thoughts </Title>
-            </Banner>
-              <ReviewContainer>
-                <PostReview />
-                <GetReview comments={comments} />
-              </ReviewContainer>
+          <DestinationPageComponent data={data} />
+          <Banner>
+            <Desc>REVIEW TIME</Desc>
+            <Title>Share your thoughts </Title>
+          </Banner>
+          <ReviewContainer>
+            <PostReview />
+            { reviews && <GetReview reviews={reviews} />}
+          </ReviewContainer>
         </Destination>
       </Line>
     </Home>
@@ -102,50 +63,99 @@ export const StyledRating = styled(Rating)({
   },
 });
 export const Destination = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0 96px;
-
-  .image_container {
-    width: 100%;
-    padding-bottom: 96px;
     display: flex;
-    justify-content: center;
-  }
-
-  .information {
-    color: #102a43;
-    line-height: 1.3;
-    margin-top: 32px;
-    text-align: center;
-    width: 60vw;
-    
-  }
-
-  .location {
-    display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 16px;
-    padding-bottom: 24px;
+    padding: 0 96px;
 
-    .icon {
-      color: #2680c2;
+    .image_container {
+        width: 100%;
+        padding-bottom: 64px;
+        display: grid;
+        grid-template-columns: 1.5fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        gap: 24px;
+        justify-content: center;
     }
 
-    .address {
-      margin: 0;
-      font-weight: 400;
-      font-size: 16px;
-      font-style: italic;
+    .image {
+        height: 200px;
+        width: 100%;
+        object-fit: cover;
+
+        &:first-of-type {
+            grid-column: 1;
+            grid-row: 1/3;
+            height: 424px;
+            width: 700px;
+            object-fit: cover;
+        }
     }
-  }
 
-  .map {
-    width: 100%;
-    padding-bottom: 96px;
-  }
+    .description_container {
+        display: grid;
+        width: 100%;
+        grid-template-columns: 1.5fr 1fr;
+        gap: 24px;
 
+        .description {
+            h2 {
+                font-size: 24px;
+                margin: 0;
+                color: var(--color-blue-0);
+                display: flex;
+                gap: 24px;
+            }
+
+            p {
+                color: #102a43;
+                line-height: 1.3;
+                text-align: justify;
+            }
+
+            .rating {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+
+                span {
+                    color: var(--color-grey-1);
+                    font-size: 18px;
+                }
+
+                .icon_star {
+                    width: 24px;
+                    height: 24px;
+                    color: var(--color-green-2);
+                }
+            }
+        }
+
+        .location {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+
+            .icon {
+                width: 24px;
+                height: 24px;
+                color: #2680c2;
+            }
+
+            .address {
+                color: var(--color-blue-0);
+                margin: 0;
+                font-weight: 400;
+                font-size: 24px;
+                font-style: italic;
+            }
+        }
+
+        .map {
+            width: 100%;
+            padding-bottom: 96px;
+        }
+    }
 `;

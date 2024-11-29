@@ -1,35 +1,48 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { useDispatch } from "react-redux";
+import {
+  setAuthStatus,
+  unsetCredentials,
+} from "../../features/authentification/authSlice.js";
+import { toast } from "react-toastify";
 
+const baseQuery = fetchBaseQuery({
+  baseUrl: "http://localhost:3000/",
+  credentials: "include",
+});
+const baseQueryWithReauth = async (args = {}, api, extraOptions) => {
+  let result = await baseQuery(args, api, extraOptions);
+
+  if (result.error && result.error.status === 401) {
+    api.dispatch(unsetCredentials());
+    toast.error("Unauthorized. Please sign in");
+  }
+
+  return result;
+};
 export const api = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "http://127.0.0.1:5000",
-    prepareHeaders: (headers, { getState }) => {
-      const token = getState().auth.access_token;
-      if (token) {
-        headers.set("authorization", `Bearer ${token}`);
-      }
-      return headers;
-    },
-  }),
+  baseQuery: baseQueryWithReauth,
+
   endpoints: (builder) => ({
     getDestinations: builder.query({
-      query: (page) => `posts/?page=${page}&pagesize=6`,
+      query: ({ page, limit, search, type, rating }) => {
+        const searchParams = new URLSearchParams();
+        page && searchParams.append("page", page);
+        limit && searchParams.append("limit", limit);
+        search && searchParams.append("search", search);
+        type && searchParams.append("type", type);
+        rating && searchParams.append("rating", rating);
+        return `destinations/?${searchParams.toString()}`;
+      },
     }),
     getDestinationById: builder.query({
-      query: (slug) => `posts/${slug}`,
+      query: (id) => `destination/${id}`,
     }),
     postDestination: builder.mutation({
       query: (information) => ({
-        url: "posts",
+        url: "destination",
         method: "POST",
-        body: { ...information },
-      }),
-    }),
-    postDestinationImg: builder.mutation({
-      query: ({ information, slug }) => ({
-        url: `posts/${slug}/image`,
-        method: "PUT",
         body: information,
       }),
     }),
@@ -47,20 +60,20 @@ export const api = createApi({
         query: email,
       }),
     }),
-    getReview: builder.query({
-      query: (slug) => `comments/location/${slug}`,
+    getReviews: builder.query({
+      query: (id) => `reviews/${id}`,
       providesTags: ["getReview"],
     }),
     postReview: builder.mutation({
-      query: ({ review, slug }) => ({
-        url: `comments/${slug}`,
+      query: ({ review, id }) => ({
+        url: `reviews/${id}`,
         method: "POST",
         body: { ...review },
       }),
       invalidatesTags: ["getReview"],
     }),
     getUserReviews: builder.query({
-      query: (username) => `comments/user/${username}`,
+      query: () => `user/reviews`,
       providesTags: ["deleteReview"],
     }),
     putResetPassword: builder.mutation({
@@ -88,10 +101,9 @@ export const {
   useGetDestinationsQuery,
   useGetDestinationByIdQuery,
   usePostDestinationMutation,
-  usePostDestinationImgMutation,
   useVerificationEmailMutation,
   useReVerificationEmailMutation,
-  useGetReviewQuery,
+  useGetReviewsQuery,
   usePostReviewMutation,
   useGetUserReviewsQuery,
   usePutResetPasswordMutation,

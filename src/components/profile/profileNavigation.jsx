@@ -2,28 +2,38 @@ import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
 import { Home, Line } from "../../Styles/Banner.js";
 import { unsetCredentials } from "../../features/authentification/authSlice.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
+import { useLogoutMutation } from "../../app/services/authService.js";
 
 function ProfileNavigation(props) {
   const dispatch = useDispatch();
+  const userRole = useSelector((state) => state.auth.user.role);
 
+  const [logout] = useLogoutMutation();
   const handleLogout = () => {
     dispatch(unsetCredentials());
+    logout();
   };
   return (
     <Home>
       <Line>
         <ProfileNav>
-          <NavLink className={"link"}  to={"/profileNavigation/profileFav"}>
+          <NavLink className={"link"} to={"/profileNavigation/profileFav"}>
             <p>Favorite Destinations</p>
           </NavLink>
           <NavLink className={"link"} to={"/profileNavigation/profileActivity"}>
             <p>Your Activity</p>
           </NavLink>
-          <NavLink className={"link"} activeclassname="active" to={"/profileNavigation/postDestination"}>
-            <p>Post a Destination</p>
-          </NavLink>
+          {userRole === "admin" && (
+            <NavLink
+              className={"link"}
+              activeclassname="active"
+              to={"/profileNavigation/postDestination"}
+            >
+              <p>Post a Destination</p>
+            </NavLink>
+          )}
           <NavLink to={"/"} className={"link"} onClick={handleLogout}>
             <p>Sign Out</p>
           </NavLink>
@@ -38,7 +48,7 @@ function ProfileNavigation(props) {
 
 export default ProfileNavigation;
 export const activeStyle = {
-  color: 'var(--color-blue-1)', // Change this to the desired color
+  color: "var(--color-blue-1)", // Change this to the desired color
 };
 const ProfileNav = styled.div`
   position: fixed;
@@ -74,7 +84,6 @@ const ProfileNav = styled.div`
       ${activeStyle}
     }
   }
-
 `;
 const ProfileContainer = styled.div`
   margin-left: 250px;

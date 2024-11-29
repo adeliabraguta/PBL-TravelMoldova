@@ -19,14 +19,12 @@ export default function HomePage() {
   const information = informationData.accordion;
   const testimonials = testimonialsData.testimonials;
 
-  const {
-    data: destinations = [],
-    isLoading,
-    isFetching,
-  } = useGetDestinationsQuery();
+  const { data, isLoading, isFetching } = useGetDestinationsQuery({
+    page: 1,
+    limit: 3,
+  });
 
   const { data: stories = [] } = useGetStoriesQuery();
-
   return (
     <Home>
       <Line>
@@ -69,10 +67,10 @@ export default function HomePage() {
         ) : (
           <>
             <div className={"list"}>
-              {destinations
+              {data.data
                 .map((destination) => (
                   <DestinationComponent
-                    key={destination.slug}
+                    key={destination._id}
                     destination={destination}
                   />
                 ))
@@ -99,35 +97,49 @@ export default function HomePage() {
         </div>
       </Testimonial>
       <Information>
-        <ul className="list">
-          <p className="desc">NEED TO KNOW</p>
-          <h1 className="title">Useful information about Moldova</h1>
-          {information.map((info, index) => (
-            <InformationComponent key={index} info={info} />
-          ))}
-        </ul>
-      </Information>
-      <div>
-        <TravelDestinations>
-          <div className={"guide"}>
-            <h1 className={"title"}>Travel Stories</h1>
-          </div>
-        </TravelDestinations>
-        <Stories>
-          <div className="desc-div">
-            <p className="desc">
-              Here you can discover fascinating travel stories from Moldova.
-              This will not leave you indifferent. Moldova is about wonderful
-              nature and interesting adventures.
-            </p>
-          </div>
-          <div className="stories">
-            {stories.map((story, index) => (
-              <StoriesComponent key={index} story={story} />
+        <Banner>
+          <Desc>NEED TO KNOW</Desc>
+          <Title>Useful information about Moldova</Title>
+        </Banner>
+        <div className={"info_container"}>
+          <ul className="list">
+            {information.map((info, index) => (
+              <InformationComponent key={index} info={info} />
             ))}
-          </div>
-        </Stories>
-      </div>
+          </ul>
+          <iframe
+            className={"map-link"}
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2789019.679401683!2d25.75085015505356!3d46.94887773432135!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x40c97c3628b769a1%3A0x258119acdf53accb!2sMoldova!5e0!3m2!1sen!2s!4v1729965547321!5m2!1sen!2s"
+            width="400px"
+            height="450px"
+            style={{ border: 0 }}
+            allowFullScreen=""
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+      </Information>
+      {/*<div>*/}
+      {/*  <TravelDestinations>*/}
+      {/*    <div className={"guide"}>*/}
+      {/*      <h1 className={"title"}>Travel Stories</h1>*/}
+      {/*    </div>*/}
+      {/*  </TravelDestinations>*/}
+      {/*  <Stories>*/}
+      {/*    <div className="desc-div">*/}
+      {/*      <p className="desc">*/}
+      {/*        Here you can discover fascinating travel stories from Moldova.*/}
+      {/*        This will not leave you indifferent. Moldova is about wonderful*/}
+      {/*        nature and interesting adventures.*/}
+      {/*      </p>*/}
+      {/*    </div>*/}
+      {/*    <div className="stories">*/}
+      {/*      {stories.map((story, index) => (*/}
+      {/*        <StoriesComponent key={index} story={story} />*/}
+      {/*      ))}*/}
+      {/*    </div>*/}
+      {/*  </Stories>*/}
+      {/*</div>*/}
     </Home>
   );
 }
@@ -212,7 +224,8 @@ const TravelDestinations = styled.div`
     padding: 0 96px 96px 96px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    gap: 64px;
+    column-gap: 64px;
+    row-gap: 24px;
     transition-property: box-shadow, transform;
     transition: 0.3s ease;
     will-change: box-shadow, transform;
@@ -267,31 +280,17 @@ const Testimonial = styled.div`
 const Information = styled.div`
   padding: 0px 48px 96px 48px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  .list {
-    list-style-type: none;
-
-    .desc {
-      margin: 0;
-      color: #079a82;
-      letter-spacing: 1.5px;
-      font-size: 14px;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    .title {
-      text-align: center;
-      font-size: 24px;
-      padding-bottom: 48px;
-      margin: 0;
-    }
-
-    .grid {
-      max-width: 60vw;
-    }
+  
+  .info_container{
+    padding-top: 32px;
+    display: flex;
+    gap: 96px;
+    justify-content: center;
+    flex-wrap: wrap;
+    
   }
 `;
 const Stories = styled.div`

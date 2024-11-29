@@ -1,42 +1,46 @@
-import { Banner } from "../../Styles/Banner.js";
-import { StyledRating } from "../../components/DestinationPageAccount.jsx";
-import React, { useRef, useState } from "react";
-import { useGetReviewQuery } from "../../app/services/apiService.js";
-import { Link, useParams } from "react-router-dom";
+import React from "react";
 import styled from "styled-components";
+import ReviewComponent from "./reviewComponent.jsx";
+import { IoTrashBinOutline } from "react-icons/io5";
+import { useDeleteReviewMutation } from "../../app/services/apiService.js";
+import { useSelector } from "react-redux";
 
-export default function GetReview({ comments }) {
+export default function GetReview({ reviews }) {
+  const [deleteReview, { isSuccess }] = useDeleteReviewMutation();
+  const role = useSelector((state) => state.auth.user.role);
+  const reviewDelete = (comment) => {
+    deleteReview(comment);
+  };
   return (
     <Reviews>
-      {comments
-        .map((reviewItem, index) => (
-          <Review key={index}>
-            <div>
-              <div>
-                {reviewItem.username && (
-                  <p className={"title"}>{reviewItem.username}</p>
-                )}
-                {reviewItem.slug && (
-                  <Link className={"title"} to={`/posts/${reviewItem.slug}`}>
-                    {reviewItem.slug?.split("-").join(" ")}
-                  </Link>
-                )}
-
-                <StyledRating
-                  name={`rating-${index}`}
-                  value={reviewItem.rating}
-                  readOnly
-                />
-              </div>
-              <span>{reviewItem.created_at}</span>
+      {reviews &&
+        reviews
+          .map((review, index) => (
+            <div key={review._id}>
+              {role === "admin" && (
+                <div className={"hasPermission"} >
+                  <ReviewComponent
+                    reviewItem={review}
+                    index={index}
+                  />
+                  <IoTrashBinOutline
+                    className={"icon"}
+                    index={index}
+                    onClick={() => reviewDelete(reviewItem.review._id)}
+                  />
+                </div>
+              )}
+              {role === "user" || role === null && (
+                <div>
+                  <ReviewComponent reviewItem={review} index={index} />
+                </div>
+              )}
             </div>
-            <p>{reviewItem.body}</p>
-          </Review>
-        ))
-        .reverse()}
-      {comments.length === 0 && (
+          ))
+          .reverse()}
+      {reviews && reviews.length === 0 && (
         <Review>
-          <p>No comments yet for this destination.</p>
+          <p>No reviews yet</p>
         </Review>
       )}
     </Reviews>
@@ -47,6 +51,26 @@ const Reviews = styled.div`
   display: flex;
   flex-direction: column;
   gap: 24px;
+
+  .hasPermission {
+    display: grid;
+    grid-template-columns: 95% 5%;
+    gap: 24px;
+    justify-content: center;
+    align-items: center;
+
+    .icon {
+      height: 20px;
+      width: 20px;
+      color: var(--color-green-2);
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        color: var(--color-blue-6);
+      }
+    }
+  }
 `;
 const Review = styled.div`
   background-color: var(--color-grey-9);
@@ -55,27 +79,8 @@ const Review = styled.div`
   flex-direction: column;
   gap: 8px;
 
-  div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 20px;
-
-    .title {
-      margin: 0;
-      color: var(--color-blue-3);
-      font-size: 18px;
-      font-weight: 600;
-      letter-spacing: 1.1px;
-      text-decoration: none;
-    }
-  }
-
-  span {
-    color: #9fb3c8;
-  }
-  p{
+  p {
     white-space: normal;
-    word-wrap: break-word
+    word-wrap: break-word;
   }
 `;

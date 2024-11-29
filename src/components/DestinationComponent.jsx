@@ -1,13 +1,15 @@
-import { IoLocationOutline, IoArrowForwardOutline } from "react-icons/io5";
+import {IoLocationOutline, IoArrowForwardOutline, IoStar} from "react-icons/io5";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { IoIosHeart } from "react-icons/io";
+import {IoIosHeart, IoMdStar} from "react-icons/io";
 import { FaHeart } from "react-icons/fa";
 import { selectFavoriteDestinations, setFavourite } from "./UI/favSlice.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import { selectIsAuthenticated } from "../features/authentification/authSlice.js";
 
 export default function DestinationComponent({ destination }) {
+  const token = useSelector(selectIsAuthenticated);
   const dispatch = useDispatch();
   const destinations = useSelector(selectFavoriteDestinations);
 
@@ -31,184 +33,220 @@ export default function DestinationComponent({ destination }) {
   return (
     <div>
       <Destination>
-        <Link className={"link"} to={`/posts/${destination.slug}`}>
+        <Link className={"link"} to={`/posts/${destination._id}`}>
           <div className={"img-container"}>
             <img
               className={"img"}
-              src={`http://127.0.0.1:5000${destination?.images[0]}`}
-              alt={destination.slug}
+              src={`http://localhost:3000/${destination?.images[0]}`}
+              alt={destination._id}
             />
           </div>
         </Link>
         <div className={"desc"}>
-          <Link className={"link"} to={`/posts/${destination.slug}`}>
-            <h2 className={"title"}>{destination.title}</h2>
+          <Link className={"link"} to={`/posts/${destination._id}`}>
+            <h2 className={"title"}>{destination.name}</h2>
           </Link>
-          <div className={"fav-container"}>
-            <FaHeart
-              className={
-                isFav
-                  ? "icon_fav icon_fav-active"
-                  : "icon_fav icon_fav-inactive"
-              }
-              onClick={toggleFav}
-              onMouseEnter={displayMessage}
-              onMouseLeave={hideMessage}
-            />
+          <div className={"actions"}>
 
-            <p
-              className={
-                isMessage
-                  ? "hover_message hover_message-visible"
-                  : "hover_message hover_message-hidden"
-              }
-            >
-              {isFav ? "Remove from favorite" : "Add to favorite"}
-            </p>
+          <div className={"rating"}>
+            <IoMdStar className={"icon_star"} />
+            <span>{destination.rating}</span>
           </div>
+
+          {token && (
+            <div className={"fav-container"}>
+              <FaHeart
+                className={
+                  isFav
+                    ? "icon_fav icon_fav-active"
+                    : "icon_fav icon_fav-inactive"
+                }
+                onClick={toggleFav}
+                onMouseEnter={displayMessage}
+                onMouseLeave={hideMessage}
+              />
+
+              <p
+                className={
+                  isMessage
+                    ? "hover_message hover_message-visible"
+                    : "hover_message hover_message-hidden"
+                }
+              >
+                {isFav ? "Remove from favorite" : "Add to favorite"}
+              </p>
+            </div>
+          )}
+          </div>
+
         </div>
         <div className={"location"}>
           <IoLocationOutline className={"icon"} />
-          <p className={"address"}>{destination.address}</p>
+          <p className={"address"}>{destination.location}</p>
         </div>
       </Destination>
     </div>
   );
 }
 const Destination = styled.div`
-  width: 100%;
-  display: grid;
-  flex-direction: column;
-  gap: 4px;
-
-  .img-container {
     width: 100%;
-    height: 100%;
-    overflow: hidden;
+    display: grid;
+    flex-direction: column;
+    gap: 4px;
 
-    &:hover .img {
-      transform: scale(1.1);
-    }
-  }
+    .img-container {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
 
-  .img {
-    aspect-ratio: 5/3;
-    transition: transform 0.5s ease;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    position: relative;
-  }
-
-  .link {
-    text-decoration: none;
-  }
-
-  .desc {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    .route {
-      text-decoration: none;
+        &:hover .img {
+            transform: scale(1.1);
+        }
     }
 
-    .title {
-      color: var(--color-grey-3);
-      margin: 0;
-      font-weight: 600;
-      font-size: 20px;
-
-      &:active,
-      &:hover {
-        color: #243b53;
-      }
+    .img {
+        aspect-ratio: 5/3;
+        transition: transform 0.5s ease;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: relative;
     }
 
-    .icon {
-      height: 24px;
-      width: 24px;
-      color: var(--color-grey-7);
-
-      cursor: pointer;
-
-      &:hover {
-        color: var(--color-grey-6);
-      }
+    .link {
+        text-decoration: none;
     }
 
-    .icon.active {
-      color: var(color-blue-4);
-    }
-  }
+    .desc {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
 
-  .location {
-    display: flex;
-    align-items: center;
-    align-content: center;
-    gap: 16px;
-    padding-bottom: 16px;
+        .route {
+            text-decoration: none;
+        }
 
-    .icon {
-      color: var(--color-green-3);
-    }
+        .title {
+            color: var(--color-grey-3);
+            margin: 0;
+            font-weight: 600;
+            font-size: 20px;
 
-    .address {
-      margin: 0;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--color-grey-0);
-      font-size: 16px;
-    }
-  }
+            &:active,
+            &:hover {
+                color: #243b53;
+            }
+        }
 
-  .fav-container {
-    position: relative;
-    display: flex;
-    justify-content: center;
+        .icon {
+            height: 24px;
+            width: 24px;
+            color: var(--color-grey-7);
 
-    .icon_fav {
-      height: 20px;
-      width: 20px;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
+            cursor: pointer;
 
-    .icon_fav-active {
-      color: var(--color-green-2);
+            &:hover {
+                color: var(--color-grey-6);
+            }
+        }
 
-      &:hover {
-        color: var(--color-green-4);
-      }
-    }
+        .icon.active {
+            color: var(color-blue-4);
+        }
 
-    .icon_fav-inactive {
-      color: var(--color-grey-7);
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
 
-      &:hover {
-        color: var(--color-green-4);
-      }
-    }
+            .rating {
+                display: flex;
+                align-items: center;
+                justify-content: center;
 
-    .hover_message {
-      margin: 0;
-      position: absolute;
-      background-color: white;
-      padding: 10px 15px;
-      width: max-content;
-      opacity: 90%;
-      color: var(--color-grey-2);
-      top: -60px;
-      right: -40px;
-      box-shadow: rgba(0, 0, 0, 0.07) 0 0 10px 2px;
+                span {
+                    color: var(--color-grey-1);
+                    font-size: 18px;
+                }
+
+                .icon_star {
+                    width: 24px;
+                    height: 24px;
+                    color: var(--color-green-2);
+                }
+            }
+        }
+
     }
 
-    .hover_message-visible {
-      visibility: visible;
+    .location {
+        display: flex;
+        align-items: center;
+        align-content: center;
+        gap: 16px;
+        padding-bottom: 16px;
+
+        .icon {
+            color: var(--color-green-3);
+        }
+
+        .address {
+            margin: 0;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--color-grey-0);
+            font-size: 16px;
+        }
     }
 
-    .hover_message-hidden {
-      visibility: hidden;
+    .fav-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+
+
+        .icon_fav {
+            height: 20px;
+            width: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .icon_fav-active {
+            color: var(--color-green-2);
+
+            &:hover {
+                color: var(--color-green-4);
+            }
+        }
+
+        .icon_fav-inactive {
+            color: var(--color-grey-7);
+
+            &:hover {
+                color: var(--color-green-4);
+            }
+        }
+
+        .hover_message {
+            margin: 0;
+            position: absolute;
+            background-color: white;
+            padding: 10px 15px;
+            width: max-content;
+            opacity: 90%;
+            color: var(--color-grey-2);
+            top: -60px;
+            right: -40px;
+            box-shadow: rgba(0, 0, 0, 0.07) 0 0 10px 2px;
+        }
+
+        .hover_message-visible {
+            visibility: visible;
+        }
+
+        .hover_message-hidden {
+            visibility: hidden;
+        }
     }
-  }
 `;

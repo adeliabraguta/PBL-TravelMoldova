@@ -1,56 +1,65 @@
-import { Banner, Desc, Title } from "../../Styles/Banner.js";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StyledRating } from "../../components/DestinationPageAccount.jsx";
 import {
-  useGetReviewQuery,
+  useGetReviewsQuery,
   usePostReviewMutation,
 } from "../../app/services/apiService.js";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setComment } from "./reviewSlice.js";
 import styled from "styled-components";
 import { useFormik } from "formik";
-import { loginSchema } from "../authentification/schemas/schemaLogin.js";
 import { ReviewSchema } from "./postRevireSchema.js";
+import { toast } from "react-toastify";
 
 export default function PostReview() {
-  const slug = useParams();
-  const [rating, setRating] = useState(0);
-  const { data: comments = [] } = useGetReviewQuery(slug.slug);
-  const [reviewPost, { isSuccess, data }] = usePostReviewMutation();
-  const title = "title";
+  const id = useParams();
+  const [reviewPost, { isSuccess, data, isError, error }] =
+    usePostReviewMutation();
 
   const onSubmit = () => {
     reviewPost({
-      review: { body: values.review, rating: values.rating, title },
-      slug: slug.slug,
+      review: { comment: values.review, rating: values.rating },
+      id: id.id,
     });
-    values.review = "";
-    values.rating = 0;
+    resetForm();
   };
-  const { values, handleChange, errors, handleSubmit } = useFormik({
-    initialValues: {
-      rating: 0,
-      review: "",
-    },
-    validationSchema: ReviewSchema,
-    onSubmit,
-  });
-  console.log(errors);
+  const { values, resetForm, handleChange, touched, errors, handleSubmit } =
+    useFormik({
+      initialValues: {
+        rating: 0,
+        review: "",
+      },
+      validationSchema: ReviewSchema,
+      onSubmit,
+    });
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success(data.message);
+      resetForm();
+    } else if (isError) {
+      toast.error(error.data.message);
+    }
+  }, [isSuccess, isError, data, error]);
   return (
     <PostReviews>
       <form className={"place-review"} onSubmit={handleSubmit}>
         <div className={"place-review-input"}>
           <div className={"rating stars"}>
-            <div className={"review-title"}>Your rating:</div>
+            <div className={"review-title"}>
+              {errors.rating && touched.rating && <span>{errors.rating}</span>}{" "}
+              Your rating:
+            </div>
             <StyledRating
               name="rating"
-              value={values.rating}
+              value={parseInt(values.rating)}
               onChange={handleChange}
             />
           </div>
           <div className={"rating"}>
-            <div className={"review-title"}>Your review:</div>
+            <div className={"review-title"}>
+              {errors.review && touched.review && <span>{errors.review}</span>}{" "}
+              Your review:
+            </div>
             <textarea
               name={"review"}
               rows="1"
@@ -97,6 +106,14 @@ const PostReviews = styled.div`
           letter-spacing: 1px;
           color: var(--color-blue-0);
           font-weight: 600;
+
+          span {
+            position: relative;
+            top: -6px;
+            font-weight: 400;
+            font-size: 24px;
+            color: #ff0044;
+          }
         }
       }
 

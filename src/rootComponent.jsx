@@ -7,6 +7,7 @@ const RootComponent = () => {
   const isAuthPopupVisible = useSelector(
     (state) => state.auth.isAuthPopupVisible,
   );
+
   return (
     <>
       {isAuthPopupVisible && <AuthPopup />}

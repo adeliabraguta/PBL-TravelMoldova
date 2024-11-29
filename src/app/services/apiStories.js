@@ -8,7 +8,7 @@ export const storiesApi = createApi({
   }),
   endpoints: (builder) => ({
     getStories: builder.query({
-      query: (page = 1) => `auth/register`,
+      query: (page = 1) => `stories`,
     }),
     getStoryById: builder.query({
       query: (id) => `stories/${id}`,

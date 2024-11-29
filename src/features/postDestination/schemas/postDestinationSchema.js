@@ -5,6 +5,7 @@ export const postDestinationSchema = yup.object().shape({
   description: yup.string().required("*"),
   location: yup.string().required("*"),
   map: yup.string().required("*"),
+  type: yup.string().required("*"),
   images: yup.array()
       .of(yup.mixed().required('*'))
       .min(1, '*'),

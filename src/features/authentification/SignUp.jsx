@@ -21,7 +21,6 @@ export default function SignUp({ setShowSignIn, setShowSignUp }) {
     register({
       username: values.username,
       password: values.password,
-      email: values.email,
     });
   };
 

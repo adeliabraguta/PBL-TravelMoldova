@@ -19,7 +19,7 @@ export default function ImageCarousel({destination}) {
             <CarouselComponent>{destination.map((img, index) => {
                 return (
                     <div key={index} className={slide === index ? `slide active` : 'slide'}>
-                        {index === slide && (<img src={`http://127.0.0.1:5000${img}`}
+                        {index === slide && (<img src={`http://localhost:3000/${img}`}
                                                   alt={img.alt}
                                                   key={index}
                                                   className={"img"}/>)}

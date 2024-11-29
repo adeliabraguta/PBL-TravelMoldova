@@ -1,6 +1,5 @@
 import ReactDOM from "react-dom/client";
-import React from "react";
-import App from "./App";
+import React, { useState } from "react";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
@@ -9,6 +8,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import ScrollToTop from "./ScrollToTop.jsx";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import RootComponent from "./rootComponent.jsx";
 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -17,7 +17,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <ScrollToTop />
-        <App />
+        <RootComponent />
       </PersistGate>
     </Provider>
     <ToastContainer />
