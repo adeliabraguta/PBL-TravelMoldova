@@ -3,7 +3,7 @@ Promoting tourism in Moldova
 
 ## Tech stack
 ✔️ JavaScript <br>
-✔️ RaactJS <br>
+✔️ ReactJS <br>
 ✔️ RTK Query <br>
 ✔️ Styled Components
 
