@@ -14,7 +14,7 @@ export default function DestinationComponent({ destination }) {
   const destinations = useSelector(selectFavoriteDestinations);
 
   const favState = Boolean(
-    destinations.find((item) => item.slug === destination.slug),
+    destinations.find((item) => item._id === destination._id),
   );
   const [isFav, setIsFav] = useState(favState);
   const [isMessage, setIsMessage] = useState(false);
@@ -196,57 +196,6 @@ const Destination = styled.div`
             font-style: italic;
             color: var(--color-grey-0);
             font-size: 16px;
-        }
-    }
-
-    .fav-container {
-        position: relative;
-        display: flex;
-        justify-content: center;
-
-
-        .icon_fav {
-            height: 20px;
-            width: 20px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .icon_fav-active {
-            color: var(--color-green-2);
-
-            &:hover {
-                color: var(--color-green-4);
-            }
-        }
-
-        .icon_fav-inactive {
-            color: var(--color-grey-7);
-
-            &:hover {
-                color: var(--color-green-4);
-            }
-        }
-
-        .hover_message {
-            margin: 0;
-            position: absolute;
-            background-color: white;
-            padding: 10px 15px;
-            width: max-content;
-            opacity: 90%;
-            color: var(--color-grey-2);
-            top: -60px;
-            right: -40px;
-            box-shadow: rgba(0, 0, 0, 0.07) 0 0 10px 2px;
-        }
-
-        .hover_message-visible {
-            visibility: visible;
-        }
-
-        .hover_message-hidden {
-            visibility: hidden;
         }
     }
 `;

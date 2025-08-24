@@ -5,6 +5,7 @@ import { Auth, AuthContainer } from "../../Styles/Auth.styled.js";
 import { IoCloseOutline } from "react-icons/io5";
 import SignUp from "./SignUp.jsx";
 import SignIn from "./SignIn.jsx";
+import ResetPassword from "./ResetPassword.jsx";
 
 export default function AuthPopup() {
   const dispatch = useDispatch();
@@ -19,9 +20,11 @@ export default function AuthPopup() {
     dispatch(unsetAuthPopup());
     setShowSignIn(true);
     setShowSignUp(false);
+    setShowResetPassword(false);
   };
 
   const [showSignUp, setShowSignUp] = useState(false);
+  const [showResetPassword, setShowResetPassword] = useState(false);
   const [showSignIn, setShowSignIn] = useState(true);
 
   return (
@@ -35,6 +38,7 @@ export default function AuthPopup() {
             <SignIn
               setShowSignIn={setShowSignIn}
               setShowSignUp={setShowSignUp}
+              setShowResetPassword={setShowResetPassword}
             />
           )}
 
@@ -42,6 +46,13 @@ export default function AuthPopup() {
             <SignUp
               setShowSignIn={setShowSignIn}
               setShowSignUp={setShowSignUp}
+            />
+          )}
+
+          {showResetPassword && (
+            <ResetPassword
+              setShowSignIn={setShowSignIn}
+              setShowResetPassword={setShowResetPassword}
             />
           )}
         </Auth>

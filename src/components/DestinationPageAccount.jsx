@@ -105,7 +105,14 @@ export const Destination = styled.div`
                 margin: 0;
                 color: var(--color-blue-0);
                 display: flex;
+                justify-content: space-between;
+                align-items: center;
                 gap: 24px;
+              .interactions{
+                display: flex;
+                gap: 24px;
+                align-items: end;
+              }
             }
 
             p {

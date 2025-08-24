@@ -18,7 +18,7 @@ function ProfileFav(props) {
       <List>
         {destinations?.map((destination) => (
           <DestinationComponent
-            key={destination.slug}
+            key={destination._id}
             destination={destination}
           />
         ))}

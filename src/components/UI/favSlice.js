@@ -13,11 +13,11 @@ const favouriteSlice = createSlice({
   reducers: {
     setFavourite: (state, action) => {
       const destinationIndex = state.favouriteList.findIndex(
-          (item) => item.slug === action.payload.slug
+          (item) => item._id === action.payload._id
       );
       if (destinationIndex !== -1) {
         state.favouriteList = state.favouriteList.filter(
-            (item) => item.slug !== action.payload.slug
+            (item) => item._id !== action.payload._id
         );
       } else {
         state.favouriteList.push(action.payload);

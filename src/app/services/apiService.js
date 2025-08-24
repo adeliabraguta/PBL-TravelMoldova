@@ -94,6 +94,13 @@ export const api = createApi({
       }),
       invalidatesTags: ["deleteReview"],
     }),
+    postLikedDestination: builder.mutation({
+      query: ({ favorite }) => ({
+        url: `favorite`,
+        method: "POST",
+        body: { ...favorite },
+      }),
+    })
   }),
 });
 
