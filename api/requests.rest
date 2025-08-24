@@ -1,0 +1,26 @@
+### GET request to example server
+POST http://127.0.0.1:3000/auth/register
+Content-Type: application/json
+
+{
+  "username": "adissssssgbdsn",
+  "password": "adminadmin"
+}
+
+### GET request to example server
+POST http://127.0.0.1:3000/auth/login
+Content-Type: application/json
+
+{
+  "username": "adissssssgbdsn",
+  "password": "adminadmin"
+}
+
+###
+GET http://127.0.0.1:3000/auth/checkAuth
+
+###
+GET http://127.0.0.1:3000/destinations?page=1&limit=1
+
+###
+GET http://127.0.0.1:3000/destination/671d0a9db709f4f0f297c717
